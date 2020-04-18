@@ -3,16 +3,17 @@ import { CommonModule } from '@angular/common';
 
 import { PlayRoutingModule } from './play-routing.module';
 import { PlayScreenComponent } from './components/play-screen/play-screen.component';
-import { KeyboardComponent } from './components/keyboard/keyboard.component';
+import { GameKeyboardComponent } from './components/game-keyboard/game-keyboard.component';
 import { HangmanComponent } from './components/hangman/hangman.component';
 import { GuessingWordComponent } from './components/guessing-word/guessing-word.component';
-import { HangmanService } from './services/hangman.service';
+import { HangmanService } from './components/hangman/hangman.service';
+import { LettersService } from './services/letters.service';
 
 
 @NgModule({
   declarations: [
     PlayScreenComponent,
-    KeyboardComponent,
+    GameKeyboardComponent,
     HangmanComponent,
     GuessingWordComponent
   ],
@@ -21,7 +22,8 @@ import { HangmanService } from './services/hangman.service';
     PlayRoutingModule
   ],
   providers: [
-    HangmanService
+    HangmanService,
+    LettersService
   ]
 })
 export class PlayModule { }

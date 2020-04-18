@@ -1,0 +1,3 @@
+<div>
+  <button *ngFor="let button of BUTTONS" [disabled]="button.isDisabled" (click)="buttonClicked(button.key)">{{button.key}}</button>
+</div>

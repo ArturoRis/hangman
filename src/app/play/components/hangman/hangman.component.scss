@@ -1,0 +1,11 @@
+span {
+  opacity: 0;
+
+  &.visible {
+    opacity: 1;
+  }
+
+  &:not(:last-child) {
+    margin-right: .3em;
+  }
+}

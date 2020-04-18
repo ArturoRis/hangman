@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { HangmanService } from '../../services/hangman.service';
+import { HangmanService } from './hangman.service';
 import { tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 
@@ -17,6 +17,7 @@ export class HangmanComponent implements OnInit, OnDestroy {
   fifthError = false;
   sixthError = false;
 
+  private numOfErrors = 0;
   private sub = new Subscription();
 
   constructor(
@@ -26,7 +27,7 @@ export class HangmanComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.sub.add(this.hangmanService.getErrors$().pipe(
-      tap(error => this.showError(error))
+      tap(() => this.addError())
       ).subscribe()
     );
   }
@@ -35,6 +36,10 @@ export class HangmanComponent implements OnInit, OnDestroy {
     this.sub.unsubscribe();
   }
 
+  addError() {
+    this.numOfErrors += 1;
+    this.showError(this.numOfErrors);
+  }
   showError(error: HangmanError) {
     // tslint:disable:no-switch-case-fall-through
     switch (error) {
