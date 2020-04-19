@@ -1,14 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { HangmanService } from './hangman.service';
-import { tap } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { GameStateService } from '../../services/game-state.service';
+import { BaseComponent } from '../../../core/base-objects/base-component';
+import { TurnService } from '../../services/turn.service';
 
 @Component({
   selector: 'hmo-hangman',
   templateUrl: './hangman.component.html',
   styleUrls: ['./hangman.component.scss']
 })
-export class HangmanComponent implements OnInit, OnDestroy {
+export class HangmanComponent extends BaseComponent implements OnInit {
 
   firstError = false;
   secondError = false;
@@ -16,34 +19,47 @@ export class HangmanComponent implements OnInit, OnDestroy {
   fourthError = false;
   fifthError = false;
   sixthError = false;
+  showWin: string;
+  itsMe: boolean;
 
   private numOfErrors = 0;
-  private sub = new Subscription();
 
   constructor(
-    private hangmanService: HangmanService
+    private hangmanService: HangmanService,
+    private gameStateService: GameStateService,
+    private turnService: TurnService
   ) {
+    super();
   }
 
   ngOnInit(): void {
-    this.sub.add(this.hangmanService.getErrors$().pipe(
-      tap(() => this.addError())
+    this.addSubscription(
+      this.hangmanService.getErrors$().pipe(
+        tap(() => this.addError())
       ).subscribe()
     );
-  }
 
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    this.addSubscription(
+      this.gameStateService.getState$().pipe(
+        filter( state => state.status && state.status !== 'lose'),
+        tap( state => {
+          this.showWin = state.status;
+          this.itsMe = state.status === this.turnService.currentUser;
+        })
+      ).subscribe()
+    );
   }
 
   addError() {
     this.numOfErrors += 1;
     this.showError(this.numOfErrors);
   }
+
   showError(error: HangmanError) {
     // tslint:disable:no-switch-case-fall-through
     switch (error) {
       case HangmanError.SIXTH:
+        this.loseGame();
         this.sixthError = true;
       case HangmanError.FIFTH:
         this.fifthError = true;
@@ -56,6 +72,10 @@ export class HangmanComponent implements OnInit, OnDestroy {
       case HangmanError.FIRST:
         this.firstError = true;
     }
+  }
+
+  loseGame() {
+    this.gameStateService.finishGame(false);
   }
 }
 

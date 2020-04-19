@@ -1,7 +1,7 @@
-import { Observable, Subject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 
 export abstract class BaseChannelService<E> {
-  private channel = new Subject<E>();
+  protected channel = new ReplaySubject<E>();
 
   protected sendEvent(event: E) {
     this.channel.next(event);

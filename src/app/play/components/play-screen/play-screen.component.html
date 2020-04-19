@@ -1,4 +1,13 @@
-<h1>Play screen</h1>
-<hmo-hangman></hmo-hangman>
-<hmo-guessing-word></hmo-guessing-word>
-<hmo-game-keyboard></hmo-game-keyboard>
+<ng-container [ngSwitch]="status">
+
+  <ng-container *ngSwitchCase="Status.CHOOSE_WORD">
+    <hmo-choose-word></hmo-choose-word>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="Status.PLAY">
+    <hmo-hangman></hmo-hangman>
+    <hmo-guessing-word></hmo-guessing-word>
+    <hmo-game-keyboard></hmo-game-keyboard>
+  </ng-container>
+
+</ng-container>

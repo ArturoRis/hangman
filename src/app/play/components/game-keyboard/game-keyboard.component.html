@@ -1,3 +1,7 @@
-<div>
-  <button *ngFor="let button of BUTTONS" [disabled]="button.isDisabled" (click)="buttonClicked(button.key)">{{button.key}}</button>
+<div class="waiting-turn-container" *ngIf="!hideGameKeyboard">
+  <hmo-waiting-turn></hmo-waiting-turn>
+  <div>
+    <button *ngFor="let button of BUTTONS" [disabled]="button.isDisabled"
+            (click)="buttonClicked(button.key)">{{button.key}}</button>
+  </div>
 </div>

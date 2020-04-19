@@ -8,6 +8,11 @@ import { HangmanComponent } from './components/hangman/hangman.component';
 import { GuessingWordComponent } from './components/guessing-word/guessing-word.component';
 import { HangmanService } from './components/hangman/hangman.service';
 import { LettersService } from './services/letters.service';
+import { ChooseWordComponent } from './components/choose-word/choose-word.component';
+import { FormsModule } from '@angular/forms';
+import { WaitingTurnComponent } from './components/waiting-turn/waiting-turn.component';
+import { TurnService } from './services/turn.service';
+import { GameStateService } from './services/game-state.service';
 
 
 @NgModule({
@@ -15,15 +20,20 @@ import { LettersService } from './services/letters.service';
     PlayScreenComponent,
     GameKeyboardComponent,
     HangmanComponent,
-    GuessingWordComponent
+    GuessingWordComponent,
+    ChooseWordComponent,
+    WaitingTurnComponent
   ],
   imports: [
     CommonModule,
-    PlayRoutingModule
+    PlayRoutingModule,
+    FormsModule
   ],
   providers: [
     HangmanService,
-    LettersService
+    LettersService,
+    TurnService,
+    GameStateService
   ]
 })
 export class PlayModule { }

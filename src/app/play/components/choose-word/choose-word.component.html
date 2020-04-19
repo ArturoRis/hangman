@@ -1,0 +1,9 @@
+<div class="waiting-turn-container">
+  <hmo-waiting-turn></hmo-waiting-turn>
+  <p>Scrivi la parola che gli altri dovranno indovinare</p>
+  <div>
+    <label hidden for="word">Parola da indovinare</label>
+    <input id="word" type="text" [(ngModel)]="word" required pattern="\w*( \w*)*"/>
+    <button (click)="chooseWord()" [disabled]="!word">Ok</button>
+  </div>
+</div>
