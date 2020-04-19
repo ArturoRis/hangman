@@ -8,6 +8,7 @@ import { CreateNicknameComponent } from './components/create-nickname/create-nic
 import { NicknameGuard } from './services/nickname.guard';
 import { TurnService } from './services/turn.service';
 import { FormsModule } from '@angular/forms';
+import { SocketService } from './services/socket.service';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { FormsModule } from '@angular/forms';
   ],
   providers: [
     NicknameGuard,
-    TurnService
+    TurnService,
+    SocketService
   ]
 })
 export class CoreModule { }
