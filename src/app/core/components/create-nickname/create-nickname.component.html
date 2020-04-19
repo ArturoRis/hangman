@@ -1,0 +1,6 @@
+<p>Inserisci il tuo nickname</p>
+<div>
+  <label hidden for="nickname">Nickname</label>
+  <input id="nickname" type="text" [(ngModel)]="nickname" required pattern="\w*"/>
+  <button (click)="chooseNickname()" [disabled]="!nickname">Salva</button>
+</div>

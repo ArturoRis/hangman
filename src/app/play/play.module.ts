@@ -11,7 +11,6 @@ import { LettersService } from './services/letters.service';
 import { ChooseWordComponent } from './components/choose-word/choose-word.component';
 import { FormsModule } from '@angular/forms';
 import { WaitingTurnComponent } from './components/waiting-turn/waiting-turn.component';
-import { TurnService } from './services/turn.service';
 import { GameStateService } from './services/game-state.service';
 
 
@@ -32,7 +31,6 @@ import { GameStateService } from './services/game-state.service';
   providers: [
     HangmanService,
     LettersService,
-    TurnService,
     GameStateService
   ]
 })

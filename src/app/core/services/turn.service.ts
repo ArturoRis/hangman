@@ -1,4 +1,4 @@
-import { BaseChannelService } from '../../core/base-objects/base-channel-service';
+import { BaseChannelService } from '../base-objects/base-channel-service';
 
 export class TurnService extends BaseChannelService<string> {
   currentUser: string;

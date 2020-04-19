@@ -4,7 +4,7 @@ import { filter, tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { GameStateService } from '../../services/game-state.service';
 import { BaseComponent } from '../../../core/base-objects/base-component';
-import { TurnService } from '../../services/turn.service';
+import { TurnService } from '../../../core/services/turn.service';
 
 @Component({
   selector: 'hmo-hangman',
