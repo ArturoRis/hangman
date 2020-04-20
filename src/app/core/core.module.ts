@@ -4,11 +4,10 @@ import { CoreRoutingModule } from './core-routing.module';
 import { PageComponent } from './components/page/page.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { WelcomeComponent } from './components/welcome/welcome.component';
-import { CreateNicknameComponent } from './components/create-nickname/create-nickname.component';
-import { NicknameGuard } from './services/nickname.guard';
-import { TurnService } from './services/turn.service';
+import { CreateNicknameComponent } from '../play/components/create-nickname/create-nickname.component';
 import { FormsModule } from '@angular/forms';
 import { SocketService } from './services/socket.service';
+import { ManageRoomComponent } from './components/manage-room/manage-room.component';
 
 
 @NgModule({
@@ -16,7 +15,8 @@ import { SocketService } from './services/socket.service';
     PageComponent,
     MenuComponent,
     WelcomeComponent,
-    CreateNicknameComponent
+    CreateNicknameComponent,
+    ManageRoomComponent
   ],
   exports: [
     PageComponent
@@ -27,8 +27,6 @@ import { SocketService } from './services/socket.service';
     CoreRoutingModule,
   ],
   providers: [
-    NicknameGuard,
-    TurnService,
     SocketService
   ]
 })

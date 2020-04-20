@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { TurnService } from '../../../core/services/turn.service';
+import { TurnService } from '../../services/turn.service';
 import { tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 

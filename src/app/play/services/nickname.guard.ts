@@ -11,7 +11,7 @@ export class NicknameGuard implements CanActivate, CanActivateChild {
   }
 
   canActivate(): boolean | UrlTree {
-    return this.turnService.currentUser ? true : this.router.createUrlTree(['create-nickname']);
+    return this.turnService.currentUser ? true : this.router.createUrlTree(['play', 'create-nickname']);
   }
 
   canActivateChild(): boolean | UrlTree {

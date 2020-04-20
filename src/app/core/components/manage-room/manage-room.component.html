@@ -1,0 +1,11 @@
+<h1>Crea o unisciti ad una stanza</h1>
+<p>
+  <button (click)="createRoom()">Crea stanza</button>
+</p>
+<p>
+  <label>Id stanza
+    <input type="text" [(ngModel)]="roomId">
+  </label>
+  <button (click)="joinRoom()">Unisciti</button>
+</p>
+<div *ngIf="error">{{error}}</div>

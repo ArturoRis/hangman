@@ -1,5 +1,5 @@
 import * as io from 'socket.io-client';
-import { Observable, ReplaySubject } from 'rxjs';
+import { ReplaySubject } from 'rxjs';
 
 export class SocketService {
   private url = 'http://localhost:3000';
@@ -9,8 +9,8 @@ export class SocketService {
     this.socket = io(this.url);
   }
 
-  sendMessage(type: string, payload: any) {
-    this.socket.emit(type, payload);
+  sendMessage<R = string>(type: string, payload: any, callback?: (response: SocketResponse<R>) => void) {
+    this.socket.emit(type, payload, callback);
   }
 
   getMessages$(type) {
@@ -20,4 +20,9 @@ export class SocketService {
     });
     return obs$.asObservable();
   }
+}
+
+export interface SocketResponse<T = string> {
+  ok: boolean;
+  data: T;
 }

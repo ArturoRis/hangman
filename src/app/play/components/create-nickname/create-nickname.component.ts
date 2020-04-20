@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TurnService } from '../../services/turn.service';
 import { tap } from 'rxjs/operators';
-import { BaseComponent } from '../../base-objects/base-component';
+import { BaseComponent } from '../../../core/base-objects/base-component';
 
 @Component({
   selector: 'hmo-create-nickname',

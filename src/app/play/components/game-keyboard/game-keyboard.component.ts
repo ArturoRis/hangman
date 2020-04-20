@@ -34,6 +34,12 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
         tap( () => this.hideGameKeyboard = true)
       ).subscribe()
     );
+
+    this.addSubscription(
+      this.gameKeyboardService.getLetters$().pipe(
+        tap( key => this.disableButton(key))
+      ).subscribe()
+    );
   }
 
   buttonClicked(key: string) {

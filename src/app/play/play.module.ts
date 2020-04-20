@@ -12,6 +12,8 @@ import { ChooseWordComponent } from './components/choose-word/choose-word.compon
 import { FormsModule } from '@angular/forms';
 import { WaitingTurnComponent } from './components/waiting-turn/waiting-turn.component';
 import { GameStateService } from './services/game-state.service';
+import { TurnService } from './services/turn.service';
+import { NicknameGuard } from './services/nickname.guard';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { GameStateService } from './services/game-state.service';
   providers: [
     HangmanService,
     LettersService,
-    GameStateService
+    GameStateService,
+    NicknameGuard,
+    TurnService
   ]
 })
 export class PlayModule { }
