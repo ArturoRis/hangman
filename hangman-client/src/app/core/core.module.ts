@@ -8,6 +8,7 @@ import { CreateNicknameComponent } from '../play/components/create-nickname/crea
 import { FormsModule } from '@angular/forms';
 import { SocketService } from './services/socket.service';
 import { ManageRoomComponent } from './components/manage-room/manage-room.component';
+import { RoomComponent } from './components/room/room.component';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { ManageRoomComponent } from './components/manage-room/manage-room.compon
     MenuComponent,
     WelcomeComponent,
     CreateNicknameComponent,
-    ManageRoomComponent
+    ManageRoomComponent,
+    RoomComponent
   ],
   exports: [
     PageComponent

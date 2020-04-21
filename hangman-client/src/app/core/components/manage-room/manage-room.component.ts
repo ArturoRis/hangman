@@ -30,12 +30,12 @@ export class ManageRoomComponent implements OnInit {
 
   joinRoom() {
     this.error = undefined;
-    this.socketService.sendMessage(
+    this.socketService.sendMessage<any>(
       'join-room',
       this.roomId,
       (resp) => {
         if (resp.ok) {
-          this.goToRoom(resp.data);
+          this.goToRoom(resp.data && resp.data.id);
         } else {
           this.error = resp.data;
         }
@@ -44,6 +44,6 @@ export class ManageRoomComponent implements OnInit {
   }
 
   goToRoom(roomId) {
-    this.router.navigate(['play', roomId]);
+    this.router.navigate(['room', roomId]);
   }
 }
