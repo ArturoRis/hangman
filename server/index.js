@@ -21,8 +21,6 @@ function emitNewTurn(soc){
   soc.emit('new-turn', { ok: true, data: getNextTurn()});
 }
 
-class Room
-
 io.on('connection', (socket) => {
   console.log('user connected');
   const id = socket.handshake.headers.cookie
