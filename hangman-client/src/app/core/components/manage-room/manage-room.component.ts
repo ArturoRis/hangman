@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 export class ManageRoomComponent implements OnInit {
 
   roomId: string;
-  error: string;
 
   constructor(
     private socketService: SocketService,
@@ -29,18 +28,7 @@ export class ManageRoomComponent implements OnInit {
   }
 
   joinRoom() {
-    this.error = undefined;
-    this.socketService.sendMessage<any>(
-      'join-room',
-      this.roomId,
-      (resp) => {
-        if (resp.ok) {
-          this.goToRoom(resp.data && resp.data.id);
-        } else {
-          this.error = resp.data;
-        }
-      }
-    );
+    this.goToRoom(this.roomId);
   }
 
   goToRoom(roomId) {

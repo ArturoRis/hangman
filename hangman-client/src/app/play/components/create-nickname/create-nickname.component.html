@@ -1,8 +1,0 @@
-<p>Inserisci il tuo nickname</p>
-<div>
-  <div *ngIf="loading">Caricamento</div>
-  <div *ngIf="resp">Risposta: {{resp}}</div>
-  <label hidden for="nickname">Nickname</label>
-  <input id="nickname" type="text" [(ngModel)]="nickname" required pattern="\w*"/>
-  <button (click)="chooseNickname()" [disabled]="!nickname">Salva</button>
-</div>

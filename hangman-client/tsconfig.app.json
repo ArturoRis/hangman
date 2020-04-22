@@ -5,10 +5,10 @@
     "types": []
   },
   "files": [
-    "hangman-client/src/main.ts",
-    "hangman-client/src/polyfills.ts"
+    "src/main.ts",
+    "src/polyfills.ts"
   ],
   "include": [
-    "hangman-client/src/**/*.d.ts"
+    "src/**/*.d.ts"
   ]
 }

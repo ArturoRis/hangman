@@ -13,7 +13,6 @@ import { FormsModule } from '@angular/forms';
 import { WaitingTurnComponent } from './components/waiting-turn/waiting-turn.component';
 import { GameStateService } from './services/game-state.service';
 import { TurnService } from './services/turn.service';
-import { NicknameGuard } from './services/nickname.guard';
 
 
 @NgModule({
@@ -34,7 +33,6 @@ import { NicknameGuard } from './services/nickname.guard';
     HangmanService,
     LettersService,
     GameStateService,
-    NicknameGuard,
     TurnService
   ]
 })

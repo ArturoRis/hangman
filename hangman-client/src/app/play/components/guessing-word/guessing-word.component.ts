@@ -26,6 +26,8 @@ export class GuessingWordComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.gameKeyboardService.start();
+
     this.addSubscription(
       this.gameKeyboardService.getLetters$().pipe(
         tap(letter => this.checkLetter(letter))
@@ -34,7 +36,7 @@ export class GuessingWordComponent extends BaseComponent implements OnInit {
 
     this.addSubscription(
       this.gameStateService.getState$().pipe(
-        filter(state => !!state.currentWord && this.currentWord != state.currentWord),
+        filter(state => !!state.currentWord && this.currentWord !== state.currentWord),
         tap(state => this.setWord(state.currentWord))
       ).subscribe()
     );
@@ -46,14 +48,6 @@ export class GuessingWordComponent extends BaseComponent implements OnInit {
       letterInfo.forEach(l => l.isGuessed = true);
     } else {
       this.hangmanService.sendError();
-    }
-
-    this.checkWin();
-  }
-
-  checkWin() {
-    if (this.lettersInfo.every(letterInfo => letterInfo.isGuessed)) {
-      this.gameStateService.finishGame(true);
     }
   }
 
@@ -70,6 +64,6 @@ export class GuessingWordComponent extends BaseComponent implements OnInit {
 }
 
 interface LetterInfo {
-  letter: string;
+  letter?: string;
   isGuessed: boolean;
 }

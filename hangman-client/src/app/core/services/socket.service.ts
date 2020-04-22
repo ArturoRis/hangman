@@ -10,15 +10,25 @@ export class SocketService {
   }
 
   sendMessage<R = string>(type: string, payload: any, callback?: (response: SocketResponse<R>) => void) {
-    this.socket.emit(type, payload, callback);
+    console.log('sending', type, payload);
+    if (callback) {
+      this.socket.emit(type, payload, callback);
+    } else {
+      this.socket.emit(type, payload);
+    }
   }
 
-  getMessages$(type) {
-    const obs$ = new ReplaySubject();
+  getMessages$<R = string>(type) {
+    const obs$ = new ReplaySubject<SocketResponse<R>>();
     this.socket.on(type, (message) => {
+      console.log('received', type, message);
       obs$.next(message);
     });
     return obs$.asObservable();
+  }
+
+  getId() {
+    return this.socket.id;
   }
 }
 

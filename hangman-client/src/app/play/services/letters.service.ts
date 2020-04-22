@@ -10,8 +10,11 @@ export class LettersService extends BaseChannelService<string> {
     private socketService: SocketService
   ) {
     super();
+  }
+
+  start() {
     this.socketService.getMessages$('new-guess').pipe(
-      tap( (newKey: any) => {
+      tap((newKey: any) => {
         this.sendEvent(newKey.data);
       })
     ).subscribe();
@@ -19,7 +22,6 @@ export class LettersService extends BaseChannelService<string> {
 
   sendLetter(key: string) {
     this.socketService.sendMessage('new-guess', key);
-
   }
 
   getLetters$() {
