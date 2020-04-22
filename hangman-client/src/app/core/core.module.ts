@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { SocketService } from './services/socket.service';
 import { ManageRoomComponent } from './components/manage-room/manage-room.component';
 import { RoomComponent } from './components/room/room.component';
+import { PlayersService } from './services/players.service';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { RoomComponent } from './components/room/room.component';
     CoreRoutingModule,
   ],
   providers: [
-    SocketService
+    SocketService,
+    PlayersService
   ]
 })
 export class CoreModule { }

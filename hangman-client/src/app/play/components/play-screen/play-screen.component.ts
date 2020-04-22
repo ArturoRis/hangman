@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GameStateService } from '../../services/game-state.service';
 import { tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'hmo-play-screen',
@@ -15,7 +16,8 @@ export class PlayScreenComponent implements OnInit, OnDestroy {
   private sub: Subscription = new Subscription();
 
   constructor(
-    private gameStateService: GameStateService
+    private gameStateService: GameStateService,
+    private route: ActivatedRoute
   ) {
   }
 
@@ -32,7 +34,8 @@ export class PlayScreenComponent implements OnInit, OnDestroy {
       ).subscribe()
     );
 
-    this.gameStateService.startGame();
+    const roomId = this.route.snapshot.params.ID;
+    this.gameStateService.startGame(roomId);
   }
 
   ngOnDestroy(): void {

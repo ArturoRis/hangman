@@ -45,6 +45,12 @@ export class WebsocketGateway implements OnGatewayDisconnect {
     this.server.to(room.id).emit('go-to-start', new SocketResponse(true, undefined));
   }
 
+  @SubscribeMessage('get-state')
+  getState(client: Socket) {
+    const room = this.usersConnected[client.id];
+    return new SocketResponse(true, room);
+  }
+
   @SubscribeMessage('get-current-turn')
   startGame(client: Socket) {
     console.log('start-game', client.id);
@@ -72,6 +78,7 @@ export class WebsocketGateway implements OnGatewayDisconnect {
     if (!finishState) {
       this.server.to(room.id).emit('new-turn', new SocketResponse(true, room.getNextTurn()))
     } else {
+      room.resetGame();
       this.server.to(room.id).emit('finish-game', new SocketResponse(true, {
         isWin: finishState === 'win',
         who: client.id
@@ -107,6 +114,13 @@ class Room {
   constructor(
     public id: string
   ) {
+  }
+
+  resetGame() {
+    this.currentTurn = undefined;
+    this.lettersInfo = undefined;
+    this.guesses = [];
+    this.errors = 0;
   }
 
   isPresent(user: string) {
@@ -147,11 +161,11 @@ class Room {
   addGuess(guess: string) {
     this.guesses.push(guess);
 
-    const letterInfo = this.lettersInfo.find( l => l.letter === guess);
-    if (!letterInfo) {
+    const letterInfo = this.lettersInfo.filter( l => l.letter === guess);
+    if (!letterInfo || !letterInfo.length) {
       this.errors += 1;
     } else {
-      letterInfo.isGuessed = true;
+      letterInfo.forEach( l => l.isGuessed = true);
     }
   }
 

@@ -13,6 +13,7 @@ export class TurnService extends BaseChannelService<string> {
     private socketService: SocketService,
   ) {
     super();
+    this.currentUser = this.socketService.getId();
   }
 
   receiveTurns() {
@@ -33,7 +34,6 @@ export class TurnService extends BaseChannelService<string> {
   }
 
   start() {
-    this.currentUser = this.socketService.getId();
     this.receiveTurns();
     this.socketService.sendMessage('get-current-turn', undefined, (resp) => {
       this.setTurn(resp.data);

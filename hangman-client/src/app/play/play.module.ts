@@ -10,9 +10,10 @@ import { HangmanService } from './components/hangman/hangman.service';
 import { LettersService } from './services/letters.service';
 import { ChooseWordComponent } from './components/choose-word/choose-word.component';
 import { FormsModule } from '@angular/forms';
-import { WaitingTurnComponent } from './components/waiting-turn/waiting-turn.component';
+import { PlayersViewerComponent } from './components/players-viewer/players-viewer.component';
 import { GameStateService } from './services/game-state.service';
 import { TurnService } from './services/turn.service';
+import { WaitingTurnDirective } from './directives/waiting-turn.directive';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { TurnService } from './services/turn.service';
     HangmanComponent,
     GuessingWordComponent,
     ChooseWordComponent,
-    WaitingTurnComponent
+    PlayersViewerComponent,
+    WaitingTurnDirective
   ],
   imports: [
     CommonModule,

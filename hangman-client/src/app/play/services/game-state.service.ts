@@ -6,11 +6,6 @@ import { TurnService } from './turn.service';
 
 @Injectable()
 export class GameStateService extends BaseChannelService<GameState> {
-  private INITIAL_STATE: GameState = {
-    currentWord: undefined,
-    lettersUsed: [],
-    status: undefined,
-  };
 
   private currentState: GameState;
 
@@ -21,7 +16,7 @@ export class GameStateService extends BaseChannelService<GameState> {
     super();
   }
 
-  startGame() {
+  startGame(roomId: string) {
     this.getChannel$().pipe(
       tap((state) => this.currentState = state)
     ).subscribe();
@@ -44,8 +39,10 @@ export class GameStateService extends BaseChannelService<GameState> {
       })
     ).subscribe();
 
-    this.sendEvent(this.INITIAL_STATE);
-    this.turnService.start();
+    this.socketService.sendMessage<any>('get-state', roomId, resp => {
+      this.turnService.start();
+      this.sendEvent(resp.data);
+    });
   }
 
   finishGame(win: boolean) {
@@ -64,6 +61,8 @@ export class GameStateService extends BaseChannelService<GameState> {
 
 export interface GameState {
   currentWord: string;
-  lettersUsed: string[];
+  guesses: string[];
   status: string | 'lose' | undefined;
+  errors: number;
+  players: string[];
 }
