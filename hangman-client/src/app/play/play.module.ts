@@ -6,13 +6,10 @@ import { PlayScreenComponent } from './components/play-screen/play-screen.compon
 import { GameKeyboardComponent } from './components/game-keyboard/game-keyboard.component';
 import { HangmanComponent } from './components/hangman/hangman.component';
 import { GuessingWordComponent } from './components/guessing-word/guessing-word.component';
-import { HangmanService } from './components/hangman/hangman.service';
-import { LettersService } from './services/letters.service';
 import { ChooseWordComponent } from './components/choose-word/choose-word.component';
 import { FormsModule } from '@angular/forms';
 import { PlayersViewerComponent } from './components/players-viewer/players-viewer.component';
 import { GameStateService } from './services/game-state.service';
-import { TurnService } from './services/turn.service';
 import { WaitingTurnDirective } from './directives/waiting-turn.directive';
 
 
@@ -32,10 +29,7 @@ import { WaitingTurnDirective } from './directives/waiting-turn.directive';
     FormsModule
   ],
   providers: [
-    HangmanService,
-    LettersService,
-    GameStateService,
-    TurnService
+    GameStateService
   ]
 })
 export class PlayModule { }

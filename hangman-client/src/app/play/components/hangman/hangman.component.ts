@@ -1,10 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { HangmanService } from './hangman.service';
-import { filter, tap } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { tap } from 'rxjs/operators';
 import { GameStateService } from '../../services/game-state.service';
 import { BaseComponent } from '../../../core/base-objects/base-component';
-import { TurnService } from '../../services/turn.service';
 
 @Component({
   selector: 'hmo-hangman',
@@ -25,26 +22,25 @@ export class HangmanComponent extends BaseComponent implements OnInit {
   private numOfErrors = 0;
 
   constructor(
-    private hangmanService: HangmanService,
     private gameStateService: GameStateService,
-    private turnService: TurnService
   ) {
     super();
   }
 
   ngOnInit(): void {
     this.addSubscription(
-      this.hangmanService.getErrors$().pipe(
+      this.gameStateService.getErrors$().pipe(
         tap(() => this.addError())
       ).subscribe()
     );
 
     this.addSubscription(
-      this.gameStateService.getState$().pipe(
-        filter( state => state.status && state.status !== 'lose'),
-        tap( state => {
-          this.showWin = state.status;
-          this.itsMe = state.status === this.turnService.currentUser;
+      this.gameStateService.getStatus$().pipe(
+        tap(status => {
+          if (status && status !== 'lose') {
+            this.showWin = status;
+            this.itsMe = status === this.gameStateService.currentUser;
+          }
         })
       ).subscribe()
     );
@@ -59,7 +55,6 @@ export class HangmanComponent extends BaseComponent implements OnInit {
     // tslint:disable:no-switch-case-fall-through
     switch (error) {
       case HangmanError.SIXTH:
-        this.loseGame();
         this.sixthError = true;
       case HangmanError.FIFTH:
         this.fifthError = true;
@@ -72,10 +67,6 @@ export class HangmanComponent extends BaseComponent implements OnInit {
       case HangmanError.FIRST:
         this.firstError = true;
     }
-  }
-
-  loseGame() {
-    this.gameStateService.finishGame(false);
   }
 }
 

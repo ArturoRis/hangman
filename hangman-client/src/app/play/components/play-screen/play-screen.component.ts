@@ -33,9 +33,6 @@ export class PlayScreenComponent implements OnInit, OnDestroy {
         })
       ).subscribe()
     );
-
-    const roomId = this.route.snapshot.params.ID;
-    this.gameStateService.startGame(roomId);
   }
 
   ngOnDestroy(): void {

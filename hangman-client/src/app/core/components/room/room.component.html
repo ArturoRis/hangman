@@ -2,7 +2,7 @@
 <p>
   Giocatori:
   <ng-container *ngFor="let p of players;let last = last">
-    <span>{{p}}</span>{{last ? '': ', '}}
+    <span>{{p.name}}</span>{{last ? '': ', '}}
   </ng-container>
 </p>
 <p>

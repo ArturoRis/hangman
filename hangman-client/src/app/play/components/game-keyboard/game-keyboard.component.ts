@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { LettersService } from '../../services/letters.service';
 import { GameStateService } from '../../services/game-state.service';
 import { BaseComponent } from '../../../core/base-objects/base-component';
-import { filter, tap } from 'rxjs/operators';
+import { first, map, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'hmo-game-keyboard',
@@ -12,10 +12,10 @@ import { filter, tap } from 'rxjs/operators';
 export class GameKeyboardComponent extends BaseComponent implements OnInit {
 
   BUTTONS: GKButton[] = [];
-  hideGameKeyboard: boolean;
+  hideGameKeyboard: Observable<boolean>;
+  showGameKeyboard: Observable<boolean>;
 
   constructor(
-    private gameKeyboardService: LettersService,
     private gameStateService: GameStateService
   ) {
     super();
@@ -28,23 +28,30 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.hideGameKeyboard = this.gameStateService.getStatus$().pipe(
+      map((status) => !!status)
+    );
+
+    this.showGameKeyboard = this.gameStateService.getStatus$().pipe(
+      map((status) => !status)
+    );
+
     this.addSubscription(
-      this.gameStateService.getState$().pipe(
-        filter( state => !!state.status),
-        tap( () => this.hideGameKeyboard = true)
+      this.gameStateService.getNewGuess$().pipe(
+        tap(key => this.disableButton(key))
       ).subscribe()
     );
 
     this.addSubscription(
-      this.gameKeyboardService.getLetters$().pipe(
-        tap( key => this.disableButton(key))
+      this.gameStateService.getGuesses$().pipe(
+        first(),
+        tap(guesses => guesses.forEach(key => this.disableButton(key)))
       ).subscribe()
     );
   }
 
   buttonClicked(key: string) {
-    this.gameKeyboardService.sendLetter(key);
-    this.disableButton(key);
+    this.gameStateService.sendLetter(key);
   }
 
   disableButton(key: string) {
@@ -52,6 +59,10 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
     if (button) {
       button.isDisabled = true;
     }
+  }
+
+  restartGame() {
+    this.gameStateService.restartGame();
   }
 }
 

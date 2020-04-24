@@ -78,12 +78,18 @@ export class WebsocketGateway implements OnGatewayDisconnect {
     if (!finishState) {
       this.server.to(room.id).emit('new-turn', new SocketResponse(true, room.getNextTurn()))
     } else {
-      room.resetGame();
       this.server.to(room.id).emit('finish-game', new SocketResponse(true, {
         isWin: finishState === 'win',
         who: client.id
       }))
     }
+  }
+
+  @SubscribeMessage('restart-game')
+  restartGame(client: Socket) {
+    const room = this.usersConnected[client.id];
+    room.resetGame();
+    this.server.to(room.id).emit('restart-game', new SocketResponse(true, room));
   }
 
   handleDisconnect(client: Socket): any {

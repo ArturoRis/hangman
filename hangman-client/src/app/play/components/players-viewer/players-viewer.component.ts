@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { TurnService } from '../../services/turn.service';
 import { tap } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
-import { PlayersService } from '../../../core/services/players.service';
+import { Observable, Subscription } from 'rxjs';
+import { PlayerInfo, PlayersService } from '../../../core/services/players.service';
+import { GameStateService } from '../../services/game-state.service';
 
 @Component({
   selector: 'hmo-players-viewer',
@@ -12,29 +12,25 @@ import { PlayersService } from '../../../core/services/players.service';
 export class PlayersViewerComponent implements OnInit, OnDestroy {
   me: string;
   currentTurn: string;
-  players: string[];
+  players: Observable<PlayerInfo[]>;
 
   private sub: Subscription = new Subscription();
 
   constructor(
-    private turnService: TurnService,
-    private playersService: PlayersService
+    private playersService: PlayersService,
+    private gameStateService: GameStateService
   ) {
   }
 
   ngOnInit(): void {
-    this.me = this.turnService.currentUser;
+    this.me = this.gameStateService.currentUser;
     this.sub.add(
-      this.turnService.getCurrentTurn$().pipe(
+      this.gameStateService.getCurrentTurn$().pipe(
         tap(user => this.currentTurn = user)
       ).subscribe()
     );
 
-    this.sub.add(
-      this.playersService.getPlayers$().pipe(
-        tap( players => this.players = players)
-      ).subscribe()
-    );
+    this.players = this.playersService.getPlayers$();
   }
 
   ngOnDestroy(): void {

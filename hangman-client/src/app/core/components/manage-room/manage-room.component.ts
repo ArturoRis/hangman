@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SocketResponse, SocketService } from '../../services/socket.service';
 import { Router } from '@angular/router';
+import { PlayersService } from '../../services/players.service';
 
 @Component({
   selector: 'hmo-manage-room',
@@ -10,9 +11,11 @@ import { Router } from '@angular/router';
 export class ManageRoomComponent implements OnInit {
 
   roomId: string;
+  name: string;
 
   constructor(
     private socketService: SocketService,
+    private playersService: PlayersService,
     private router: Router
   ) {
   }
@@ -21,13 +24,15 @@ export class ManageRoomComponent implements OnInit {
   }
 
   createRoom() {
+    this.playersService.setName(this.name);
     this.socketService.sendMessage(
       'create-room',
-      undefined,
+      name,
       ({data}) => this.goToRoom(data));
   }
 
   joinRoom() {
+    this.playersService.setName(this.name);
     this.goToRoom(this.roomId);
   }
 

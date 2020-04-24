@@ -1,6 +1,9 @@
-<div hmoWaitingTurn *ngIf="!hideGameKeyboard">
+<div hmoWaitingTurn *ngIf="showGameKeyboard | async">
   <div>
     <button *ngFor="let button of BUTTONS" [disabled]="button.isDisabled"
             (click)="buttonClicked(button.key)">{{button.key}}</button>
   </div>
+</div>
+<div *ngIf="hideGameKeyboard | async">
+  <button (click)="restartGame()">Ricomincia</button>
 </div>

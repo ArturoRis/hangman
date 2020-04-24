@@ -2,12 +2,12 @@
   Giocatori:
 </p>
 <p class="players">
-  <ng-container *ngFor="let p of players">
-    <ng-container *ngIf="p === currentTurn; else elseBlock">
-      <strong>{{p}}{{p === me ? ' (Io)' : ''}}</strong>
+  <ng-container *ngFor="let p of (players | async)">
+    <ng-container *ngIf="p.id === currentTurn; else elseBlock">
+      <strong>{{p.name}}{{p.id === me ? ' (Io)' : ''}}</strong>
     </ng-container>
     <ng-template #elseBlock>
-      <span>{{p}}{{p === me ? ' (Io)' : ''}}</span>
+      <span>{{p.name}}{{p.id === me ? ' (Io)' : ''}}</span>
     </ng-template>
   </ng-container>
 </p>

@@ -1,15 +1,11 @@
 <hmo-players-viewer></hmo-players-viewer>
 
-<ng-container [ngSwitch]="status">
+<ng-container *ngIf="status === Status.CHOOSE_WORD">
+  <hmo-choose-word></hmo-choose-word>
+</ng-container>
 
-  <ng-container *ngSwitchCase="Status.CHOOSE_WORD">
-    <hmo-choose-word></hmo-choose-word>
-  </ng-container>
-
-  <ng-container *ngSwitchCase="Status.PLAY">
-    <hmo-hangman></hmo-hangman>
-    <hmo-guessing-word></hmo-guessing-word>
-    <hmo-game-keyboard></hmo-game-keyboard>
-  </ng-container>
-
+<ng-container *ngIf="status === Status.PLAY">
+  <hmo-hangman></hmo-hangman>
+  <hmo-guessing-word></hmo-guessing-word>
+  <hmo-game-keyboard></hmo-game-keyboard>
 </ng-container>
