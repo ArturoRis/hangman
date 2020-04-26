@@ -9,6 +9,7 @@ import { SocketService } from './services/socket.service';
 import { ManageRoomComponent } from './components/manage-room/manage-room.component';
 import { PlayerInfoService } from './services/player-info.service';
 import { LeaveRoomGuard } from './services/leave-room.guard';
+import { UiKitModule } from '../ui-kit/ui-kit.module';
 
 
 @NgModule({
@@ -25,6 +26,7 @@ import { LeaveRoomGuard } from './services/leave-room.guard';
     CommonModule,
     FormsModule,
     CoreRoutingModule,
+    UiKitModule
   ],
   providers: [
     SocketService,
