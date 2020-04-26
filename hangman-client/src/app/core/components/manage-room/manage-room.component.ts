@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { SocketResponse, SocketService } from '../../services/socket.service';
+import { SocketService } from '../../services/socket.service';
 import { Router } from '@angular/router';
-import { PlayersService } from '../../services/players.service';
+import { PlayerInfoService } from '../../services/player-info.service';
 
 @Component({
   selector: 'hmo-manage-room',
@@ -15,28 +15,28 @@ export class ManageRoomComponent implements OnInit {
 
   constructor(
     private socketService: SocketService,
-    private playersService: PlayersService,
-    private router: Router
+    private router: Router,
+    private playerInfoService: PlayerInfoService
   ) {
   }
 
   ngOnInit(): void {
+    this.name = this.playerInfoService.getName();
   }
 
   createRoom() {
-    this.playersService.setName(this.name);
     this.socketService.sendMessage(
       'create-room',
-      name,
+      this.name,
       ({data}) => this.goToRoom(data));
   }
 
   joinRoom() {
-    this.playersService.setName(this.name);
     this.goToRoom(this.roomId);
   }
 
   goToRoom(roomId) {
-    this.router.navigate(['room', roomId]);
+    this.playerInfoService.setName(this.name);
+    this.router.navigate(['game', roomId]);
   }
 }

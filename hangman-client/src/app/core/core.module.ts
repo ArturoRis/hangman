@@ -7,8 +7,8 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { FormsModule } from '@angular/forms';
 import { SocketService } from './services/socket.service';
 import { ManageRoomComponent } from './components/manage-room/manage-room.component';
-import { RoomComponent } from './components/room/room.component';
-import { PlayersService } from './services/players.service';
+import { PlayerInfoService } from './services/player-info.service';
+import { LeaveRoomGuard } from './services/leave-room.guard';
 
 
 @NgModule({
@@ -16,8 +16,7 @@ import { PlayersService } from './services/players.service';
     PageComponent,
     MenuComponent,
     WelcomeComponent,
-    ManageRoomComponent,
-    RoomComponent
+    ManageRoomComponent
   ],
   exports: [
     PageComponent
@@ -29,7 +28,8 @@ import { PlayersService } from './services/players.service';
   ],
   providers: [
     SocketService,
-    PlayersService
+    PlayerInfoService,
+    LeaveRoomGuard
   ]
 })
 export class CoreModule { }

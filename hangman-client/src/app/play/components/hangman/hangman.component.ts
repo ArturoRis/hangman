@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { GameStateService } from '../../services/game-state.service';
 import { BaseComponent } from '../../../core/base-objects/base-component';
+import { PlayerInfoService } from '../../../core/services/player-info.service';
 
 @Component({
   selector: 'hmo-hangman',
@@ -23,6 +24,7 @@ export class HangmanComponent extends BaseComponent implements OnInit {
 
   constructor(
     private gameStateService: GameStateService,
+    private playerInfoService: PlayerInfoService
   ) {
     super();
   }
@@ -30,7 +32,7 @@ export class HangmanComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.addSubscription(
       this.gameStateService.getErrors$().pipe(
-        tap(() => this.addError())
+        tap((error) => this.setError(error))
       ).subscribe()
     );
 
@@ -38,16 +40,19 @@ export class HangmanComponent extends BaseComponent implements OnInit {
       this.gameStateService.getStatus$().pipe(
         tap(status => {
           if (status && status !== 'lose') {
-            this.showWin = status;
-            this.itsMe = status === this.gameStateService.currentUser;
+            this.showWin = this.gameStateService.state.players.find( p => p.id === status).name;
+            this.itsMe = status === this.playerInfoService.getId();
+          } else {
+            this.showWin = undefined;
+            this.itsMe = undefined;
           }
         })
       ).subscribe()
     );
   }
 
-  addError() {
-    this.numOfErrors += 1;
+  setError(error: number) {
+    this.numOfErrors = error;
     this.showError(this.numOfErrors);
   }
 

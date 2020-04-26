@@ -11,6 +11,8 @@ import { FormsModule } from '@angular/forms';
 import { PlayersViewerComponent } from './components/players-viewer/players-viewer.component';
 import { GameStateService } from './services/game-state.service';
 import { WaitingTurnDirective } from './directives/waiting-turn.directive';
+import { RoomComponent } from './components/room/room.component';
+import { RoomGuard } from './services/room.guard';
 
 
 @NgModule({
@@ -21,7 +23,8 @@ import { WaitingTurnDirective } from './directives/waiting-turn.directive';
     GuessingWordComponent,
     ChooseWordComponent,
     PlayersViewerComponent,
-    WaitingTurnDirective
+    WaitingTurnDirective,
+    RoomComponent
   ],
   imports: [
     CommonModule,
@@ -29,7 +32,8 @@ import { WaitingTurnDirective } from './directives/waiting-turn.directive';
     FormsModule
   ],
   providers: [
-    GameStateService
+    GameStateService,
+    RoomGuard
   ]
 })
 export class PlayModule { }

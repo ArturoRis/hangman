@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { GameStateService } from '../../services/game-state.service';
 import { tap } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'hmo-play-screen',
@@ -17,15 +16,14 @@ export class PlayScreenComponent implements OnInit, OnDestroy {
 
   constructor(
     private gameStateService: GameStateService,
-    private route: ActivatedRoute
   ) {
   }
 
   ngOnInit(): void {
     this.sub.add(
-      this.gameStateService.getState$().pipe(
-        tap(state => {
-          if (!state.currentWord) {
+      this.gameStateService.getWord$().pipe(
+        tap(word => {
+          if (!word || !word.length) {
             this.status = Status.CHOOSE_WORD;
           } else {
             this.status = Status.PLAY;

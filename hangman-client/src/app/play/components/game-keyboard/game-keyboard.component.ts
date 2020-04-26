@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { GameStateService } from '../../services/game-state.service';
 import { BaseComponent } from '../../../core/base-objects/base-component';
-import { first, map, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { filter, first, map, tap, withLatestFrom } from 'rxjs/operators';
+import { combineLatest, Observable } from 'rxjs';
+import { PlayerInfoService } from '../../../core/services/player-info.service';
 
 @Component({
   selector: 'hmo-game-keyboard',
@@ -12,11 +13,12 @@ import { Observable } from 'rxjs';
 export class GameKeyboardComponent extends BaseComponent implements OnInit {
 
   BUTTONS: GKButton[] = [];
-  hideGameKeyboard: Observable<boolean>;
+  showRestart: Observable<boolean>;
   showGameKeyboard: Observable<boolean>;
 
   constructor(
-    private gameStateService: GameStateService
+    private gameStateService: GameStateService,
+    private playerInfoService: PlayerInfoService
   ) {
     super();
     for (let c = 65; c < 91; c++) {
@@ -28,24 +30,29 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.hideGameKeyboard = this.gameStateService.getStatus$().pipe(
-      map((status) => !!status)
-    );
 
     this.showGameKeyboard = this.gameStateService.getStatus$().pipe(
       map((status) => !status)
     );
 
+    this.showRestart = combineLatest([
+      this.showGameKeyboard,
+      this.gameStateService.getMaster$()
+    ]).pipe(
+      map(([showGameKeyboard, master]) => !showGameKeyboard && this.playerInfoService.getId() === master)
+    );
+
     this.addSubscription(
       this.gameStateService.getNewGuess$().pipe(
-        tap(key => this.disableButton(key))
+        filter(guess => !!guess),
+        tap(({letter}) => this.disableButton(letter))
       ).subscribe()
     );
 
     this.addSubscription(
       this.gameStateService.getGuesses$().pipe(
         first(),
-        tap(guesses => guesses.forEach(key => this.disableButton(key)))
+        tap(guesses => guesses.forEach(key => this.disableButton(key.letter)))
       ).subscribe()
     );
   }

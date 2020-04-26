@@ -1,0 +1,5 @@
+<p>Sei nella stanza: {{roomId | async}}</p>
+<hmo-players-viewer></hmo-players-viewer>
+<p>
+  <button *ngIf="amIMaster | async" (click)="startGame()">Inizia</button>
+</p>

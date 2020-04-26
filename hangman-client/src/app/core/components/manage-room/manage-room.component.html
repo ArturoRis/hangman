@@ -4,11 +4,11 @@
   <input type="text" [(ngModel)]="name" required>
 </p>
 <p>
-  <button (click)="createRoom()">Crea stanza</button>
+  <button (click)="createRoom()" [disabled]="!name">Crea stanza</button>
 </p>
 <p>
   <label>Id stanza
     <input type="text" [(ngModel)]="roomId">
   </label>
-  <button (click)="joinRoom()">Unisciti</button>
+  <button (click)="joinRoom()" [disabled]="!name">Unisciti</button>
 </p>

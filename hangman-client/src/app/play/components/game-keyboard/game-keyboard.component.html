@@ -4,6 +4,6 @@
             (click)="buttonClicked(button.key)">{{button.key}}</button>
   </div>
 </div>
-<div *ngIf="hideGameKeyboard | async">
+<div *ngIf="showRestart | async">
   <button (click)="restartGame()">Ricomincia</button>
 </div>
