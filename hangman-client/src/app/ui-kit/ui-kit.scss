@@ -1,0 +1,47 @@
+/* HEX */
+$primary: #41e2baff;
+$secondary: #f7e733ff;
+$bkg-primary: #f4e8c1ff;
+$bkg-secondary: #f7f7f9ff;
+$active1: #2b2d42ff;
+$active2: #083d77ff;
+
+/* GRADIENT */
+$gradient-top: linear-gradient(0deg, #2b2d42ff, #083d77ff, #41e2baff, #f7e733ff, #f4e8c1ff, #f7f7f9ff);
+$gradient-right: linear-gradient(90deg, #2b2d42ff, #083d77ff, #41e2baff, #f7e733ff, #f4e8c1ff, #f7f7f9ff);
+$gradient-bottom: linear-gradient(180deg, #2b2d42ff, #083d77ff, #41e2baff, #f7e733ff, #f4e8c1ff, #f7f7f9ff);
+$gradient-left: linear-gradient(270deg, #2b2d42ff, #083d77ff, #41e2baff, #f7e733ff, #f4e8c1ff, #f7f7f9ff);
+$gradient-top-right: linear-gradient(45deg, #2b2d42ff, #083d77ff, #41e2baff, #f7e733ff, #f4e8c1ff, #f7f7f9ff);
+$gradient-bottom-right: linear-gradient(135deg, #2b2d42ff, #083d77ff, #41e2baff, #f7e733ff, #f4e8c1ff, #f7f7f9ff);
+$gradient-top-left: linear-gradient(225deg, #2b2d42ff, #083d77ff, #41e2baff, #f7e733ff, #f4e8c1ff, #f7f7f9ff);
+$gradient-bottom-left: linear-gradient(315deg, #2b2d42ff, #083d77ff, #41e2baff, #f7e733ff, #f4e8c1ff, #f7f7f9ff);
+$gradient-radial: radial-gradient(#2b2d42ff, #083d77ff, #41e2baff, #f7e733ff, #f4e8c1ff, #f7f7f9ff);
+
+@tailwind base;
+
+input {
+  @apply border rounded px-3 py-1 w-auto;
+}
+
+button {
+  @apply px-3 py-1 rounded bg-primary;
+}
+
+button:hover {
+  @apply shadow-md;
+}
+
+body {
+  color: $active1;
+  @apply h-screen;
+}
+
+label {
+  @apply flex flex-col;
+}
+
+@tailwind components;
+
+@tailwind utilities;
+
+
