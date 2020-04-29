@@ -31,12 +31,26 @@ button:hover {
   @apply shadow-md;
 }
 
-body {
-  color: $active1;
-  @apply h-screen;
+.stack {
+  input {
+    @apply rounded-b-none w-full border-b-0;
+  }
+
+  button {
+    @apply rounded-t-none w-full;
+  }
 }
 
-label {
+hr {
+  height: .2rem;
+  @apply bg-gray-600 rounded-full my-2;
+}
+
+body {
+  @apply h-screen text-active1;
+}
+
+.input-group {
   @apply flex flex-col;
 }
 

@@ -1,20 +1,23 @@
 <div hmoUiTitle>Crea o unisciti ad una stanza</div>
-<div class="block">
-  <label class="w-full sm:w-2/3 md:w-1/3 lg:w-1/4">
-    Inserisci il tuo nome:
-    <input type="text" [(ngModel)]="name" required>
-  </label>
-</div>
-<div class="flex justify-around items-center block">
-  <div class="w-5/12">
-    <button (click)="createRoom()" [disabled]="!name">Crea stanza</button>
-  </div>
-  <div class="w-2/12">O</div>
-  <div class="w-5/12">
-    <label>
-      Id stanza
-      <input type="text" [(ngModel)]="roomId">
+<div class="block mb-1">
+  <div class="input-group w-full sm:w-2/3 md:w-1/3 lg:w-1/4">
+    <label for="name">
+      Inserisci il tuo nome:
     </label>
-    <button (click)="joinRoom()" [disabled]="!name">Unisciti</button>
+    <input id="name" type="text" [(ngModel)]="name" required>
+  </div>
+</div>
+<hr>
+<div class="flex flex-col space-y-2 md:space-y-0 md:flex-row justify-center items-center block">
+  <div class="w-4/5 md:w-4/12 text-center">
+    <button class="w-full" (click)="createRoom()" [disabled]="!name">Crea stanza</button>
+  </div>
+  <div class="w-4/5 md:w-2/12 text-center">oppure</div>
+  <div class="w-4/5 md:w-4/12">
+    <div class="input-group stack text-center">
+      <label for="roomId" class="sr-only">Id stanza</label>
+      <input id="roomId" type="text" placeholder="Id stanza" [(ngModel)]="roomId">
+      <button (click)="joinRoom()" [disabled]="!name">Unisciti</button>
+    </div>
   </div>
 </div>

@@ -6,6 +6,6 @@ import { Directive, HostBinding } from '@angular/core';
 export class UiContainerDirective {
 
   @HostBinding('class')
-  classes = 'py-4 px-2 flex bg-bkg-secondary h-full';
+  classes = 'py-4 px-3 flex bg-bkg-secondary h-full';
 
 }
