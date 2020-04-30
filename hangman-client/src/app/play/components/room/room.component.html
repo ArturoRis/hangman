@@ -1,4 +1,4 @@
-<p>Sei nella stanza: {{roomId | async}}</p>
+<div hmoUiTitle>Stanza: <span class="underline text-active2 cursor-pointer" title="Ottieni link" (click)="getLink()">{{roomId | async}}</span></div>
 <hmo-players-viewer></hmo-players-viewer>
 <p>
   <button *ngIf="amIMaster | async" (click)="startGame()">Inizia</button>

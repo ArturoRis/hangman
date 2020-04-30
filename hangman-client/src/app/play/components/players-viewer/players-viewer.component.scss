@@ -1,10 +1,17 @@
-.players {
-  .player {
-    padding: .2em;
-    border: 1px solid orange;
+.master {
+  padding-left: 2rem;
 
-    &.master {
-      color: red;
-    }
+  &::before {
+    content: "M";
+    position: absolute;
+    top: 0.15rem;
+    left: -0.9rem;
+    transform: rotate(-51deg);
+    background: #f7e733ff;
+    text-align: center;
+    width: 3.3rem;
+    font-size: smaller;
+    font-weight: bolder;
+    padding-top: .2em;
   }
 }

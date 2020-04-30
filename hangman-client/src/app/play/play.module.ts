@@ -13,6 +13,7 @@ import { GameStateService } from './services/game-state.service';
 import { WaitingTurnDirective } from './directives/waiting-turn.directive';
 import { RoomComponent } from './components/room/room.component';
 import { RoomGuard } from './services/room.guard';
+import { UiKitModule } from '../ui-kit/ui-kit.module';
 
 
 @NgModule({
@@ -29,7 +30,8 @@ import { RoomGuard } from './services/room.guard';
   imports: [
     CommonModule,
     PlayRoutingModule,
-    FormsModule
+    FormsModule,
+    UiKitModule
   ],
   providers: [
     GameStateService,

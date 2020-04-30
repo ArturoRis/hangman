@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { tap } from 'rxjs/operators';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
 
 import { GameStateService, PlayerInfo } from '../../services/game-state.service';
 import { PlayerInfoService } from '../../../core/services/player-info.service';

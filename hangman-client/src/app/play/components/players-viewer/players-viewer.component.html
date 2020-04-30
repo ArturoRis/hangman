@@ -1,14 +1,10 @@
-<p>
-  Giocatori:
-</p>
-<p class="players">
-  <span class="player" [class.master]="p.id === master" *ngFor="let p of (players | async)">
-    <ng-container *ngIf="p.id === currentTurn; else elseBlock">
-      <strong>{{p.name}}{{p.id === me ? ' (Io)' : ''}}</strong>
-    </ng-container>
-    <ng-template #elseBlock>
-      <span>{{p.name}}{{p.id === me ? ' (Io)' : ''}}</span>
-    </ng-template>
-    - Punti: {{p.points}}
-  </span>
-</p>
+<div class="sm:flex items-center py-2">
+  <div class="text-2xl mr-2">Giocatori</div>
+  <div class="flex flex-wrap">
+    <span [class.border-primary]="p.id === me" [class.border-active2]="p.id !== me" class="border-2 rounded-full px-3 py-2 m-2 relative overflow-hidden flex flex-col"
+          [class.master]="p.id === master" *ngFor="let p of (players | async)">
+        <span>{{p.name}} - {{p.points}}</span>
+        <span class="rounded-full h-1 bg-active2 w-full" [class.invisible]="p.id !== currentTurn"></span>
+    </span>
+  </div>
+</div>
