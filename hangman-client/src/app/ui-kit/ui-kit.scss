@@ -54,6 +54,23 @@ body {
   @apply flex flex-col;
 }
 
+.tooltip {
+  @apply relative underline text-active2 cursor-pointer;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+  @apply invisible text-white text-sm text-center p-2 rounded absolute z-10 block;
+  top: -100%;
+  left: 0;
+  margin: 0 auto;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.tooltip:hover .tooltiptext {
+  @apply visible;
+}
+
 @tailwind components;
 
 @tailwind utilities;
