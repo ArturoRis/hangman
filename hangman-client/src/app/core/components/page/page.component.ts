@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
+import { BaseComponent } from '../../base-objects/base-component';
 
 @Component({
   selector: 'hmo-page',
   templateUrl: './page.component.html',
   styleUrls: ['./page.component.scss']
 })
-export class PageComponent implements OnInit {
+export class PageComponent extends BaseComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+    super();
+  }
 
   ngOnInit(): void {
   }

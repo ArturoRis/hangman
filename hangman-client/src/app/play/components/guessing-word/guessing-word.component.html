@@ -1,11 +1,8 @@
-<div>
-  <p>La parola da indovinare è:</p>
-  <div class="m-4">
+<div class="m-4 text-center">
     <span class="letter"
           *ngFor="let letterInfo of (lettersInfo | async)">
      <ng-container
        *ngIf="letterInfo.letter; else whiteSpaceTemplate">{{letterInfo.isGuessed ? letterInfo.letter : '_'}}</ng-container>
       <ng-template #whiteSpaceTemplate>&nbsp;</ng-template>
     </span>
-  </div>
 </div>

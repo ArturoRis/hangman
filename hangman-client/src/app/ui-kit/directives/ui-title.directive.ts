@@ -6,6 +6,6 @@ import { Directive, HostBinding } from '@angular/core';
 export class UiTitleDirective {
 
   @HostBinding('class')
-  classes = 'text-3xl py-2 block';
+  classes = 'text-3xl py-2 block text-center lg:text-left';
 
 }

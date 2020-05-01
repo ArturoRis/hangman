@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GameStateService } from '../../services/game-state.service';
 import { BaseComponent } from '../../../core/base-objects/base-component';
-import { filter, first, map, tap, withLatestFrom } from 'rxjs/operators';
+import { filter, first, map, tap } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
 import { PlayerInfoService } from '../../../core/services/player-info.service';
 
