@@ -2,11 +2,10 @@ import * as io from 'socket.io-client';
 import { ReplaySubject } from 'rxjs';
 
 export class SocketService {
-  private url = 'http://localhost:3000';
   private socket;
 
   constructor() {
-    this.socket = io(this.url);
+    this.socket = io(location.protocol + '//' + location.hostname + ':' + 3000);
   }
 
   sendMessage<R = string>(type: string, payload: any, callback?: (response: SocketResponse<R>) => void) {

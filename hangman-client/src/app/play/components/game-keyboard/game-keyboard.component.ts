@@ -76,7 +76,7 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
 
     this.addSubscription(
       this.gameStateService.getWord$().pipe(
-        tap(letters => this.guessingWord = letters.map(l => l.letter).join(''))
+        tap(letters => this.guessingWord = letters.map(l => l.letter || ' ').join(''))
       ).subscribe()
     );
   }

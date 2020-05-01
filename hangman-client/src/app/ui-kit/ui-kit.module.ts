@@ -5,6 +5,7 @@ import { UiLogoComponent } from './components/ui-logo/ui-logo.component';
 import { RouterModule } from '@angular/router';
 import { UiContainerDirective } from './directives/ui-container.directive';
 import { UiTitleDirective } from './directives/ui-title.directive';
+import { UiAnimatedRouterOutletComponent } from './components/ui-animated-router-outlet/ui-animated-router-outlet.component';
 
 
 @NgModule({
@@ -13,6 +14,7 @@ import { UiTitleDirective } from './directives/ui-title.directive';
     UiLogoComponent,
     UiContainerDirective,
     UiTitleDirective,
+    UiAnimatedRouterOutletComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +24,8 @@ import { UiTitleDirective } from './directives/ui-title.directive';
     UiMenuComponent,
     UiLogoComponent,
     UiContainerDirective,
-    UiTitleDirective
+    UiTitleDirective,
+    UiAnimatedRouterOutletComponent
   ]
 })
 export class UiKitModule {

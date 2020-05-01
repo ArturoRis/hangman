@@ -18,13 +18,11 @@ export class HangmanComponent extends BaseComponent implements OnInit {
   fifthError = false;
   sixthError = false;
   showWin: string;
-  itsMe: boolean;
 
   private numOfErrors = 0;
 
   constructor(
-    private gameStateService: GameStateService,
-    private playerInfoService: PlayerInfoService
+    private gameStateService: GameStateService
   ) {
     super();
   }
@@ -33,6 +31,18 @@ export class HangmanComponent extends BaseComponent implements OnInit {
     this.addSubscription(
       this.gameStateService.getErrors$().pipe(
         tap((error) => this.setError(error))
+      ).subscribe()
+    );
+
+    this.addSubscription(
+      this.gameStateService.getStatus$().pipe(
+        tap(status => {
+          if (status && status !== 'lose') {
+            this.showWin = this.gameStateService.state.players.find( p => p.id === status).name;
+          } else {
+            this.showWin = undefined;
+          }
+        })
       ).subscribe()
     );
   }
