@@ -14,6 +14,7 @@ import { WaitingTurnDirective } from './directives/waiting-turn.directive';
 import { RoomComponent } from './components/room/room.component';
 import { RoomGuard } from './services/room.guard';
 import { UiKitModule } from '../ui-kit/ui-kit.module';
+import { RoomTitleComponent } from './components/room-title/room-title.component';
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import { UiKitModule } from '../ui-kit/ui-kit.module';
     ChooseWordComponent,
     PlayersViewerComponent,
     WaitingTurnDirective,
-    RoomComponent
+    RoomComponent,
+    RoomTitleComponent
   ],
   imports: [
     CommonModule,

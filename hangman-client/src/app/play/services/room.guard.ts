@@ -38,7 +38,7 @@ export class RoomGuard implements CanActivate, CanActivateChild {
   canActivateChild(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> {
-    return this.canActivate(next, state);
+    return this.canActivate(next.parent, state);
   }
 
 

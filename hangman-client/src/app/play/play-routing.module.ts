@@ -4,11 +4,14 @@ import { PlayScreenComponent } from './components/play-screen/play-screen.compon
 import { RoomComponent } from './components/room/room.component';
 import { RoomGuard } from './services/room.guard';
 import { LeaveRoomGuard } from '../core/services/leave-room.guard';
+import { RoomTitleComponent } from './components/room-title/room-title.component';
 
 
 const routes: Routes = [
   {
-    path: ':ID', children: [
+    path: ':ID',
+    component: RoomTitleComponent,
+    children: [
       {
         path: '', component: RoomComponent
       },
@@ -17,6 +20,7 @@ const routes: Routes = [
       }
     ],
     canActivateChild: [RoomGuard],
+    canActivate: [RoomGuard],
     canDeactivate: [LeaveRoomGuard]
   }
 ];

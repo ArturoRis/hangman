@@ -1,5 +1,3 @@
-<div hmoUiTitle>Stanza: <span class="tooltip" (click)="getLink()">{{roomId | async}}<span class="tooltiptext">{{tooltiptext}}</span></span></div>
-<hmo-players-viewer></hmo-players-viewer>
-<p>
+<div class="pt-2">
   <button *ngIf="amIMaster | async" (click)="startGame()">Inizia</button>
-</p>
+</div>
