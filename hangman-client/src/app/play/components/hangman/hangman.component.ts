@@ -35,20 +35,6 @@ export class HangmanComponent extends BaseComponent implements OnInit {
         tap((error) => this.setError(error))
       ).subscribe()
     );
-
-    this.addSubscription(
-      this.gameStateService.getStatus$().pipe(
-        tap(status => {
-          if (status && status !== 'lose') {
-            this.showWin = this.gameStateService.state.players.find( p => p.id === status).name;
-            this.itsMe = status === this.playerInfoService.getId();
-          } else {
-            this.showWin = undefined;
-            this.itsMe = undefined;
-          }
-        })
-      ).subscribe()
-    );
   }
 
   setError(error: number) {

@@ -5,6 +5,14 @@
       (click)="buttonClicked(button.key)">{{button.key}}</button>
   </div>
 </div>
-<div *ngIf="showRestart | async">
+<div class="my-2 text-xl text-center" *ngIf="showWin !== undefined">
+  <div class="" *ngIf="showWin">
+    Complimenti {{itsMe ? 'hai vinto' : 'a ' + showWin}}!
+  </div>
+  <div *ngIf="!showWin">
+    Hai perso, la parola era: "{{guessingWord}}"
+  </div>
+</div>
+<div class="text-center" *ngIf="showRestart | async">
   <button (click)="restartGame()">Ricomincia</button>
 </div>

@@ -15,6 +15,9 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
   BUTTONS: GKButton[] = [];
   showRestart: Observable<boolean>;
   showGameKeyboard: Observable<boolean>;
+  showWin: string | boolean;
+  itsMe: boolean;
+  guessingWord: string;
 
   constructor(
     private gameStateService: GameStateService,
@@ -53,6 +56,27 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
       this.gameStateService.getGuesses$().pipe(
         first(),
         tap(guesses => guesses.forEach(key => this.disableButton(key.letter)))
+      ).subscribe()
+    );
+
+    this.addSubscription(
+      this.gameStateService.getStatus$().pipe(
+        tap(status => {
+          this.itsMe = undefined;
+          this.showWin = undefined;
+          if (status && status !== 'lose') {
+            this.showWin = this.gameStateService.state.players.find(p => p.id === status).name;
+            this.itsMe = status === this.playerInfoService.getId();
+          } else if (status === 'lose') {
+            this.showWin = false;
+          }
+        })
+      ).subscribe()
+    );
+
+    this.addSubscription(
+      this.gameStateService.getWord$().pipe(
+        tap(letters => this.guessingWord = letters.map(l => l.letter).join(''))
       ).subscribe()
     );
   }
