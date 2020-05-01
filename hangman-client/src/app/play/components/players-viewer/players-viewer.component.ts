@@ -35,7 +35,7 @@ export class PlayersViewerComponent extends BaseComponent implements OnInit, OnD
 
     this.addSubscription(
       this.gameStateService.getMaster$().pipe(
-        tap( master => this.master = master)
+        tap(master => this.master = master)
       ).subscribe()
     );
 

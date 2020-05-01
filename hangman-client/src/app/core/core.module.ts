@@ -34,4 +34,5 @@ import { UiKitModule } from '../ui-kit/ui-kit.module';
     LeaveRoomGuard
   ]
 })
-export class CoreModule { }
+export class CoreModule {
+}

@@ -57,9 +57,9 @@ export class WebsocketGateway implements OnGatewayDisconnect {
 
       if (room.players.length) {
 
-      if (player.id === room.currentTurn) {
-        this.server.to(room.id).emit('new-turn', new SocketResponse(true, room.updateNextTurn()));
-      }
+        if (player.id === room.currentTurn) {
+          this.server.to(room.id).emit('new-turn', new SocketResponse(true, room.updateNextTurn()));
+        }
       } else {
         this.rooms.delete(room.id);
       }
@@ -231,7 +231,7 @@ class Room {
   }
 
   updateNextTurn() {
-    if(this.players.length !== 1) {
+    if (this.players.length !== 1) {
       if (!this.currentTurn) {
         this.currentTurn = this.players[0].id;
       } else {
@@ -279,7 +279,7 @@ class Room {
     if (this.currentWord.every(l => l.isGuessed)) {
       this.status = this.currentTurn;
 
-      this.players.find( p => p.id === this.currentTurn).points += 1;
+      this.players.find(p => p.id === this.currentTurn).points += 1;
     }
 
     if (this.errors > 5) {

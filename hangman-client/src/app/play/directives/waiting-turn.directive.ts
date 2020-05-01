@@ -21,7 +21,7 @@ export class WaitingTurnDirective extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.addSubscription(
       this.gameStateService.getCurrentTurn$().pipe(
-        tap( turn => {
+        tap(turn => {
           if (this.playerInfoService.getId() !== turn) {
             this.renderer.setAttribute(this.elRef.nativeElement, 'hidden', 'true');
           } else {

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { GameStateService } from '../../services/game-state.service';
 import { BaseComponent } from '../../../core/base-objects/base-component';
-import { PlayerInfoService } from '../../../core/services/player-info.service';
 
 @Component({
   selector: 'hmo-hangman',
@@ -38,7 +37,7 @@ export class HangmanComponent extends BaseComponent implements OnInit {
       this.gameStateService.getStatus$().pipe(
         tap(status => {
           if (status && status !== 'lose') {
-            this.showWin = this.gameStateService.state.players.find( p => p.id === status).name;
+            this.showWin = this.gameStateService.state.players.find(p => p.id === status).name;
           } else {
             this.showWin = undefined;
           }

@@ -1,8 +1,8 @@
 <div hmoWaitingTurn *ngIf="showGameKeyboard | async">
   <div class="flex flex-wrap justify-around md:mx-auto md:w-10/12">
     <button class="m-2 py-4 md:py-3 md:m-2 w-1/4 sm:w-1/6 md:w-1/12"
-      *ngFor="let button of BUTTONS" [disabled]="button.isDisabled"
-      (click)="buttonClicked(button.key)">{{button.key}}</button>
+            *ngFor="let button of BUTTONS" [disabled]="button.isDisabled"
+            (click)="buttonClicked(button.key)">{{button.key}}</button>
   </div>
 </div>
 <div class="my-2 text-xl text-center" *ngIf="showWin !== undefined">

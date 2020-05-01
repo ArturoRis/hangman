@@ -40,4 +40,5 @@ import { RoomTitleComponent } from './components/room-title/room-title.component
     RoomGuard
   ]
 })
-export class PlayModule { }
+export class PlayModule {
+}
