@@ -1,0 +1,18 @@
+span {
+  opacity: 0;
+
+  &.visible {
+    opacity: 1;
+  }
+
+  &:not(:last-child) {
+    margin-right: .3em;
+  }
+}
+
+svg {
+  fill: none;
+  stroke: #2b2d42ff;
+  stroke-width: 5;
+  stroke-miterlimit: 10;
+}

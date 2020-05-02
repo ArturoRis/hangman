@@ -1,0 +1,13 @@
+<div class="space-y-2">
+  <div>Scrivi la parola che gli altri dovranno indovinare</div>
+  <div>
+    <form>
+      <label hidden for="word">Parola da indovinare</label>
+      <input class="rounded-r-none" id="word" type="text" [(ngModel)]="word" required pattern="[a-zA-Z]+( [a-zA-Z]+)*"
+             #wordModel="ngModel" name="word"/>
+      <button type="submit" class="rounded-l-none border border-primary" (click)="chooseWord()"
+              [disabled]="wordModel.invalid">Ok
+      </button>
+    </form>
+  </div>
+</div>

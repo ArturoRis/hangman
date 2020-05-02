@@ -1,0 +1,33 @@
+.player {
+  @apply border-2 rounded-full px-3 py-2 m-2 overflow-hidden flex flex-col relative;
+
+  &.master {
+    @apply pl-8;
+
+    &::before {
+      @apply bg-secondary;
+      content: "M";
+      position: absolute;
+      top: 0.15rem;
+      left: -0.9rem;
+      transform: rotate(-51deg);
+      text-align: center;
+      width: 3.3rem;
+      font-size: smaller;
+      font-weight: bolder;
+      padding-top: .2em;
+    }
+  }
+
+  .name.current-turn {
+    position: relative;
+
+    &::after {
+      content: '';
+      @apply rounded-full h-1 bg-active2 w-full;
+      position: absolute;
+      top: 100%;
+      left: 0;
+    }
+  }
+}

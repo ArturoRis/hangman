@@ -1,0 +1,9 @@
+<div class="sm:flex items-center py-2">
+  <div class="text-2xl mr-2">Giocatori</div>
+  <div class="flex flex-wrap">
+    <span [class.border-primary]="p.id === me" [class.border-active2]="p.id !== me" class="player"
+          [class.master]="p.id === master" *ngFor="let p of (players | async)">
+        <span class="name" [class.current-turn]="p.id === currentTurn">{{p.name}} - {{p.points}}</span>
+    </span>
+  </div>
+</div>
