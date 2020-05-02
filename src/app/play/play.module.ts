@@ -15,6 +15,7 @@ import { RoomComponent } from './components/room/room.component';
 import { RoomGuard } from './services/room.guard';
 import { UiKitModule } from '../ui-kit/ui-kit.module';
 import { RoomTitleComponent } from './components/room-title/room-title.component';
+import { TryToGuessComponent } from './components/try-to-guess/try-to-guess.component';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { RoomTitleComponent } from './components/room-title/room-title.component
     PlayersViewerComponent,
     WaitingTurnDirective,
     RoomComponent,
-    RoomTitleComponent
+    RoomTitleComponent,
+    TryToGuessComponent
   ],
   imports: [
     CommonModule,

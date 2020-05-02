@@ -1,8 +1,9 @@
-import { distinctUntilChanged, pluck, tap } from 'rxjs/operators';
+import { distinctUntilChanged, map, pluck, tap } from 'rxjs/operators';
 import { SocketService } from '../../core/services/socket.service';
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Observable, Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { PlayerInfoService } from '../../core/services/player-info.service';
 
 @Injectable()
 export class GameStateService implements OnDestroy {
@@ -13,6 +14,7 @@ export class GameStateService implements OnDestroy {
     status: null,
     currentWord: [],
     currentTurn: null,
+    wordGuesses: [],
     errors: 0,
     guesses: [],
     id: null,
@@ -24,6 +26,7 @@ export class GameStateService implements OnDestroy {
 
   constructor(
     private socketService: SocketService,
+    private playerInfoService: PlayerInfoService,
     private router: Router
   ) {
     this.registerActions();
@@ -137,6 +140,12 @@ export class GameStateService implements OnDestroy {
         tap(({data: currentTurn}) => this.updateState({currentTurn}))
       ).subscribe()
     );
+
+    this.sub.add(
+      this.socketService.getMessages$<string[]>('new-word-guesses').pipe(
+        tap(({data: wordGuesses}) => this.updateState({wordGuesses}))
+      ).subscribe()
+    );
   }
 
   // Actions
@@ -150,6 +159,10 @@ export class GameStateService implements OnDestroy {
 
   sendLetter(key: string) {
     this.socketService.sendMessage('new-guess', key);
+  }
+
+  sendWordGuess(wordGuess: string) {
+    this.socketService.sendMessage('new-word-guess', wordGuess);
   }
 
   initGame() {
@@ -223,6 +236,22 @@ export class GameStateService implements OnDestroy {
       distinctUntilChanged()
     );
   }
+
+  getWordGuesses$(): Observable<string[]> {
+    return this.getState$().pipe(
+      pluck('wordGuesses'),
+      distinctUntilChanged()
+    );
+  }
+
+  getAmIMaster$(): Observable<boolean> {
+    return this.getMaster$().pipe(
+      map(master => {
+        console.log('AmIMaster', this.playerInfoService.getId(), master);
+        return this.playerInfoService.getId() === master;
+      })
+    );
+  }
 }
 
 export interface GameState {
@@ -230,6 +259,7 @@ export interface GameState {
   currentWord: LetterInfo[];
   newGuess: GuessInfo;
   guesses: GuessInfo[];
+  wordGuesses: string[];
   status: Status;
   errors: number;
   master: string; // The id of the player that is the game master

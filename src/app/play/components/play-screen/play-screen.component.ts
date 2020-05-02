@@ -1,7 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { GameStateService } from '../../services/game-state.service';
 import { tap } from 'rxjs/operators';
-import { Subscription } from 'rxjs';
 import { BaseComponent } from '../../../core/base-objects/base-component';
 
 @Component({
@@ -9,11 +8,10 @@ import { BaseComponent } from '../../../core/base-objects/base-component';
   templateUrl: './play-screen.component.html',
   styleUrls: ['./play-screen.component.scss']
 })
-export class PlayScreenComponent extends BaseComponent implements OnInit, OnDestroy {
+export class PlayScreenComponent extends BaseComponent implements OnInit {
   Status = Status;
   status: Status;
-
-  private sub: Subscription = new Subscription();
+  amIMaster: boolean;
 
   constructor(
     private gameStateService: GameStateService,
@@ -22,7 +20,7 @@ export class PlayScreenComponent extends BaseComponent implements OnInit, OnDest
   }
 
   ngOnInit(): void {
-    this.sub.add(
+    this.addSubscription(
       this.gameStateService.getWord$().pipe(
         tap(word => {
           if (!word || !word.length) {
@@ -33,10 +31,12 @@ export class PlayScreenComponent extends BaseComponent implements OnInit, OnDest
         })
       ).subscribe()
     );
-  }
 
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
+    this.addSubscription(
+      this.gameStateService.getAmIMaster$().pipe(
+        tap(amIMaster => this.amIMaster = amIMaster)
+      ).subscribe()
+    );
   }
 
 }

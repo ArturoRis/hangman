@@ -17,22 +17,22 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
   showGameKeyboard: Observable<boolean>;
   showWin: string | boolean;
   itsMe: boolean;
-  guessingWord: string;
 
   constructor(
     private gameStateService: GameStateService,
     private playerInfoService: PlayerInfoService
   ) {
     super();
-  }
-
-  ngOnInit(): void {
     for (let c = 65; c < 91; c++) {
       this.BUTTONS.push({
         key: String.fromCharCode(c),
         isDisabled: false
       });
     }
+  }
+
+  ngOnInit(): void {
+    this.enableAllButtons();
 
     this.showGameKeyboard = this.gameStateService.getStatus$().pipe(
       map((status) => !status)
@@ -55,7 +55,10 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
     this.addSubscription(
       this.gameStateService.getGuesses$().pipe(
         first(),
-        tap(guesses => guesses.forEach(key => this.disableButton(key.letter)))
+        tap(guesses => {
+          this.enableAllButtons();
+          guesses.forEach(key => this.disableButton(key.letter));
+        })
       ).subscribe()
     );
 
@@ -74,15 +77,11 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
       ).subscribe()
     );
 
-    this.addSubscription(
-      this.gameStateService.getWord$().pipe(
-        tap(letters => this.guessingWord = letters.map(l => l.letter || ' ').join(''))
-      ).subscribe()
-    );
   }
 
   buttonClicked(key: string) {
     this.gameStateService.sendLetter(key);
+    this.disableButton(key);
   }
 
   disableButton(key: string) {
@@ -94,6 +93,10 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
 
   restartGame() {
     this.gameStateService.restartGame();
+  }
+
+  private enableAllButtons() {
+    this.BUTTONS.forEach( b => b.isDisabled = false);
   }
 }
 
