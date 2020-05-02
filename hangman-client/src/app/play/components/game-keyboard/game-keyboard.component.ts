@@ -24,15 +24,15 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
     private playerInfoService: PlayerInfoService
   ) {
     super();
+  }
+
+  ngOnInit(): void {
     for (let c = 65; c < 91; c++) {
       this.BUTTONS.push({
         key: String.fromCharCode(c),
         isDisabled: false
       });
     }
-  }
-
-  ngOnInit(): void {
 
     this.showGameKeyboard = this.gameStateService.getStatus$().pipe(
       map((status) => !status)
