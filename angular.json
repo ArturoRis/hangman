@@ -151,6 +151,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "hangman"
+    }
+  },
+  "defaultProject": "hangman",
+  "cli": {
+    "defaultCollection": "@datorama/akita"
+  }
 }
