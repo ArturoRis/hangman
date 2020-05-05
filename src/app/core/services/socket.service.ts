@@ -1,5 +1,5 @@
 import * as io from 'socket.io-client';
-import { ReplaySubject } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 export class SocketService {
@@ -23,12 +23,17 @@ export class SocketService {
   }
 
   getMessages$<R = string>(type) {
-    const obs$ = new ReplaySubject<SocketResponse<R>>();
-    this.socket.on(type, (message) => {
-      console.log('received', type, message);
-      obs$.next(message);
+    return new Observable<SocketResponse<R>>(obs$ => {
+
+      const listener = (message) => {
+        console.log('received', type, message);
+        obs$.next(message);
+      };
+
+      this.socket.on(type, listener);
+
+      return () => this.socket.off(type, listener);
     });
-    return obs$.asObservable();
   }
 
   getId() {
