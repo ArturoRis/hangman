@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SocketService } from './socket.service';
 
-@Injectable()
+@Injectable({providedIn: 'root'})
 export class PlayerInfoService {
   private id: string;
   private name: string;

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { SocketService } from '../../services/socket.service';
 import { Router } from '@angular/router';
-import { PlayerInfoService } from '../../services/player-info.service';
+import { PlayerInfoService } from '../../state/player-info.service';
+import { PlayerInfoQuery } from '../../state/player-info.query';
 import { BaseComponent } from '../../base-objects/base-component';
 
 @Component({
@@ -17,13 +18,14 @@ export class ManageRoomComponent extends BaseComponent implements OnInit {
   constructor(
     private socketService: SocketService,
     private router: Router,
+    private playerInfoQuery: PlayerInfoQuery,
     private playerInfoService: PlayerInfoService
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.name = this.playerInfoService.getName();
+    this.name = this.playerInfoQuery.getName();
   }
 
   createRoom() {

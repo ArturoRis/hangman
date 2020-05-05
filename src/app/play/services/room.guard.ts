@@ -3,14 +3,14 @@ import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterSt
 import { Observable } from 'rxjs';
 import { GameState, GameStateService } from './game-state.service';
 import { SocketService } from '../../core/services/socket.service';
-import { PlayerInfoService } from '../../core/services/player-info.service';
+import { PlayerInfoQuery } from '../../core/state/player-info.query';
 
 @Injectable()
 export class RoomGuard implements CanActivate, CanActivateChild {
   constructor(
     private gameStateService: GameStateService,
     private socketService: SocketService,
-    private playerInfoService: PlayerInfoService,
+    private playerInfoQuery: PlayerInfoQuery,
     private router: Router
   ) {
   }
@@ -21,7 +21,7 @@ export class RoomGuard implements CanActivate, CanActivateChild {
     return new Observable(sub => {
       this.socketService.sendMessage<GameState>('join-room', {
         roomId: next.params.ID,
-        name: this.playerInfoService.getName()
+        name: this.playerInfoQuery.getName()
       }, ({data: gameState, ok}) => {
         console.log('join-room', ok, gameState);
 

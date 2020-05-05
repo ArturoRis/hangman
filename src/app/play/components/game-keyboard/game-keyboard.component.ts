@@ -3,7 +3,7 @@ import { GameStateService } from '../../services/game-state.service';
 import { BaseComponent } from '../../../core/base-objects/base-component';
 import { filter, first, map, tap } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
-import { PlayerInfoService } from '../../../core/services/player-info.service';
+import { PlayerInfoQuery } from '../../../core/state/player-info.query';
 
 @Component({
   selector: 'hmo-game-keyboard',
@@ -20,7 +20,7 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
 
   constructor(
     private gameStateService: GameStateService,
-    private playerInfoService: PlayerInfoService
+    private playerInfoQuery: PlayerInfoQuery
   ) {
     super();
     for (let c = 65; c < 91; c++) {
@@ -42,7 +42,7 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
       this.showGameKeyboard,
       this.gameStateService.getMaster$()
     ]).pipe(
-      map(([showGameKeyboard, master]) => !showGameKeyboard && this.playerInfoService.getId() === master)
+      map(([showGameKeyboard, master]) => !showGameKeyboard && this.playerInfoQuery.getId() === master)
     );
 
     this.addSubscription(
@@ -69,7 +69,7 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
           this.showWin = undefined;
           if (status && status !== 'lose') {
             this.showWin = this.gameStateService.state.players.find(p => p.id === status).name;
-            this.itsMe = status === this.playerInfoService.getId();
+            this.itsMe = status === this.playerInfoQuery.getId();
           } else if (status === 'lose') {
             this.showWin = false;
           }

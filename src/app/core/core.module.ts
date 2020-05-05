@@ -7,7 +7,6 @@ import { WelcomeComponent } from './components/welcome/welcome.component';
 import { FormsModule } from '@angular/forms';
 import { SocketService } from './services/socket.service';
 import { ManageRoomComponent } from './components/manage-room/manage-room.component';
-import { PlayerInfoService } from './services/player-info.service';
 import { LeaveRoomGuard } from './services/leave-room.guard';
 import { UiKitModule } from '../ui-kit/ui-kit.module';
 
@@ -30,7 +29,6 @@ import { UiKitModule } from '../ui-kit/ui-kit.module';
   ],
   providers: [
     SocketService,
-    PlayerInfoService,
     LeaveRoomGuard
   ]
 })

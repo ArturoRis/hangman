@@ -2,8 +2,8 @@ import { Injectable } from '@angular/core';
 import { Store, StoreConfig } from '@datorama/akita';
 
 export interface PlayerInfoState {
-   id: string;
-   name: string;
+  id: string;
+  name: string;
 }
 
 function generateRandomName() {
@@ -17,8 +17,8 @@ export function createInitialState(): PlayerInfoState {
   };
 }
 
-@Injectable({ providedIn: 'root' })
-@StoreConfig({ name: 'player-info' })
+@Injectable({providedIn: 'root'})
+@StoreConfig({name: 'player-info'})
 export class PlayerInfoStore extends Store<PlayerInfoState> {
 
   constructor() {
