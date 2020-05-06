@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../../../core/base-objects/base-component';
-import { GameStateService } from '../../services/game-state.service';
+import { GameService } from '../../state/game.service';
+import { GameQuery } from '../../state/game.query';
 import { map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
@@ -17,14 +18,15 @@ export class TryToGuessComponent extends BaseComponent implements OnInit {
   amINotMaster$: Observable<boolean>;
 
   constructor(
-    private gameStateService: GameStateService
+    private gameService: GameService,
+    private gameQuery: GameQuery
   ) {
     super();
   }
 
   ngOnInit(): void {
     this.addSubscription(
-      this.gameStateService.getCurrentTurn$().pipe(
+      this.gameQuery.getCurrentTurn$().pipe(
         tap(() => {
           if (this.turnsToWait > 0) {
             this.turnsToWait -= 1;
@@ -33,15 +35,15 @@ export class TryToGuessComponent extends BaseComponent implements OnInit {
       ).subscribe()
     );
 
-    this.wordGuesses$ = this.gameStateService.getWordGuesses$();
+    this.wordGuesses$ = this.gameQuery.getWordGuesses$();
 
-    this.amINotMaster$ = this.gameStateService.getAmIMaster$().pipe(
+    this.amINotMaster$ = this.gameQuery.getAmIMaster$().pipe(
       map( amIMaster => !amIMaster)
     );
   }
 
   sendTry() {
-    this.gameStateService.sendWordGuess(this.wordGuess);
+    this.gameService.sendWordGuess(this.wordGuess);
     this.turnsToWait = 3;
     this.wordGuess = '';
   }

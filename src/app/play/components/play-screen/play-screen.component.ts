@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GameStateService } from '../../services/game-state.service';
+import { GameQuery } from '../../state/game.query';
 import { tap } from 'rxjs/operators';
 import { BaseComponent } from '../../../core/base-objects/base-component';
 
@@ -14,14 +14,14 @@ export class PlayScreenComponent extends BaseComponent implements OnInit {
   amIMaster: boolean;
 
   constructor(
-    private gameStateService: GameStateService,
+    private gameQuery: GameQuery,
   ) {
     super();
   }
 
   ngOnInit(): void {
     this.addSubscription(
-      this.gameStateService.getWord$().pipe(
+      this.gameQuery.getWord$().pipe(
         tap(word => {
           if (!word || !word.length) {
             this.status = Status.CHOOSE_WORD;
@@ -33,7 +33,7 @@ export class PlayScreenComponent extends BaseComponent implements OnInit {
     );
 
     this.addSubscription(
-      this.gameStateService.getAmIMaster$().pipe(
+      this.gameQuery.getAmIMaster$().pipe(
         tap(amIMaster => this.amIMaster = amIMaster)
       ).subscribe()
     );

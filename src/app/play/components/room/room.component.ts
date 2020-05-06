@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BaseComponent } from '../../../core/base-objects/base-component';
-import { GameStateService } from '../../services/game-state.service';
+import { GameService } from '../../state/game.service';
+import { GameQuery } from '../../state/game.query';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -13,16 +14,17 @@ export class RoomComponent extends BaseComponent implements OnInit {
   amIMaster: Observable<boolean>;
 
   constructor(
-    private gameStateService: GameStateService,
+    private gameService: GameService,
+    private gameQuery: GameQuery
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.amIMaster = this.gameStateService.getAmIMaster$();
+    this.amIMaster = this.gameQuery.getAmIMaster$();
   }
 
   startGame() {
-    this.gameStateService.initGame();
+    this.gameService.initGame();
   }
 }

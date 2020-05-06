@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { tap } from 'rxjs/operators';
-import { GameStateService } from '../../services/game-state.service';
+import { GameQuery } from '../../state/game.query';
 import { BaseComponent } from '../../../core/base-objects/base-component';
 
 @Component({
@@ -21,23 +21,23 @@ export class HangmanComponent extends BaseComponent implements OnInit {
   private numOfErrors = 0;
 
   constructor(
-    private gameStateService: GameStateService
+    private gameQuery: GameQuery
   ) {
     super();
   }
 
   ngOnInit(): void {
     this.addSubscription(
-      this.gameStateService.getErrors$().pipe(
+      this.gameQuery.getErrors$().pipe(
         tap((error) => this.setError(error))
       ).subscribe()
     );
 
     this.addSubscription(
-      this.gameStateService.getStatus$().pipe(
+      this.gameQuery.getStatus$().pipe(
         tap(status => {
           if (status && status !== 'lose') {
-            this.showWin = this.gameStateService.state.players.find(p => p.id === status).name;
+            this.showWin = this.gameQuery.players.find(p => p.id === status).name;
           } else {
             this.showWin = undefined;
           }

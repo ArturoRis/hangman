@@ -1,7 +1,7 @@
 import { Directive, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { BaseComponent } from '../../core/base-objects/base-component';
 import { tap } from 'rxjs/operators';
-import { GameStateService } from '../services/game-state.service';
+import { GameQuery } from '../state/game.query';
 import { PlayerInfoQuery } from '../../core/state/player-info.query';
 
 @Directive({
@@ -12,7 +12,7 @@ export class WaitingTurnDirective extends BaseComponent implements OnInit {
   constructor(
     private elRef: ElementRef,
     private renderer: Renderer2,
-    private gameStateService: GameStateService,
+    private gameQuery: GameQuery,
     private playerInfoQuery: PlayerInfoQuery
   ) {
     super();
@@ -22,7 +22,7 @@ export class WaitingTurnDirective extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.addSubscription(
-      this.gameStateService.getCurrentTurn$().pipe(
+      this.gameQuery.getCurrentTurn$().pipe(
         tap(turn => {
           if (this.playerInfoQuery.getId() !== turn) {
             this.renderer.setAttribute(this.elRef.nativeElement, 'hidden', 'true');

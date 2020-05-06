@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { GameStore } from './game.store';
 import { SocketService } from '../../core/services/socket.service';
 import { Subscription } from 'rxjs';
-import { GameState, GuessInfo, LetterInfo, PlayerInfo, Status } from '../services/game-state.service';
+import { GameState, GuessInfo, LetterInfo, PlayerInfo, Status } from './game.store';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
@@ -92,6 +92,10 @@ export class GameService implements OnDestroy {
 
   setWord(word: string) {
     this.socketService.sendMessage('set-word', word);
+  }
+
+  startGame(state: GameState) {
+    this.gameStore.update(state);
   }
 
   restartGame() {

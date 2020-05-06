@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { GameStateService } from '../../services/game-state.service';
+import { GameQuery } from '../../state/game.query';
 import { BaseComponent } from '../../../core/base-objects/base-component';
 
 @Component({
@@ -14,13 +14,13 @@ export class RoomTitleComponent extends BaseComponent implements OnInit {
   tooltiptext = 'Clicca per copiare il link';
 
   constructor(
-    private gameStateService: GameStateService
+    private gameQuery: GameQuery
   ) {
     super();
   }
 
   ngOnInit(): void {
-    this.roomId = this.gameStateService.getId$();
+    this.roomId = this.gameQuery.getId$();
   }
 
   async getLink() {

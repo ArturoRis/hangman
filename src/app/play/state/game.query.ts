@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Query } from '@datorama/akita';
-import { GameState, GameStore } from './game.store';
+import { GameState, GameStore, GuessInfo, LetterInfo, PlayerInfo, Status } from './game.store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { GuessInfo, LetterInfo, PlayerInfo, Status } from '../services/game-state.service';
 import { PlayerInfoQuery } from '../../core/state/player-info.query';
 
 @Injectable({ providedIn: 'root' })
@@ -14,6 +13,10 @@ export class GameQuery extends Query<GameState> {
     protected playerInfoQuery: PlayerInfoQuery
     ) {
     super(store);
+  }
+
+  get players(): PlayerInfo[] {
+    return this.getValue().players;
   }
 
   getStatus$(): Observable<Status> {

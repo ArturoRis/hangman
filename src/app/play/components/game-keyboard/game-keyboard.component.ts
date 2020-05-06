@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { GameStateService } from '../../services/game-state.service';
+import { GameService } from '../../state/game.service';
+import { GameQuery } from '../../state/game.query';
 import { BaseComponent } from '../../../core/base-objects/base-component';
 import { filter, first, map, tap } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
@@ -19,7 +20,8 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
   itsMe: boolean;
 
   constructor(
-    private gameStateService: GameStateService,
+    private gameService: GameService,
+    private gameQuery: GameQuery,
     private playerInfoQuery: PlayerInfoQuery
   ) {
     super();
@@ -34,26 +36,26 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
     this.enableAllButtons();
 
-    this.showGameKeyboard = this.gameStateService.getStatus$().pipe(
+    this.showGameKeyboard = this.gameQuery.getStatus$().pipe(
       map((status) => !status)
     );
 
     this.showRestart = combineLatest([
       this.showGameKeyboard,
-      this.gameStateService.getMaster$()
+      this.gameQuery.getMaster$()
     ]).pipe(
       map(([showGameKeyboard, master]) => !showGameKeyboard && this.playerInfoQuery.getId() === master)
     );
 
     this.addSubscription(
-      this.gameStateService.getNewGuess$().pipe(
+      this.gameQuery.getNewGuess$().pipe(
         filter(guess => !!guess),
         tap(({letter}) => this.disableButton(letter))
       ).subscribe()
     );
 
     this.addSubscription(
-      this.gameStateService.getGuesses$().pipe(
+      this.gameQuery.getGuesses$().pipe(
         first(),
         tap(guesses => {
           this.enableAllButtons();
@@ -63,12 +65,12 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
     );
 
     this.addSubscription(
-      this.gameStateService.getStatus$().pipe(
+      this.gameQuery.getStatus$().pipe(
         tap(status => {
           this.itsMe = undefined;
           this.showWin = undefined;
           if (status && status !== 'lose') {
-            this.showWin = this.gameStateService.state.players.find(p => p.id === status).name;
+            this.showWin = this.gameQuery.players.find(p => p.id === status).name;
             this.itsMe = status === this.playerInfoQuery.getId();
           } else if (status === 'lose') {
             this.showWin = false;
@@ -80,7 +82,7 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
   }
 
   buttonClicked(key: string) {
-    this.gameStateService.sendLetter(key);
+    this.gameService.sendLetter(key);
     this.disableButton(key);
   }
 
@@ -92,7 +94,7 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
   }
 
   restartGame() {
-    this.gameStateService.restartGame();
+    this.gameService.restartGame();
   }
 
   private enableAllButtons() {

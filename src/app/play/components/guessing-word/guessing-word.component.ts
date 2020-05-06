@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { filter } from 'rxjs/operators';
-import { GameStateService } from '../../services/game-state.service';
+import { GameQuery } from '../../state/game.query';
 import { BaseComponent } from '../../../core/base-objects/base-component';
 import { Observable } from 'rxjs';
 
@@ -13,14 +13,14 @@ export class GuessingWordComponent extends BaseComponent implements OnInit {
   lettersInfo: Observable<LetterInfo[]>;
 
   constructor(
-    private gameStateService: GameStateService
+    private gameQuery: GameQuery
   ) {
     super();
   }
 
   ngOnInit(): void {
 
-    this.lettersInfo = this.gameStateService.getWord$().pipe(
+    this.lettersInfo = this.gameQuery.getWord$().pipe(
       filter(word => !!word && !!word.length)
     );
   }

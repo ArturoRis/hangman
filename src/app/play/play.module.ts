@@ -9,7 +9,6 @@ import { GuessingWordComponent } from './components/guessing-word/guessing-word.
 import { ChooseWordComponent } from './components/choose-word/choose-word.component';
 import { FormsModule } from '@angular/forms';
 import { PlayersViewerComponent } from './components/players-viewer/players-viewer.component';
-import { GameStateService } from './services/game-state.service';
 import { WaitingTurnDirective } from './directives/waiting-turn.directive';
 import { RoomComponent } from './components/room/room.component';
 import { RoomGuard } from './services/room.guard';
@@ -38,7 +37,6 @@ import { TryToGuessComponent } from './components/try-to-guess/try-to-guess.comp
     UiKitModule
   ],
   providers: [
-    GameStateService,
     RoomGuard
   ]
 })

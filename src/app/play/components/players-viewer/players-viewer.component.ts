@@ -1,8 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-
-import { GameStateService, PlayerInfo } from '../../services/game-state.service';
+import { GameQuery } from '../../state/game.query';
+import { PlayerInfo } from '../../state/game.store';
 import { PlayerInfoQuery } from '../../../core/state/player-info.query';
 import { BaseComponent } from '../../../core/base-objects/base-component';
 
@@ -19,7 +19,7 @@ export class PlayersViewerComponent extends BaseComponent implements OnInit, OnD
   players: Observable<PlayerInfo[]>;
 
   constructor(
-    private gameStateService: GameStateService,
+    private gameQuery: GameQuery,
     private playerInfoQuery: PlayerInfoQuery
   ) {
     super();
@@ -28,18 +28,18 @@ export class PlayersViewerComponent extends BaseComponent implements OnInit, OnD
   ngOnInit(): void {
     this.me = this.playerInfoQuery.getId();
     this.addSubscription(
-      this.gameStateService.getCurrentTurn$().pipe(
+      this.gameQuery.getCurrentTurn$().pipe(
         tap(user => this.currentTurn = user)
       ).subscribe()
     );
 
     this.addSubscription(
-      this.gameStateService.getMaster$().pipe(
+      this.gameQuery.getMaster$().pipe(
         tap(master => this.master = master)
       ).subscribe()
     );
 
-    this.players = this.gameStateService.getPlayers$();
+    this.players = this.gameQuery.getPlayers$();
   }
 
 }

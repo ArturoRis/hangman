@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable } from 'rxjs';
-import { GameState, GameStateService } from './game-state.service';
+import { GameState } from '../state/game.store';
+import { GameService } from '../state/game.service';
 import { SocketService } from '../../core/services/socket.service';
 import { PlayerInfoQuery } from '../../core/state/player-info.query';
 
 @Injectable()
 export class RoomGuard implements CanActivate, CanActivateChild {
   constructor(
-    private gameStateService: GameStateService,
+    private gameStateService: GameService,
     private socketService: SocketService,
     private playerInfoQuery: PlayerInfoQuery,
     private router: Router

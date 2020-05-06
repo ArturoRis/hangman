@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { arrayAdd, arrayRemove, arrayUpdate, Store, StoreConfig } from '@datorama/akita';
-import { GuessInfo, LetterInfo, PlayerInfo, Status } from '../services/game-state.service';
 
 export interface GameState {
   id: string;
@@ -14,6 +13,26 @@ export interface GameState {
   currentTurn: string; // The id of the player whose has the current turn
   players: PlayerInfo[];
 }
+
+export type Status = string | 'lose' | null;
+
+export interface LetterInfo {
+  id: string;
+  letter: string;
+  isGuessed: boolean;
+}
+
+export interface GuessInfo {
+  letter: string;
+  ids: string[]; // if present are the id of the LetterInfo of which this letter is the answer
+}
+
+export interface PlayerInfo {
+  id: string;
+  name: string;
+  points: number;
+}
+
 
 export function createInitialState(): GameState {
   return {

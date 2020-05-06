@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { GameStateService } from '../../services/game-state.service';
+import { GameService } from '../../state/game.service';
 import { BaseComponent } from '../../../core/base-objects/base-component';
 
 @Component({
@@ -12,7 +12,7 @@ export class ChooseWordComponent extends BaseComponent implements OnInit {
   word: string;
 
   constructor(
-    private gameStateService: GameStateService
+    private gameService: GameService
   ) {
     super();
   }
@@ -21,6 +21,6 @@ export class ChooseWordComponent extends BaseComponent implements OnInit {
   }
 
   chooseWord() {
-    this.gameStateService.setWord(this.word);
+    this.gameService.setWord(this.word);
   }
 }
