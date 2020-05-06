@@ -1,8 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { GameStore } from './game.store';
+import { GameState, GameStore, GuessInfo, LetterInfo, PlayerInfo, Status } from './game.store';
 import { SocketService } from '../../core/services/socket.service';
 import { Subscription } from 'rxjs';
-import { GameState, GuessInfo, LetterInfo, PlayerInfo, Status } from './game.store';
 import { tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 

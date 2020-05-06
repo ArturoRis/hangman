@@ -98,7 +98,7 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
   }
 
   private enableAllButtons() {
-    this.BUTTONS.forEach( b => b.isDisabled = false);
+    this.BUTTONS.forEach(b => b.isDisabled = false);
   }
 }
 

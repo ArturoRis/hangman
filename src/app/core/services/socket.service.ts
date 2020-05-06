@@ -1,24 +1,32 @@
 import * as io from 'socket.io-client';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
+import { guid } from '@datorama/akita';
+import { Injectable } from '@angular/core';
 
+@Injectable({providedIn: 'root'})
 export class SocketService {
   private socket;
+  private readonly id;
 
   constructor() {
-    if (environment.production) {
-      this.socket = io('https://hmo-hangman-online.herokuapp.com');
-    } else {
-      this.socket = io(location.protocol + '//' + location.hostname + ':' + 3000);
+    this.id = sessionStorage.getItem('hmo-id');
+    if (!this.id) {
+      this.id = guid();
+      sessionStorage.setItem('hmo-id', this.id);
     }
+
+    const socketUrl = environment.socketUrl;
+
+    this.socket = io(socketUrl, {query: {id: this.id}});
   }
 
   sendMessage<R = string>(type: string, payload: any, callback?: (response: SocketResponse<R>) => void) {
     console.log('sending', type, payload);
     if (callback) {
-      this.socket.emit(type, payload, callback);
+      this.socket.emit(type, {id: this.id, payload}, callback);
     } else {
-      this.socket.emit(type, payload);
+      this.socket.emit(type, {id: this.id, payload});
     }
   }
 
@@ -37,7 +45,7 @@ export class SocketService {
   }
 
   getId() {
-    return this.socket.id;
+    return this.id;
   }
 }
 

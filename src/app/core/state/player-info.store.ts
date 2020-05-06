@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Store, StoreConfig } from '@datorama/akita';
+import { SocketService } from '../services/socket.service';
 
 export interface PlayerInfoState {
   id: string;
@@ -10,10 +11,10 @@ function generateRandomName() {
   return Math.random().toString(20).substr(2, Math.floor(Math.random() * 4) + 4);
 }
 
-export function createInitialState(): PlayerInfoState {
+export function createInitialState(id: string): PlayerInfoState {
   return {
     name: localStorage.getItem('hmo-name') || generateRandomName(),
-    id: ''
+    id
   };
 }
 
@@ -21,17 +22,15 @@ export function createInitialState(): PlayerInfoState {
 @StoreConfig({name: 'player-info'})
 export class PlayerInfoStore extends Store<PlayerInfoState> {
 
-  constructor() {
-    super(createInitialState());
+  constructor(
+    socketService: SocketService
+  ) {
+    super(createInitialState(socketService.getId()));
   }
 
   updateName(name: string) {
     localStorage.setItem('hmo-name', name);
     this.update({name});
-  }
-
-  updateId(id: string) {
-    this.update({id});
   }
 }
 

@@ -38,7 +38,7 @@ export class TryToGuessComponent extends BaseComponent implements OnInit {
     this.wordGuesses$ = this.gameQuery.getWordGuesses$();
 
     this.amINotMaster$ = this.gameQuery.getAmIMaster$().pipe(
-      map( amIMaster => !amIMaster)
+      map(amIMaster => !amIMaster)
     );
   }
 

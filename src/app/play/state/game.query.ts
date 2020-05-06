@@ -5,13 +5,13 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { PlayerInfoQuery } from '../../core/state/player-info.query';
 
-@Injectable({ providedIn: 'root' })
+@Injectable({providedIn: 'root'})
 export class GameQuery extends Query<GameState> {
 
   constructor(
     protected store: GameStore,
     protected playerInfoQuery: PlayerInfoQuery
-    ) {
+  ) {
     super(store);
   }
 
