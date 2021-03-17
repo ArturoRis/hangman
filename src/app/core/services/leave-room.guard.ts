@@ -1,20 +1,13 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivateChild, CanDeactivate, RouterStateSnapshot } from '@angular/router';
-import { SocketService } from './socket.service';
+import { ActivatedRouteSnapshot, CanDeactivate, RouterStateSnapshot } from '@angular/router';
+import { RoomService } from './room.service';
 
 @Injectable()
-export class LeaveRoomGuard implements CanActivateChild, CanDeactivate<void> {
+export class LeaveRoomGuard implements CanDeactivate<void> {
 
   constructor(
-    private socketService: SocketService
+    private roomService: RoomService
   ) {
-  }
-
-  canActivateChild(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean {
-    this.socketService.sendMessage('leave-room', undefined);
-    return true;
   }
 
   canDeactivate(
@@ -22,7 +15,7 @@ export class LeaveRoomGuard implements CanActivateChild, CanDeactivate<void> {
     currentRoute: ActivatedRouteSnapshot,
     currentState: RouterStateSnapshot,
     nextState?: RouterStateSnapshot): boolean {
-    this.socketService.sendMessage('leave-room', undefined);
+    this.roomService.leaveRoom(currentRoute.params.ID).subscribe();
     return true;
   }
 }

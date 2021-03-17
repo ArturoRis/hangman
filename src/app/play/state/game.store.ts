@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { arrayAdd, arrayRemove, arrayUpdate, Store, StoreConfig } from '@datorama/akita';
+import { action, arrayAdd, arrayRemove, arrayUpdate, Store, StoreConfig } from '@datorama/akita';
 
 export interface GameState {
   id: string;
@@ -14,7 +14,7 @@ export interface GameState {
   players: PlayerInfo[];
 }
 
-export type Status = string | 'lose' | null;
+export type Status = string | 'lose';
 
 export interface LetterInfo {
   id: string;
@@ -73,30 +73,39 @@ export class GameStore extends Store<GameState> {
     return this.getValue().currentWord;
   }
 
+  @action('Remove player')
   removePlayer(playerInfo: PlayerInfo) {
     this.update({
       players: arrayRemove(this.players, playerInfo.id)
     });
   }
 
+  @action('Update Master')
   updateMaster(master: string) {
     this.update({master});
   }
 
+  @action('Add player')
   addPlayer(playerInfo: PlayerInfo) {
+    if (this.players.find( p => p.id === playerInfo.id)) {
+      return;
+    }
     this.update({
       players: arrayAdd(this.players, playerInfo)
     });
   }
 
+  @action('Update status')
   updateStatus(status: Status) {
     this.update({status});
   }
 
+  @action('Update current word')
   updateCurrentWord(currentWord: LetterInfo[]) {
     this.update({currentWord});
   }
 
+  @action('Update guess')
   addGuess(guessInfo: GuessInfo) {
     const stateUpdate: Partial<GameState> = {
       guesses: arrayAdd(this.guesses, guessInfo),
@@ -114,11 +123,19 @@ export class GameStore extends Store<GameState> {
     this.update(stateUpdate);
   }
 
+  @action('Update turn')
   updateTurn(currentTurn: string) {
     this.update({currentTurn});
   }
 
-  updateWordGuesses(wordGuesses: string[]) {
-    this.update({wordGuesses});
+  @action('Update word guesses')
+  updateWordGuesses(wordGuess: string) {
+    const wordGuesses = this.getValue().wordGuesses;
+    this.update({wordGuesses: arrayAdd(wordGuesses, wordGuess)});
+  }
+
+  @action('Update player')
+  updatePlayer(player: PlayerInfo) {
+    this.update( {players: arrayUpdate(this.players, player.id, player)});
   }
 }

@@ -21,6 +21,6 @@ export class ChooseWordComponent extends BaseComponent implements OnInit {
   }
 
   chooseWord() {
-    this.gameService.setWord(this.word);
+    this.gameService.setWord(this.word).subscribe();
   }
 }

@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { Store, StoreConfig } from '@datorama/akita';
-import { SocketService } from '../services/socket.service';
+import { ID_TOKEN } from '../../id-token.provider';
 
 export interface PlayerInfoState {
   id: string;
@@ -23,9 +23,9 @@ export function createInitialState(id: string): PlayerInfoState {
 export class PlayerInfoStore extends Store<PlayerInfoState> {
 
   constructor(
-    socketService: SocketService
+    @Inject(ID_TOKEN) readonly id: string,
   ) {
-    super(createInitialState(socketService.getId()));
+    super(createInitialState(id));
   }
 
   updateName(name: string) {

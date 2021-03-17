@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { SocketService } from '../../services/socket.service';
 import { Router } from '@angular/router';
 import { PlayerInfoService } from '../../state/player-info.service';
 import { PlayerInfoQuery } from '../../state/player-info.query';
 import { BaseComponent } from '../../base-objects/base-component';
+import { RoomService } from '../../services/room.service';
+import { DataLoaderObservable } from '../../../utils/data-loader.observable';
 
 @Component({
   selector: 'hmo-manage-room',
@@ -14,9 +15,10 @@ export class ManageRoomComponent extends BaseComponent implements OnInit {
 
   roomId: string;
   name: string;
+  createRoomLoader: DataLoaderObservable<string>;
 
   constructor(
-    private socketService: SocketService,
+    private roomService: RoomService,
     private router: Router,
     private playerInfoQuery: PlayerInfoQuery,
     private playerInfoService: PlayerInfoService
@@ -29,10 +31,8 @@ export class ManageRoomComponent extends BaseComponent implements OnInit {
   }
 
   createRoom() {
-    this.socketService.sendMessage(
-      'create-room',
-      this.name,
-      ({data}) => this.goToRoom(data));
+    this.createRoomLoader = new DataLoaderObservable(this.roomService.createRoom(this.name));
+    this.createRoomLoader.subscribe( roomId => this.goToRoom(roomId));
   }
 
   joinRoom() {

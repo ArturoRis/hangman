@@ -1,19 +1,20 @@
 <ng-container *ngIf="amINotMaster$ | async">
   <div class="text-center my-2" *ngIf="turnsToWait === 0;else waitTurns">
     <label for="wordGuess">Prova ad indovinare</label>
+    <br/>
     <input #wordGuessModel="ngModel" class="rounded-r-none" type="text" id="wordGuess" [(ngModel)]="wordGuess" required
            name="wordGuess">
-    <button class="rounded-l-none" (click)="sendTry()" [disabled]="wordGuessModel.invalid">Invia</button>
+    <button class="rounded-l-none border" (click)="sendTry()" [disabled]="wordGuessModel.invalid">Invia</button>
   </div>
   <ng-template #waitTurns>
     <div class="text-center text-xl">
     <span>
-      Devi aspettare {{turnsToWait}} per poter provare ad indovinare di nuovo
+      Devi aspettare {{turnsToWait}} turni per poter provare a indovinare di nuovo
     </span>
     </div>
   </ng-template>
 </ng-container>
-<div class="my-2 fatti" *ngIf="wordGuesses$ | async as wordGuesses">
+<div class="my-2" *ngIf="wordGuesses$ | async as wordGuesses">
   <span>Tentativi</span>
   <div class="mt-2 flex flex-wrap">
     <div class="p-2" *ngFor="let word of wordGuesses">

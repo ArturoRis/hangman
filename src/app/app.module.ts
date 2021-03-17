@@ -9,6 +9,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 // import { NG_ENTITY_SERVICE_CONFIG } from '@datorama/akita-ng-entity-service';
 import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from '../environments/environment';
+import { HttpClientModule } from '@angular/common/http';
+import { IdTokenProvider } from './id-token.provider';
 
 @NgModule({
   declarations: [
@@ -16,6 +18,7 @@ import { environment } from '../environments/environment';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     BrowserAnimationsModule,
     CoreModule,
     AppRoutingModule,
@@ -26,6 +29,7 @@ import { environment } from '../environments/environment';
       useClass: HashLocationStrategy,
       provide: LocationStrategy
     },
+    IdTokenProvider
     // { provide: NG_ENTITY_SERVICE_CONFIG, useValue: { baseUrl: 'https://jsonplaceholder.typicode.com' }}
   ],
   bootstrap: [AppComponent]

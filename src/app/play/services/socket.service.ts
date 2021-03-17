@@ -1,20 +1,16 @@
 import * as io from 'socket.io-client';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { guid } from '@datorama/akita';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
+import { ID_TOKEN } from '../../id-token.provider';
 
 @Injectable({providedIn: 'root'})
 export class SocketService {
   private socket;
-  private readonly id;
 
-  constructor() {
-    this.id = sessionStorage.getItem('hmo-id');
-    if (!this.id) {
-      this.id = guid();
-      sessionStorage.setItem('hmo-id', this.id);
-    }
+  constructor(
+    @Inject(ID_TOKEN) private readonly id: string
+  ) {
 
     const socketUrl = environment.socketUrl;
 
@@ -42,10 +38,6 @@ export class SocketService {
 
       return () => this.socket.off(type, listener);
     });
-  }
-
-  getId() {
-    return this.id;
   }
 }
 

@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { ManageRoomComponent } from './components/manage-room/manage-room.component';
 import { LeaveRoomGuard } from './services/leave-room.guard';
 import { UiKitModule } from '../ui-kit/ui-kit.module';
+import { PlayerIdInterceptorProvider } from './services/player-id.interceptor';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { UiKitModule } from '../ui-kit/ui-kit.module';
     UiKitModule
   ],
   providers: [
-    LeaveRoomGuard
+    LeaveRoomGuard,
+    PlayerIdInterceptorProvider
   ]
 })
 export class CoreModule {

@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { GameService } from '../../state/game.service';
 import { GameQuery } from '../../state/game.query';
 import { BaseComponent } from '../../../core/base-objects/base-component';
-import { filter, first, map, tap } from 'rxjs/operators';
+import { filter, first, map, shareReplay, tap } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
 import { PlayerInfoQuery } from '../../../core/state/player-info.query';
+import { DataLoaderObservable } from '../../../utils/data-loader.observable';
 
 @Component({
   selector: 'hmo-game-keyboard',
@@ -14,10 +15,12 @@ import { PlayerInfoQuery } from '../../../core/state/player-info.query';
 export class GameKeyboardComponent extends BaseComponent implements OnInit {
 
   BUTTONS: GKButton[] = [];
-  showRestart: Observable<boolean>;
-  showGameKeyboard: Observable<boolean>;
+  showRestart$: Observable<boolean>;
+  showGameKeyboard$: Observable<boolean>;
   showWin: string | boolean;
   itsMe: boolean;
+  lettersNotGuessed$: Observable<string[]>;
+  restartButton: DataLoaderObservable<void>;
 
   constructor(
     private gameService: GameService,
@@ -31,17 +34,25 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
         isDisabled: false
       });
     }
+
+    this.lettersNotGuessed$ = this.gameQuery.getGuesses$().pipe(
+      map( guesses => guesses
+        .filter( g => !g.ids || !g.ids.length)
+        .map( g => g.letter)
+      ),
+      shareReplay(1)
+    );
   }
 
   ngOnInit(): void {
     this.enableAllButtons();
 
-    this.showGameKeyboard = this.gameQuery.getStatus$().pipe(
+    this.showGameKeyboard$ = this.gameQuery.getStatus$().pipe(
       map((status) => !status)
     );
 
-    this.showRestart = combineLatest([
-      this.showGameKeyboard,
+    this.showRestart$ = combineLatest([
+      this.showGameKeyboard$,
       this.gameQuery.getMaster$()
     ]).pipe(
       map(([showGameKeyboard, master]) => !showGameKeyboard && this.playerInfoQuery.getId() === master)
@@ -56,11 +67,7 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
 
     this.addSubscription(
       this.gameQuery.getGuesses$().pipe(
-        first(),
-        tap(guesses => {
-          this.enableAllButtons();
-          guesses.forEach(key => this.disableButton(key.letter));
-        })
+        tap(guesses => guesses.forEach(key => this.disableButton(key.letter)))
       ).subscribe()
     );
 
@@ -81,9 +88,11 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
 
   }
 
-  buttonClicked(key: string) {
-    this.gameService.sendLetter(key);
-    this.disableButton(key);
+  buttonClicked(button: GKButton) {
+    button.clickHandler = new DataLoaderObservable(this.gameService.sendLetter(button.key));
+    button.clickHandler.subscribe( () => {
+      this.disableButton(button.key);
+    });
   }
 
   disableButton(key: string) {
@@ -94,7 +103,11 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
   }
 
   restartGame() {
-    this.gameService.restartGame();
+    if (this.restartButton && this.restartButton.loading) {
+      return;
+    }
+    this.restartButton = new DataLoaderObservable<void>(this.gameService.restartGame());
+    this.restartButton.subscribe();
   }
 
   private enableAllButtons() {
@@ -105,4 +118,5 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
 interface GKButton {
   key: string;
   isDisabled: boolean;
+  clickHandler?: DataLoaderObservable<any>;
 }

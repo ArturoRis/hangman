@@ -19,7 +19,6 @@ const routes: Routes = [
         path: 'play', component: PlayScreenComponent
       }
     ],
-    canActivateChild: [RoomGuard],
     canActivate: [RoomGuard],
     canDeactivate: [LeaveRoomGuard]
   }

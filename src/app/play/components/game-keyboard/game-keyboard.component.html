@@ -1,9 +1,15 @@
-<ng-container *ngIf="showGameKeyboard | async">
+<ng-container *ngIf="showGameKeyboard$ | async">
+  <div *ngIf="(lettersNotGuessed$ | async).length">
+    Non presenti:<span class="pl-2" *ngFor="let char of (lettersNotGuessed$ | async)">{{char}}</span>
+  </div>
   <div hmoWaitingTurn>
     <div class="flex flex-wrap justify-around md:mx-auto md:w-10/12">
-      <button class="m-2 py-4 md:py-3 md:m-2 w-1/4 sm:w-1/6 md:w-1/12"
-              *ngFor="let button of BUTTONS" [disabled]="button.isDisabled"
-              (click)="buttonClicked(button.key)">{{button.key}}</button>
+      <button
+        *ngFor="let button of BUTTONS"
+        class="m-1 py-3 md:py-3 md:m-1 w-1/4 sm:w-1/6 md:w-1/12"
+        [disabled]="button.isDisabled || button.clickHandler?.loading"
+        (click)="buttonClicked(button)"
+      >{{button.key}}</button>
     </div>
   </div>
   <hmo-try-to-guess></hmo-try-to-guess>
@@ -13,9 +19,11 @@
     Complimenti {{itsMe ? 'hai vinto' : 'a ' + showWin}}!
   </div>
   <div *ngIf="!showWin">
-    La parola non è stata indovinata, peccato :(
+    La parola non è stata indovinata{{itsMe ? ' :)' : ', peccato :('}}
   </div>
 </div>
-<div class="text-center" *ngIf="showRestart | async">
-  <button (click)="restartGame()">Ricomincia</button>
+<div class="text-center" *ngIf="showRestart$ | async">
+  <button
+    [disabled]="restartButton?.loading"
+    (click)="restartGame()">Continua</button>
 </div>

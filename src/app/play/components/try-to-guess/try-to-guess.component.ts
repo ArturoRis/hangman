@@ -43,8 +43,9 @@ export class TryToGuessComponent extends BaseComponent implements OnInit {
   }
 
   sendTry() {
-    this.gameService.sendWordGuess(this.wordGuess);
     this.turnsToWait = 3;
-    this.wordGuess = '';
+    this.gameService.sendWordGuess(this.wordGuess).subscribe(
+      () => this.wordGuess = '',
+      () => this.turnsToWait = 0);
   }
 }
