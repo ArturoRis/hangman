@@ -9,7 +9,7 @@ export class PlayerInfoService {
   ) {
   }
 
-  setName(name: string) {
+  setName(name: string): void {
     this.playerInfoStore.updateName(name);
   }
 }

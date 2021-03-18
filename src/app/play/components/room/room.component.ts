@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseComponent } from '../../../core/base-objects/base-component';
+import { BaseDirective } from '../../../core/base-objects/base.directive';
 import { GameService } from '../../state/game.service';
 import { GameQuery } from '../../state/game.query';
 import { Observable } from 'rxjs';
@@ -10,23 +10,24 @@ import { DataLoaderObservable } from '../../../utils/data-loader.observable';
   templateUrl: './room.component.html',
   styleUrls: ['./room.component.scss']
 })
-export class RoomComponent extends BaseComponent implements OnInit {
+export class RoomComponent extends BaseDirective implements OnInit {
 
-  amIMaster: Observable<boolean>;
-  startButton: DataLoaderObservable<void>;
+  amIMaster$: Observable<boolean>;
+  startButton?: DataLoaderObservable<void>;
 
   constructor(
     private gameService: GameService,
     private gameQuery: GameQuery
   ) {
     super();
+    this.amIMaster$ = this.gameQuery.getAmIMaster$();
   }
 
   ngOnInit(): void {
-    this.amIMaster = this.gameQuery.getAmIMaster$();
+
   }
 
-  startGame() {
+  startGame(): void {
     if (this.startButton && this.startButton.loading) {
       return;
     }

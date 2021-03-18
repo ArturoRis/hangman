@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseComponent } from '../../../core/base-objects/base-component';
+import { BaseDirective } from '../../../core/base-objects/base.directive';
 import { GameService } from '../../state/game.service';
 import { GameQuery } from '../../state/game.query';
 import { map, tap } from 'rxjs/operators';
@@ -10,10 +10,10 @@ import { Observable } from 'rxjs';
   templateUrl: './try-to-guess.component.html',
   styleUrls: ['./try-to-guess.component.scss']
 })
-export class TryToGuessComponent extends BaseComponent implements OnInit {
+export class TryToGuessComponent extends BaseDirective implements OnInit {
 
   turnsToWait = 0;
-  wordGuess: string;
+  wordGuess?: string;
   wordGuesses$: Observable<string[]>;
   amINotMaster$: Observable<boolean>;
 
@@ -22,6 +22,11 @@ export class TryToGuessComponent extends BaseComponent implements OnInit {
     private gameQuery: GameQuery
   ) {
     super();
+    this.wordGuesses$ = this.gameQuery.getWordGuesses$();
+
+    this.amINotMaster$ = this.gameQuery.getAmIMaster$().pipe(
+      map(amIMaster => !amIMaster)
+    );
   }
 
   ngOnInit(): void {
@@ -34,15 +39,12 @@ export class TryToGuessComponent extends BaseComponent implements OnInit {
         })
       ).subscribe()
     );
-
-    this.wordGuesses$ = this.gameQuery.getWordGuesses$();
-
-    this.amINotMaster$ = this.gameQuery.getAmIMaster$().pipe(
-      map(amIMaster => !amIMaster)
-    );
   }
 
-  sendTry() {
+  sendTry(): void {
+    if (!this.wordGuess) {
+      return;
+    }
     this.turnsToWait = 3;
     this.gameService.sendWordGuess(this.wordGuess).subscribe(
       () => this.wordGuess = '',

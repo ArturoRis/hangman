@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from '../../state/game.service';
 import { GameQuery } from '../../state/game.query';
-import { BaseComponent } from '../../../core/base-objects/base-component';
+import { BaseDirective } from '../../../core/base-objects/base.directive';
 import { filter, first, map, shareReplay, tap } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
 import { PlayerInfoQuery } from '../../../core/state/player-info.query';
@@ -12,15 +12,15 @@ import { DataLoaderObservable } from '../../../utils/data-loader.observable';
   templateUrl: './game-keyboard.component.html',
   styleUrls: ['./game-keyboard.component.scss']
 })
-export class GameKeyboardComponent extends BaseComponent implements OnInit {
+export class GameKeyboardComponent extends BaseDirective implements OnInit {
 
   BUTTONS: GKButton[] = [];
   showRestart$: Observable<boolean>;
   showGameKeyboard$: Observable<boolean>;
-  showWin: string | boolean;
-  itsMe: boolean;
+  showWin?: string | boolean;
+  itsMe?: boolean;
   lettersNotGuessed$: Observable<string[]>;
-  restartButton: DataLoaderObservable<void>;
+  restartButton?: DataLoaderObservable<void>;
 
   constructor(
     private gameService: GameService,
@@ -42,10 +42,6 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
       ),
       shareReplay(1)
     );
-  }
-
-  ngOnInit(): void {
-    this.enableAllButtons();
 
     this.showGameKeyboard$ = this.gameQuery.getStatus$().pipe(
       map((status) => !status)
@@ -57,11 +53,19 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
     ]).pipe(
       map(([showGameKeyboard, master]) => !showGameKeyboard && this.playerInfoQuery.getId() === master)
     );
+  }
+
+  ngOnInit(): void {
+    this.enableAllButtons();
 
     this.addSubscription(
       this.gameQuery.getNewGuess$().pipe(
         filter(guess => !!guess),
-        tap(({letter}) => this.disableButton(letter))
+        tap((guess) => {
+          if (guess) {
+            this.disableButton(guess.letter);
+          }
+        })
       ).subscribe()
     );
 
@@ -77,7 +81,7 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
           this.itsMe = undefined;
           this.showWin = undefined;
           if (status && status !== 'lose') {
-            this.showWin = this.gameQuery.players.find(p => p.id === status).name;
+            this.showWin = this.gameQuery.players.find(p => p.id === status)?.name;
             this.itsMe = status === this.playerInfoQuery.getId();
           } else if (status === 'lose') {
             this.showWin = false;
@@ -88,21 +92,21 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
 
   }
 
-  buttonClicked(button: GKButton) {
+  buttonClicked(button: GKButton): void {
     button.clickHandler = new DataLoaderObservable(this.gameService.sendLetter(button.key));
     button.clickHandler.subscribe( () => {
       this.disableButton(button.key);
     });
   }
 
-  disableButton(key: string) {
+  disableButton(key: string): void {
     const button = this.BUTTONS.find(b => b.key === key);
     if (button) {
       button.isDisabled = true;
     }
   }
 
-  restartGame() {
+  restartGame(): void {
     if (this.restartButton && this.restartButton.loading) {
       return;
     }
@@ -110,7 +114,7 @@ export class GameKeyboardComponent extends BaseComponent implements OnInit {
     this.restartButton.subscribe();
   }
 
-  private enableAllButtons() {
+  private enableAllButtons(): void {
     this.BUTTONS.forEach(b => b.isDisabled = false);
   }
 }

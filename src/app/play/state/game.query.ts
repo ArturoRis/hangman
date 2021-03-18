@@ -23,7 +23,7 @@ export class GameQuery extends Query<GameState> {
     return this.select('status');
   }
 
-  getNewGuess$(): Observable<GuessInfo> {
+  getNewGuess$(): Observable<GuessInfo | null> {
     return this.select('newGuess');
   }
 

@@ -17,7 +17,7 @@
     <div class="input-group stack text-center">
       <label for="roomId" class="sr-only">Id stanza</label>
       <input id="roomId" type="text" placeholder="Id stanza" [(ngModel)]="roomId">
-      <button (click)="joinRoom()" [disabled]="!name">Unisciti</button>
+      <button (click)="joinRoom()" [disabled]="!name || !roomId">Unisciti</button>
     </div>
   </div>
 </div>

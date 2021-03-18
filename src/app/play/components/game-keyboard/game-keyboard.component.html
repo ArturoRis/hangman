@@ -1,5 +1,5 @@
 <ng-container *ngIf="showGameKeyboard$ | async">
-  <div *ngIf="(lettersNotGuessed$ | async).length">
+  <div *ngIf="(lettersNotGuessed$ | async)?.length">
     Non presenti:<span class="pl-2" *ngFor="let char of (lettersNotGuessed$ | async)">{{char}}</span>
   </div>
   <div hmoWaitingTurn>

@@ -33,8 +33,8 @@ export class RoomService {
     );
   }
 
-  leaveRoom(roomId: string) {
+  leaveRoom(roomId: string): Observable<void> {
     const url = `${environment.apiUrl}/game/rooms/${roomId}/players/${this.id}`;
-    return this.httpClient.delete( url);
+    return this.httpClient.delete<void>( url);
   }
 }

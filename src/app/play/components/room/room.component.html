@@ -1,6 +1,6 @@
 <div class="pt-2">
   <button
-    *ngIf="amIMaster | async"
+    *ngIf="amIMaster$ | async"
     [disabled]="startButton?.loading"
     (click)="startGame()"
   >Inizia</button>

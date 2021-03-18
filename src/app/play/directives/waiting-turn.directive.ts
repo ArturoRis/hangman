@@ -1,5 +1,5 @@
 import { Directive, ElementRef, OnInit, Renderer2 } from '@angular/core';
-import { BaseComponent } from '../../core/base-objects/base-component';
+import { BaseDirective } from '../../core/base-objects/base.directive';
 import { tap } from 'rxjs/operators';
 import { GameQuery } from '../state/game.query';
 import { PlayerInfoQuery } from '../../core/state/player-info.query';
@@ -7,7 +7,7 @@ import { PlayerInfoQuery } from '../../core/state/player-info.query';
 @Directive({
   selector: '[hmoWaitingTurn]'
 })
-export class WaitingTurnDirective extends BaseComponent implements OnInit {
+export class WaitingTurnDirective extends BaseDirective implements OnInit {
 
   constructor(
     private elRef: ElementRef,

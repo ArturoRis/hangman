@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseComponent } from '../../../core/base-objects/base-component';
+import { BaseDirective } from '../../../core/base-objects/base.directive';
 import { animate, style, transition, trigger } from '@angular/animations';
 
 export const fadeInAnimation =
@@ -24,7 +24,7 @@ export const fadeInAnimation =
   styleUrls: ['./ui-animated-router-outlet.component.scss'],
   animations: [fadeInAnimation]
 })
-export class UiAnimatedRouterOutletComponent extends BaseComponent implements OnInit {
+export class UiAnimatedRouterOutletComponent extends BaseDirective implements OnInit {
 
   constructor() {
     super();

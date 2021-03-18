@@ -7,7 +7,7 @@ export interface PlayerInfoState {
   name: string;
 }
 
-function generateRandomName() {
+function generateRandomName(): string {
   return Math.random().toString(20).substr(2, Math.floor(Math.random() * 4) + 4);
 }
 
@@ -28,7 +28,7 @@ export class PlayerInfoStore extends Store<PlayerInfoState> {
     super(createInitialState(id));
   }
 
-  updateName(name: string) {
+  updateName(name: string): void {
     localStorage.setItem('hmo-name', name);
     this.update({name});
   }

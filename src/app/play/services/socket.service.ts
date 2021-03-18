@@ -4,9 +4,10 @@ import { environment } from '../../../environments/environment';
 import { Inject, Injectable } from '@angular/core';
 import { ID_TOKEN } from '../../id-token.provider';
 
+
 @Injectable({providedIn: 'root'})
 export class SocketService {
-  private socket;
+  private socket: any;
 
   constructor(
     @Inject(ID_TOKEN) private readonly id: string
@@ -17,7 +18,7 @@ export class SocketService {
     this.socket = io(socketUrl, {query: {id: this.id}});
   }
 
-  sendMessage<R = string>(type: string, payload: any, callback?: (response: SocketResponse<R>) => void) {
+  sendMessage<R = string>(type: string, payload: any, callback?: (response: SocketResponse<R>) => void): void {
     console.log('sending', type, payload);
     if (callback) {
       this.socket.emit(type, {id: this.id, payload}, callback);
@@ -26,10 +27,10 @@ export class SocketService {
     }
   }
 
-  getMessages$<R = string>(type) {
+  getMessages$<R = string>(type: string): Observable<SocketResponse<R>> {
     return new Observable<SocketResponse<R>>(obs$ => {
 
-      const listener = (message) => {
+      const listener = (message: SocketResponse<R>) => {
         console.log('received', type, message);
         obs$.next(message);
       };

@@ -2,7 +2,7 @@ import { Observable } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 
 export class DataLoaderObservable<D> extends Observable<D>{
-  loading: boolean;
+  loading = false;
   constructor(
     loader: Observable<D>
   ) {

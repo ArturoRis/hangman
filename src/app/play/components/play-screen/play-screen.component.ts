@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { GameQuery } from '../../state/game.query';
 import { tap } from 'rxjs/operators';
-import { BaseComponent } from '../../../core/base-objects/base-component';
+import { BaseDirective } from '../../../core/base-objects/base.directive';
 
 @Component({
   selector: 'hmo-play-screen',
   templateUrl: './play-screen.component.html',
   styleUrls: ['./play-screen.component.scss']
 })
-export class PlayScreenComponent extends BaseComponent implements OnInit {
+export class PlayScreenComponent extends BaseDirective implements OnInit {
   Status = Status;
-  status: Status;
-  amIMaster: boolean;
+  status?: Status;
+  amIMaster?: boolean;
 
   constructor(
     private gameQuery: GameQuery,

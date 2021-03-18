@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PlayerInfoService } from '../../state/player-info.service';
 import { PlayerInfoQuery } from '../../state/player-info.query';
-import { BaseComponent } from '../../base-objects/base-component';
+import { BaseDirective } from '../../base-objects/base.directive';
 import { RoomService } from '../../services/room.service';
 import { DataLoaderObservable } from '../../../utils/data-loader.observable';
 
@@ -11,11 +11,11 @@ import { DataLoaderObservable } from '../../../utils/data-loader.observable';
   templateUrl: './manage-room.component.html',
   styleUrls: ['./manage-room.component.scss']
 })
-export class ManageRoomComponent extends BaseComponent implements OnInit {
+export class ManageRoomComponent extends BaseDirective implements OnInit {
 
-  roomId: string;
+  roomId?: string;
   name: string;
-  createRoomLoader: DataLoaderObservable<string>;
+  createRoomLoader?: DataLoaderObservable<string>;
 
   constructor(
     private roomService: RoomService,
@@ -24,22 +24,25 @@ export class ManageRoomComponent extends BaseComponent implements OnInit {
     private playerInfoService: PlayerInfoService
   ) {
     super();
-  }
-
-  ngOnInit(): void {
     this.name = this.playerInfoQuery.getName();
   }
 
-  createRoom() {
+  ngOnInit(): void {
+  }
+
+  createRoom(): void {
     this.createRoomLoader = new DataLoaderObservable(this.roomService.createRoom(this.name));
     this.createRoomLoader.subscribe( roomId => this.goToRoom(roomId));
   }
 
-  joinRoom() {
+  joinRoom(): void {
+    if (!this.roomId) {
+      return;
+    }
     this.goToRoom(this.roomId);
   }
 
-  goToRoom(roomId) {
+  goToRoom(roomId: string): void {
     this.playerInfoService.setName(this.name);
     this.router.navigate(['game', roomId]);
   }

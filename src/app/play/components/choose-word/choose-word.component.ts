@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from '../../state/game.service';
-import { BaseComponent } from '../../../core/base-objects/base-component';
+import { BaseDirective } from '../../../core/base-objects/base.directive';
 
 @Component({
   selector: 'hmo-choose-word',
   templateUrl: './choose-word.component.html',
   styleUrls: ['./choose-word.component.scss']
 })
-export class ChooseWordComponent extends BaseComponent implements OnInit {
+export class ChooseWordComponent extends BaseDirective implements OnInit {
 
-  word: string;
+  word?: string;
 
   constructor(
     private gameService: GameService
@@ -20,7 +20,10 @@ export class ChooseWordComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  chooseWord() {
+  chooseWord(): void {
+    if (!this.word) {
+      return;
+    }
     this.gameService.setWord(this.word).subscribe();
   }
 }

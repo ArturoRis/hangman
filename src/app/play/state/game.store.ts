@@ -4,7 +4,7 @@ import { action, arrayAdd, arrayRemove, arrayUpdate, Store, StoreConfig } from '
 export interface GameState {
   id: string;
   currentWord: LetterInfo[];
-  newGuess: GuessInfo;
+  newGuess: GuessInfo | null;
   guesses: GuessInfo[];
   wordGuesses: string[];
   status: Status;
@@ -14,7 +14,7 @@ export interface GameState {
   players: PlayerInfo[];
 }
 
-export type Status = string | 'lose';
+export type Status = string | 'lose' | null;
 
 export interface LetterInfo {
   id: string;
@@ -38,12 +38,12 @@ export function createInitialState(): GameState {
   return {
     status: null,
     currentWord: [],
-    currentTurn: null,
+    currentTurn: '',
     wordGuesses: [],
     errors: 0,
     guesses: [],
-    id: null,
-    master: null,
+    id: '',
+    master: '',
     newGuess: null,
     players: []
   };
@@ -74,19 +74,19 @@ export class GameStore extends Store<GameState> {
   }
 
   @action('Remove player')
-  removePlayer(playerInfo: PlayerInfo) {
+  removePlayer(playerInfo: PlayerInfo): void {
     this.update({
       players: arrayRemove(this.players, playerInfo.id)
     });
   }
 
   @action('Update Master')
-  updateMaster(master: string) {
+  updateMaster(master: string): void {
     this.update({master});
   }
 
   @action('Add player')
-  addPlayer(playerInfo: PlayerInfo) {
+  addPlayer(playerInfo: PlayerInfo): void {
     if (this.players.find( p => p.id === playerInfo.id)) {
       return;
     }
@@ -96,17 +96,17 @@ export class GameStore extends Store<GameState> {
   }
 
   @action('Update status')
-  updateStatus(status: Status) {
+  updateStatus(status: Status): void {
     this.update({status});
   }
 
   @action('Update current word')
-  updateCurrentWord(currentWord: LetterInfo[]) {
+  updateCurrentWord(currentWord: LetterInfo[]): void {
     this.update({currentWord});
   }
 
   @action('Update guess')
-  addGuess(guessInfo: GuessInfo) {
+  addGuess(guessInfo: GuessInfo): void {
     const stateUpdate: Partial<GameState> = {
       guesses: arrayAdd(this.guesses, guessInfo),
       newGuess: guessInfo
@@ -124,18 +124,18 @@ export class GameStore extends Store<GameState> {
   }
 
   @action('Update turn')
-  updateTurn(currentTurn: string) {
+  updateTurn(currentTurn: string): void {
     this.update({currentTurn});
   }
 
   @action('Update word guesses')
-  updateWordGuesses(wordGuess: string) {
+  updateWordGuesses(wordGuess: string): void {
     const wordGuesses = this.getValue().wordGuesses;
     this.update({wordGuesses: arrayAdd(wordGuesses, wordGuess)});
   }
 
   @action('Update player')
-  updatePlayer(player: PlayerInfo) {
+  updatePlayer(player: PlayerInfo): void {
     this.update( {players: arrayUpdate(this.players, player.id, player)});
   }
 }

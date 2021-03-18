@@ -2,7 +2,7 @@ import { Inject, Injectable, OnDestroy } from '@angular/core';
 import { GameState, GameStore, GuessInfo, LetterInfo, PlayerInfo, Status } from './game.store';
 import { SocketService } from '../services/socket.service';
 import { Observable, Subscription } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
@@ -12,7 +12,7 @@ export class GameService implements OnDestroy {
 
   private sub = new Subscription();
   private baseUrl = environment.apiUrl;
-  private roomId: string;
+  private roomId?: string;
 
   constructor(
     private gameStore: GameStore,
@@ -82,34 +82,34 @@ export class GameService implements OnDestroy {
     return `${this.baseUrl}/${url}`;
   }
 
-  private startGame(state: GameState) {
+  private startGame(state: GameState): void {
     this.gameStore.update(state);
   }
 
-  setWord(word: string) {
+  setWord(word: string): Observable<string> {
     const url = this.createUrl(`game/rooms/${this.roomId}/word`);
     return this.httpClient.post(url, {word}, { responseType: 'text' });
   }
 
-  sendLetter(key: string) {
+  sendLetter(key: string): Observable<void> {
     const url = this.createUrl(`game/rooms/${this.roomId}/guesses`);
-    return this.httpClient.post(url, {letter: key});
+    return this.httpClient.post<void>(url, {letter: key});
   }
 
-  sendWordGuess(wordGuess: string) {
+  sendWordGuess(wordGuess: string): Observable<void> {
     const url = this.createUrl(`game/rooms/${this.roomId}/word-guesses`);
     const dto = {
       word: wordGuess
     };
-    return this.httpClient.post(url, dto);
+    return this.httpClient.post<void>(url, dto);
   }
 
-  initGame() {
+  initGame(): Observable<void> {
     const url = this.createUrl(`game/rooms/${this.roomId}/init-game`);
     return this.httpClient.put<void>(url, undefined);
   }
 
-  restartGame() {
+  restartGame(): Observable<void> {
     const url = this.createUrl(`game/rooms/${this.roomId}/restart-game`);
     return this.httpClient.put<void>(url, undefined);
   }

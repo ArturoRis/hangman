@@ -1,21 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from '../../../ui-kit/components/ui-menu/menu-item';
-import { BaseComponent } from '../../base-objects/base-component';
+import { BaseDirective } from '../../base-objects/base.directive';
 
 @Component({
   selector: 'hmo-menu',
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.scss']
 })
-export class MenuComponent extends BaseComponent implements OnInit {
+export class MenuComponent extends BaseDirective implements OnInit {
 
   menu: MenuItem[];
 
   constructor() {
     super();
-  }
-
-  ngOnInit(): void {
     this.menu = [
       {
         route: 'welcome',
@@ -26,6 +23,9 @@ export class MenuComponent extends BaseComponent implements OnInit {
         label: 'Gioca'
       }
     ];
+  }
+
+  ngOnInit(): void {
   }
 
 }

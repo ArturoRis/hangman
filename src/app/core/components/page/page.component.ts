@@ -1,12 +1,12 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
-import { BaseComponent } from '../../base-objects/base-component';
+import { BaseDirective } from '../../base-objects/base.directive';
 
 @Component({
   selector: 'hmo-page',
   templateUrl: './page.component.html',
   styleUrls: ['./page.component.scss']
 })
-export class PageComponent extends BaseComponent implements OnInit {
+export class PageComponent extends BaseDirective implements OnInit {
 
   @HostBinding('class.h-full')
   hFull = true;

@@ -1,7 +1,9 @@
-import { HostBinding, OnDestroy } from '@angular/core';
+import { Component, Directive, HostBinding, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-export abstract class BaseComponent implements OnDestroy {
+// Fake directive
+@Directive({})
+export abstract class BaseDirective implements OnDestroy {
   @HostBinding('class.w-full')
   wFull = true;
 
@@ -10,7 +12,7 @@ export abstract class BaseComponent implements OnDestroy {
 
   private subs = new Subscription();
 
-  protected addSubscription(sub: Subscription) {
+  protected addSubscription(sub: Subscription): void {
     this.subs.add(sub);
   }
 
