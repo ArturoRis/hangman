@@ -24,14 +24,6 @@ export const fadeInAnimation =
   styleUrls: ['./ui-animated-router-outlet.component.scss'],
   animations: [fadeInAnimation]
 })
-export class UiAnimatedRouterOutletComponent extends BaseDirective implements OnInit {
-
-  constructor() {
-    super();
-  }
-
-  ngOnInit(): void {
-  }
-
+export class UiAnimatedRouterOutletComponent {
 }
 

@@ -1,20 +1,36 @@
+<script src="../play-screen/play-screen.component.ts"></script>
 <ng-container *ngIf="showGameKeyboard$ | async">
-  <div *ngIf="(lettersNotGuessed$ | async)?.length">
-    Non presenti:<span class="pl-2" *ngFor="let char of (lettersNotGuessed$ | async)">{{char}}</span>
+  <div class="columns">
+    <div class="column is-half">
+      <div class="tags">
+        <span class="mr-2 has-text-weight-bold">Non presenti</span>
+        <span class="tag is-dark" *ngFor="let char of (lettersNotGuessed$ | async)"
+        >{{char}}</span>
+      </div>
+    </div>
+    <div class="column is-half" *ngIf="wordGuesses$ | async as wordGuesses">
+      <div class="tags">
+        <span class="mr-2 has-text-weight-bold">Tentativi</span>
+        <div class="tag is-dark" *ngFor="let word of wordGuesses"
+        >{{word}}</div>
+      </div>
+    </div>
   </div>
   <div hmoWaitingTurn>
-    <div class="flex flex-wrap justify-around md:mx-auto md:w-10/12">
-      <button
-        *ngFor="let button of BUTTONS"
-        class="m-1 py-3 md:py-3 md:m-1 w-1/4 sm:w-1/6 md:w-1/12"
-        [disabled]="button.isDisabled || button.clickHandler?.loading"
-        (click)="buttonClicked(button)"
-      >{{button.key}}</button>
+    <div class="columns is-mobile is-multiline is-centered">
+      <div class="column is-3-mobile is-2-tablet is-1-desktop" *ngFor="let button of BUTTONS">
+        <button
+          class="is-fullwidth"
+          [class.is-loading]="button.clickHandler?.loading"
+          [disabled]="button.isDisabled"
+          (click)="buttonClicked(button)"
+        >{{button.key}}</button>
+      </div>
     </div>
   </div>
   <hmo-try-to-guess></hmo-try-to-guess>
 </ng-container>
-<div class="my-2 text-xl text-center" *ngIf="showWin !== undefined">
+<div class="my-2 is-size-5 has-text-centered" *ngIf="showWin !== undefined">
   <div class="" *ngIf="showWin">
     Complimenti {{itsMe ? 'hai vinto' : 'a ' + showWin}}!
   </div>
@@ -22,8 +38,9 @@
     La parola non è stata indovinata{{itsMe ? ' :)' : ', peccato :('}}
   </div>
 </div>
-<div class="text-center" *ngIf="showRestart$ | async">
+<div class="has-text-centered" *ngIf="showRestart$ | async">
   <button
-    [disabled]="restartButton?.loading"
-    (click)="restartGame()">Continua</button>
+    [class.is-loading]="restartButton?.loading"
+    (click)="restartGame()"
+  >Continua</button>
 </div>

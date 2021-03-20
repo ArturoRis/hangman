@@ -14,11 +14,3 @@
     </div>
   </ng-template>
 </ng-container>
-<div class="my-2" *ngIf="wordGuesses$ | async as wordGuesses">
-  <span>Tentativi</span>
-  <div class="mt-2 flex flex-wrap">
-    <div class="p-2" *ngFor="let word of wordGuesses">
-      {{word}}
-    </div>
-  </div>
-</div>

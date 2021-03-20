@@ -11,13 +11,18 @@ import { BaseDirective } from '../../../core/base-objects/base.directive';
 export class RoomTitleComponent extends BaseDirective implements OnInit {
 
   roomId$: Observable<string>;
-  tooltiptext = 'Clicca per copiare il link';
+  tooltipText: string;
+  linkCopied = false;
+
+  private linkNotCopiedTooltipText = 'Clicca per copiare il link';
+  private linkCopiedTooltipText = 'Link copiato!';
 
   constructor(
     private gameQuery: GameQuery
   ) {
     super();
     this.roomId$ = this.gameQuery.getId$();
+    this.tooltipText = this.linkNotCopiedTooltipText;
   }
 
   ngOnInit(): void {
@@ -26,8 +31,11 @@ export class RoomTitleComponent extends BaseDirective implements OnInit {
   async getLink(): Promise<void> {
     const toCopy = location.href;
     await navigator.clipboard.writeText(toCopy);
-    const oldTooltip = this.tooltiptext;
-    this.tooltiptext = 'Link copiato!';
-    setTimeout(() => this.tooltiptext = oldTooltip, 2000);
+    this.tooltipText = this.linkCopiedTooltipText;
+    this.linkCopied = true;
+    setTimeout(() => {
+      this.tooltipText = this.linkNotCopiedTooltipText;
+      this.linkCopied = false;
+    }, 2000);
   }
 }

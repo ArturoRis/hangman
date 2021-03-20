@@ -4,8 +4,6 @@ import { Directive, HostBinding } from '@angular/core';
   selector: '[hmoUiTitle]'
 })
 export class UiTitleDirective {
-
   @HostBinding('class')
-  classes = 'text-3xl py-2 block text-center lg:text-left';
-
+  classes = 'is-size-4-mobile is-size-3-tablet py-2 has-text-centered-mobile has-text-left-desktop';
 }

@@ -1,23 +1,31 @@
 <div hmoUiTitle>Crea o unisciti ad una stanza</div>
-<div class="block mb-1">
-  <div class="input-group w-full sm:w-2/3 md:w-1/3 lg:w-1/4">
-    <label for="name">
-      Inserisci il tuo nome:
+<div class="columns mb-1">
+  <div class="field column is-8-mobile is-4-tablet is-3-desktop">
+    <label class="label" for="name">
+      Inserisci il tuo nome
     </label>
-    <input id="name" type="text" [(ngModel)]="name" required>
+    <div class="control">
+      <input id="name" type="text" [(ngModel)]="name" required>
+    </div>
   </div>
 </div>
 <hr>
-<div class="flex flex-col space-y-2 md:space-y-0 md:flex-row justify-center items-center block">
-  <div class="w-4/5 md:w-4/12 text-center">
-    <button class="w-full" (click)="createRoom()" [disabled]="!name || createRoomLoader?.loading">Crea stanza</button>
+<div class="columns is-mobile is-multiline is-align-items-center is-centered">
+  <div class="column is-10-mobile is-5-tablet is-4-desktop">
+    <button class="is-fullwidth" (click)="createRoom()" [disabled]="!name || createRoomLoader?.loading">Crea stanza</button>
   </div>
-  <div class="w-4/5 md:w-2/12 text-center">oppure</div>
-  <div class="w-4/5 md:w-4/12">
-    <div class="input-group stack text-center">
-      <label for="roomId" class="sr-only">Id stanza</label>
-      <input id="roomId" type="text" placeholder="Id stanza" [(ngModel)]="roomId">
-      <button (click)="joinRoom()" [disabled]="!name || !roomId">Unisciti</button>
+  <div class="column is-10-mobile is-2-tablet has-text-centered">oppure</div>
+  <div class="column is-10-mobile is-5-tablet is-4-desktop">
+    <div class="field has-text-centered is-fullwidth">
+      <label for="roomId" class="label is-sr-only">Id stanza</label>
+      <div class="field has-addons">
+        <div class="control is-expanded">
+          <input id="roomId" type="text" placeholder="Id stanza" [(ngModel)]="roomId">
+        </div>
+        <div class="control">
+          <button (click)="joinRoom()" [disabled]="!name || !roomId">Unisciti</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

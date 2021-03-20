@@ -1,61 +1,28 @@
-/* HEX */
+@charset "utf-8";
+@import "~bulma/sass/utilities/functions";
+
+// Initial var
+$white-ter: #f7f7f9ff;
+$grey-darker: #2b2d42ff;
+$grey-dark: #062f58;
+
+// Derived var
 $primary: #41e2baff;
-$secondary: #f7e733ff;
-$bkg-primary: #f4e8c1ff;
-$bkg-secondary: #f7f7f9ff;
-$active1: #2b2d42ff;
-$active2: #083d77ff;
+$hr-background-color: $grey-darker;
 
-/* GRADIENT */
-$gradient-top: linear-gradient(0deg, #2b2d42ff, #083d77ff, #41e2baff, #f7e733ff, #f4e8c1ff, #f7f7f9ff);
-$gradient-right: linear-gradient(90deg, #2b2d42ff, #083d77ff, #41e2baff, #f7e733ff, #f4e8c1ff, #f7f7f9ff);
-$gradient-bottom: linear-gradient(180deg, #2b2d42ff, #083d77ff, #41e2baff, #f7e733ff, #f4e8c1ff, #f7f7f9ff);
-$gradient-left: linear-gradient(270deg, #2b2d42ff, #083d77ff, #41e2baff, #f7e733ff, #f4e8c1ff, #f7f7f9ff);
-$gradient-top-right: linear-gradient(45deg, #2b2d42ff, #083d77ff, #41e2baff, #f7e733ff, #f4e8c1ff, #f7f7f9ff);
-$gradient-bottom-right: linear-gradient(135deg, #2b2d42ff, #083d77ff, #41e2baff, #f7e733ff, #f4e8c1ff, #f7f7f9ff);
-$gradient-top-left: linear-gradient(225deg, #2b2d42ff, #083d77ff, #41e2baff, #f7e733ff, #f4e8c1ff, #f7f7f9ff);
-$gradient-bottom-left: linear-gradient(315deg, #2b2d42ff, #083d77ff, #41e2baff, #f7e733ff, #f4e8c1ff, #f7f7f9ff);
-$gradient-radial: radial-gradient(#2b2d42ff, #083d77ff, #41e2baff, #f7e733ff, #f4e8c1ff, #f7f7f9ff);
+// New var
+$alternative: #f7e733ff;
 
-@tailwind base;
-
-input {
-  @apply border rounded px-3 py-1 w-auto;
-}
-
-button {
-  @apply px-3 py-1 rounded bg-primary;
-
-  &:hover:not(:disabled) {
-    @apply shadow-md;
-  }
-
-  &:disabled {
-    @apply bg-gray-400 border-gray-500 text-gray-600 cursor-not-allowed;
-  }
-}
-
-.stack {
-  input {
-    @apply rounded-b-none w-full border-b-0;
-  }
-
-  button {
-    @apply rounded-t-none w-full;
-  }
-}
+$secondary: #f4e8c1ff;
+$secondary-invert: findColorInvert($secondary);
+$custom-colors: ("secondary": ($secondary, $secondary-invert));
 
 hr {
-  height: .2rem;
-  @apply bg-gray-600 rounded-full my-2;
+  border-radius: 9999px;
 }
 
 body {
-  @apply h-screen text-active1;
-}
-
-.input-group {
-  @apply flex flex-col;
+  min-height: 100vh;
 }
 
 .tooltip {
@@ -75,8 +42,35 @@ body {
   @apply visible;
 }
 
-@tailwind components;
+.is-line-height-1 {
+  line-height: 1;
+}
 
-@tailwind utilities;
+hr {
+  border-radius: 9999px;
+}
+
+@import "~bulma/sass/utilities/_all";
+@import "~bulma/sass/base/_all";
+
+$navbar-breakpoint: $tablet;
+$navbar-item-hover-color: $scheme-invert;
+$navbar-item-active-background-color: $scheme-main-bis;
+
+@import "~bulma/sass/elements/_all";
+@import "~bulma/sass/form/_all";
+@import "~bulma/sass/components/_all";
+@import "~bulma/sass/grid/_all";
+@import "~bulma/sass/helpers/_all";
+@import "~bulma/sass/layout/_all";
+
+// Extensions
+@import '~@creativebulma/bulma-tooltip';
+
+span[data-tooltip] {
+  color: $link;
+  text-decoration: underline;
+  border: none;
+}
 
 

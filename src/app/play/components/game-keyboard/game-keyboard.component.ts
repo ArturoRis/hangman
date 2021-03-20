@@ -20,6 +20,7 @@ export class GameKeyboardComponent extends BaseDirective implements OnInit {
   showWin?: string | boolean;
   itsMe?: boolean;
   lettersNotGuessed$: Observable<string[]>;
+  wordGuesses$: Observable<string[]>;
   restartButton?: DataLoaderObservable<void>;
 
   constructor(
@@ -42,6 +43,8 @@ export class GameKeyboardComponent extends BaseDirective implements OnInit {
       ),
       shareReplay(1)
     );
+
+    this.wordGuesses$ = this.gameQuery.getWordGuesses$();
 
     this.showGameKeyboard$ = this.gameQuery.getStatus$().pipe(
       map((status) => !status)

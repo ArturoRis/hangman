@@ -8,8 +8,9 @@ import { BaseDirective } from '../../../core/base-objects/base.directive';
   styleUrls: ['./ui-menu.component.scss']
 })
 export class UiMenuComponent extends BaseDirective implements OnInit {
-
   @Input() menu?: MenuItem[];
+
+  isActive = false;
 
   constructor() {
     super();

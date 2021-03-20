@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from '../../state/game.service';
 import { BaseDirective } from '../../../core/base-objects/base.directive';
+import { DataLoaderObservable } from '../../../utils/data-loader.observable';
 
 @Component({
   selector: 'hmo-choose-word',
@@ -10,6 +11,7 @@ import { BaseDirective } from '../../../core/base-objects/base.directive';
 export class ChooseWordComponent extends BaseDirective implements OnInit {
 
   word?: string;
+  chooseWordButton?: DataLoaderObservable<string>;
 
   constructor(
     private gameService: GameService
@@ -24,6 +26,9 @@ export class ChooseWordComponent extends BaseDirective implements OnInit {
     if (!this.word) {
       return;
     }
-    this.gameService.setWord(this.word).subscribe();
+    this.chooseWordButton = new DataLoaderObservable(
+      this.gameService.setWord(this.word)
+    );
+    this.chooseWordButton.subscribe();
   }
 }

@@ -1,12 +1,29 @@
+$border-style: 2px solid;
+$border-radius: 20%;
+$padding-y: .2rem;
+$padding-x: .4rem;
+
 .letter {
-  @apply inline-block w-10 text-center p-2 border-r-2 border-t-2 border-b-2 border-active2;
+  font-family: Monospaced, monospace;
+  font-size: x-large;
+  width: 2.3rem;
+  text-align: center;
+  padding: $padding-y $padding-x;
+  border-color: #062f58;
+  border-top: $border-style;
+  border-bottom: $border-style;
+  border-right: $border-style;
 
   &:first-child {
     @apply rounded-l-lg border-l-2;
+    border-left: $border-style;
+    border-top-left-radius: $border-radius;
+    border-bottom-left-radius: $border-radius;
   }
 
   &:last-child {
-    @apply rounded-r-lg;
+    border-top-right-radius: $border-radius;
+    border-bottom-right-radius: $border-radius;
   }
 }
 

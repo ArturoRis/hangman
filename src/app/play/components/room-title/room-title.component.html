@@ -1,4 +1,9 @@
-<div hmoUiTitle>Stanza: <span class="tooltip" (click)="getLink()">{{roomId$ | async}}<span
-  class="tooltiptext">{{tooltiptext}}</span></span></div>
+<div hmoUiTitle>Stanza:
+  <span
+    [class.has-tooltip-active]="linkCopied"
+    (click)="getLink()"
+    [attr.data-tooltip]="tooltipText"
+  >{{roomId$ | async}}</span>
+</div>
 <hmo-players-viewer></hmo-players-viewer>
 <hmo-ui-animated-router-outlet></hmo-ui-animated-router-outlet>

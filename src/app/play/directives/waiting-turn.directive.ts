@@ -16,8 +16,6 @@ export class WaitingTurnDirective extends BaseDirective implements OnInit {
     private playerInfoQuery: PlayerInfoQuery
   ) {
     super();
-    this.wFull = false;
-    this.block = false;
   }
 
   ngOnInit(): void {

@@ -14,7 +14,6 @@ export class TryToGuessComponent extends BaseDirective implements OnInit {
 
   turnsToWait = 0;
   wordGuess?: string;
-  wordGuesses$: Observable<string[]>;
   amINotMaster$: Observable<boolean>;
 
   constructor(
@@ -22,8 +21,6 @@ export class TryToGuessComponent extends BaseDirective implements OnInit {
     private gameQuery: GameQuery
   ) {
     super();
-    this.wordGuesses$ = this.gameQuery.getWordGuesses$();
-
     this.amINotMaster$ = this.gameQuery.getAmIMaster$().pipe(
       map(amIMaster => !amIMaster)
     );

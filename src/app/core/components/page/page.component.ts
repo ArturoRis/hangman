@@ -1,5 +1,6 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { BaseDirective } from '../../base-objects/base.directive';
+import { MenuItem } from '../../../ui-kit/components/ui-menu/menu-item';
 
 @Component({
   selector: 'hmo-page',
@@ -7,12 +8,20 @@ import { BaseDirective } from '../../base-objects/base.directive';
   styleUrls: ['./page.component.scss']
 })
 export class PageComponent extends BaseDirective implements OnInit {
-
-  @HostBinding('class.h-full')
-  hFull = true;
+  menu: MenuItem[];
 
   constructor() {
     super();
+    this.menu = [
+      {
+        route: 'welcome',
+        label: 'Benvenuto'
+      },
+      {
+        route: 'manage-room',
+        label: 'Gioca'
+      }
+    ];
   }
 
   ngOnInit(): void {
