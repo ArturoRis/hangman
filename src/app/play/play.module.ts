@@ -15,6 +15,8 @@ import { RoomGuard } from './services/room.guard';
 import { UiKitModule } from '../ui-kit/ui-kit.module';
 import { RoomTitleComponent } from './components/room-title/room-title.component';
 import { TryToGuessComponent } from './components/try-to-guess/try-to-guess.component';
+import { GuessViewerComponent } from './components/guess-viewer/guess-viewer.component';
+import { WordGuessViewerComponent } from './components/word-guess-viewer/word-guess-viewer.component';
 
 
 @NgModule({
@@ -28,7 +30,9 @@ import { TryToGuessComponent } from './components/try-to-guess/try-to-guess.comp
     WaitingTurnDirective,
     RoomComponent,
     RoomTitleComponent,
-    TryToGuessComponent
+    TryToGuessComponent,
+    GuessViewerComponent,
+    WordGuessViewerComponent
   ],
   imports: [
     CommonModule,

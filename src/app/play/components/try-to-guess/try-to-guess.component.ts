@@ -3,7 +3,7 @@ import { BaseDirective } from '../../../core/base-objects/base.directive';
 import { GameService } from '../../state/game.service';
 import { GameQuery } from '../../state/game.query';
 import { map, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'hmo-try-to-guess',
@@ -38,13 +38,17 @@ export class TryToGuessComponent extends BaseDirective implements OnInit {
     );
   }
 
-  sendTry(): void {
+  sendTry(): Observable<void> {
     if (!this.wordGuess) {
-      return;
+      return of();
     }
-    this.turnsToWait = 3;
-    this.gameService.sendWordGuess(this.wordGuess).subscribe(
-      () => this.wordGuess = '',
-      () => this.turnsToWait = 0);
+    return this.gameService.sendWordGuess(this.wordGuess).pipe(
+      tap(
+        () => {
+          this.wordGuess = '';
+          this.turnsToWait = 3;
+        }
+      )
+    );
   }
 }

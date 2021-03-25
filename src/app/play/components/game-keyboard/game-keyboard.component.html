@@ -1,31 +1,13 @@
 <script src="../play-screen/play-screen.component.ts"></script>
 <ng-container *ngIf="showGameKeyboard$ | async">
-  <div class="columns">
-    <div class="column is-half">
-      <div class="tags">
-        <span class="mr-2 has-text-weight-bold">Non presenti</span>
-        <span class="tag is-dark" *ngFor="let char of (lettersNotGuessed$ | async)"
-        >{{char}}</span>
-      </div>
-    </div>
-    <div class="column is-half" *ngIf="wordGuesses$ | async as wordGuesses">
-      <div class="tags">
-        <span class="mr-2 has-text-weight-bold">Tentativi</span>
-        <div class="tag is-dark" *ngFor="let word of wordGuesses"
-        >{{word}}</div>
-      </div>
-    </div>
-  </div>
   <div hmoWaitingTurn>
-    <div class="columns is-mobile is-multiline is-centered">
-      <div class="column is-3-mobile is-2-tablet is-1-desktop" *ngFor="let button of BUTTONS">
-        <button
-          class="is-fullwidth"
-          [class.is-loading]="button.clickHandler?.loading"
-          [disabled]="button.isDisabled"
-          (click)="buttonClicked(button)"
-        >{{button.key}}</button>
-      </div>
+    <div class="is-flex is-flex-wrap-wrap is-justify-content-space-around">
+      <button
+        *ngFor="let button of BUTTONS"
+        class="keyboard-button"
+        [disabled]="button.isDisabled"
+        [asyncClick]="buttonClicked.bind(this, button)"
+      >{{button.key}}</button>
     </div>
   </div>
   <hmo-try-to-guess></hmo-try-to-guess>
@@ -40,7 +22,6 @@
 </div>
 <div class="has-text-centered" *ngIf="showRestart$ | async">
   <button
-    [class.is-loading]="restartButton?.loading"
-    (click)="restartGame()"
+    [asyncClick]="restartGame.bind(this)"
   >Continua</button>
 </div>

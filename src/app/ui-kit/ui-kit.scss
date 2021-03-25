@@ -2,13 +2,20 @@
 @import "~bulma/sass/utilities/functions";
 
 // Initial var
-$white-ter: #f7f7f9ff;
+$scheme-main: #f7f7f9ff;
 $grey-darker: #2b2d42ff;
 $grey-dark: #062f58;
 
 // Derived var
 $primary: #41e2baff;
 $hr-background-color: $grey-darker;
+
+$control-border-width: 1px;
+$control-height: 2.2rem;
+$control-padding-horizontal: calc(0.65em - #{$control-border-width});
+$button-padding-horizontal: .75em;
+
+//$button-padding-vertical: calc(.2em - #{$control-border-width});
 
 // New var
 $alternative: #f7e733ff;
@@ -21,8 +28,8 @@ hr {
   border-radius: 9999px;
 }
 
-body {
-  min-height: 100vh;
+html, body {
+  height: 100%;
 }
 
 .tooltip {
@@ -44,6 +51,18 @@ body {
 
 .is-line-height-1 {
   line-height: 1;
+}
+
+.is-full-height {
+  height: 100%;
+}
+
+.is-card {
+  border: 1px solid #c7c7c7;
+  padding: .5rem;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px #d8d8d8;
+  margin-top: 1rem;
 }
 
 hr {

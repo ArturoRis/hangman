@@ -1,0 +1,7 @@
+<span class="mr-2 has-text-weight-bold">Tentativi</span>
+<div class="tags">
+  <span
+    *ngFor="let word of (wordGuesses$ | async)"
+    class="tag is-dark"
+  >{{word}}</span>
+</div>

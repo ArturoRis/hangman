@@ -1,4 +1,4 @@
-import { Component, Directive, HostBinding, OnDestroy } from '@angular/core';
+import { Directive, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 // Fake directive

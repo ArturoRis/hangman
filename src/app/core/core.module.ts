@@ -8,13 +8,16 @@ import { ManageRoomComponent } from './components/manage-room/manage-room.compon
 import { LeaveRoomGuard } from './services/leave-room.guard';
 import { UiKitModule } from '../ui-kit/ui-kit.module';
 import { PlayerIdInterceptorProvider } from './services/player-id.interceptor';
+import { FooterComponent } from './components/footer/footer.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
   declarations: [
     PageComponent,
     WelcomeComponent,
-    ManageRoomComponent
+    ManageRoomComponent,
+    FooterComponent
   ],
   exports: [
     PageComponent
@@ -23,7 +26,8 @@ import { PlayerIdInterceptorProvider } from './services/player-id.interceptor';
     CommonModule,
     FormsModule,
     CoreRoutingModule,
-    UiKitModule
+    UiKitModule,
+    FontAwesomeModule
   ],
   providers: [
     LeaveRoomGuard,

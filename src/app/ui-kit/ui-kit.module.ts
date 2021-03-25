@@ -7,6 +7,7 @@ import { UiContainerDirective } from './directives/ui-container.directive';
 import { UiTitleDirective } from './directives/ui-title.directive';
 import { UiAnimatedRouterOutletComponent } from './components/ui-animated-router-outlet/ui-animated-router-outlet.component';
 import { UiDirectives } from './directives/ui-directives';
+import { ButtonAsyncClickDirective } from './directives/button-async-click.directive';
 
 
 @NgModule({
@@ -16,7 +17,8 @@ import { UiDirectives } from './directives/ui-directives';
     UiContainerDirective,
     UiTitleDirective,
     UiAnimatedRouterOutletComponent,
-    ...UiDirectives
+    ...UiDirectives,
+    ButtonAsyncClickDirective
   ],
   imports: [
     CommonModule,
@@ -28,7 +30,8 @@ import { UiDirectives } from './directives/ui-directives';
     UiContainerDirective,
     UiTitleDirective,
     UiAnimatedRouterOutletComponent,
-    ...UiDirectives
+    ...UiDirectives,
+    ButtonAsyncClickDirective
   ]
 })
 export class UiKitModule {

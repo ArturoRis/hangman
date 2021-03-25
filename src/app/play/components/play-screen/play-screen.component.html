@@ -1,10 +1,24 @@
-<div class="pt-2">
+<div>
   <ng-container *ngIf="status === Status.CHOOSE_WORD && amIMaster">
     <hmo-choose-word></hmo-choose-word>
   </ng-container>
 
   <ng-container *ngIf="status === Status.PLAY">
-    <hmo-hangman></hmo-hangman>
+    <div class="columns is-mobile is-justify-content-center">
+      <div class="column is-5-mobile is-4-tablet is-3-desktop">
+        <hmo-hangman></hmo-hangman>
+      </div>
+      <div class="column is-8-tablet is-6-desktop">
+        <div class="columns is-mobile is-multiline is-full-height">
+          <div class="column is-full-mobile is-half-desktop">
+            <hmo-guess-viewer></hmo-guess-viewer>
+          </div>
+          <div class="column is-full-mobile is-half-desktop">
+            <hmo-word-guess-viewer></hmo-word-guess-viewer>
+          </div>
+        </div>
+      </div>
+    </div>
     <hmo-guessing-word></hmo-guessing-word>
     <hmo-game-keyboard></hmo-game-keyboard>
   </ng-container>

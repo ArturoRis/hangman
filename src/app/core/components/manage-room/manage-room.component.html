@@ -1,29 +1,35 @@
-<div hmoUiTitle>Crea o unisciti ad una stanza</div>
-<div class="columns mb-1">
-  <div class="field column is-8-mobile is-4-tablet is-3-desktop">
-    <label class="label" for="name">
-      Inserisci il tuo nome
-    </label>
-    <div class="control">
-      <input id="name" type="text" [(ngModel)]="name" required>
-    </div>
-  </div>
+<div hmoUiTitle class="is-card">
+  <ng-container *ngIf="roomId$ | async as roomId; else elseTitle">
+    Unisciti alla stanza <strong>{{roomId}}</strong>
+  </ng-container>
+  <ng-template #elseTitle>
+    Crea stanza
+  </ng-template>
 </div>
-<hr>
-<div class="columns is-mobile is-multiline is-align-items-center is-centered">
-  <div class="column is-10-mobile is-5-tablet is-4-desktop">
-    <button class="is-fullwidth" (click)="createRoom()" [disabled]="!name || createRoomLoader?.loading">Crea stanza</button>
-  </div>
-  <div class="column is-10-mobile is-2-tablet has-text-centered">oppure</div>
-  <div class="column is-10-mobile is-5-tablet is-4-desktop">
-    <div class="field has-text-centered is-fullwidth">
-      <label for="roomId" class="label is-sr-only">Id stanza</label>
+<div class="is-card">
+  <div class="columns mb-1">
+    <div class="field column is-12-mobile is-8-tablet is-6-desktop">
+      <label class="label" for="name">
+        Inserisci il tuo nome
+      </label>
       <div class="field has-addons">
         <div class="control is-expanded">
-          <input id="roomId" type="text" placeholder="Id stanza" [(ngModel)]="roomId">
+          <input id="name" type="text" [(ngModel)]="name" required>
         </div>
         <div class="control">
-          <button (click)="joinRoom()" [disabled]="!name || !roomId">Unisciti</button>
+          <ng-container *ngIf="roomId$ | async as roomId; else elseBlock">
+              <button
+                [asyncClick]="joinRoom.bind(this, roomId)"
+                [disabled]="!name || !roomId"
+              >Unisciti</button>
+          </ng-container>
+          <ng-template #elseBlock>
+            <button
+              class="is-fullwidth"
+              [asyncClick]="createRoom.bind(this)"
+              [disabled]="!name"
+            >Crea stanza</button>
+          </ng-template>
         </div>
       </div>
     </div>

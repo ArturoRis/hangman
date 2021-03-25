@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PlayerInfoService } from '../../state/player-info.service';
 import { PlayerInfoQuery } from '../../state/player-info.query';
 import { BaseDirective } from '../../base-objects/base.directive';
 import { RoomService } from '../../services/room.service';
-import { DataLoaderObservable } from '../../../utils/data-loader.observable';
+import { Observable } from 'rxjs';
+import { map, shareReplay, switchMap } from 'rxjs/operators';
+import { fromPromise } from 'rxjs/internal-compatibility';
 
 @Component({
   selector: 'hmo-manage-room',
@@ -13,37 +15,40 @@ import { DataLoaderObservable } from '../../../utils/data-loader.observable';
 })
 export class ManageRoomComponent extends BaseDirective implements OnInit {
 
-  roomId?: string;
+  roomId$: Observable<string | undefined>;
   name: string;
-  createRoomLoader?: DataLoaderObservable<string>;
 
   constructor(
     private roomService: RoomService,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private playerInfoQuery: PlayerInfoQuery,
     private playerInfoService: PlayerInfoService
   ) {
     super();
     this.name = this.playerInfoQuery.getName();
+
+    this.roomId$ = this.activatedRoute.queryParamMap.pipe(
+      map( query => query.get('r') as string),
+      shareReplay()
+    );
   }
 
   ngOnInit(): void {
   }
 
-  createRoom(): void {
-    this.createRoomLoader = new DataLoaderObservable(this.roomService.createRoom(this.name));
-    this.createRoomLoader.subscribe( roomId => this.goToRoom(roomId));
+  createRoom(): Observable<boolean> {
+    return this.roomService.createRoom(this.name).pipe(
+      switchMap( roomId => this.goToRoom(roomId))
+    );
   }
 
-  joinRoom(): void {
-    if (!this.roomId) {
-      return;
-    }
-    this.goToRoom(this.roomId);
+  joinRoom(roomId: string): Observable<boolean> {
+    return this.goToRoom(roomId);
   }
 
-  goToRoom(roomId: string): void {
+  goToRoom(roomId: string): Observable<boolean> {
     this.playerInfoService.setName(this.name);
-    this.router.navigate(['game', roomId]);
+    return fromPromise(this.router.navigate(['game', roomId, 'play']));
   }
 }

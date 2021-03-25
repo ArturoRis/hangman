@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { GameService } from '../../state/game.service';
 import { GameQuery } from '../../state/game.query';
 import { BaseDirective } from '../../../core/base-objects/base.directive';
-import { filter, first, map, shareReplay, tap } from 'rxjs/operators';
+import { filter, map, shareReplay, tap } from 'rxjs/operators';
 import { combineLatest, Observable } from 'rxjs';
 import { PlayerInfoQuery } from '../../../core/state/player-info.query';
-import { DataLoaderObservable } from '../../../utils/data-loader.observable';
 
 @Component({
   selector: 'hmo-game-keyboard',
@@ -19,9 +18,6 @@ export class GameKeyboardComponent extends BaseDirective implements OnInit {
   showGameKeyboard$: Observable<boolean>;
   showWin?: string | boolean;
   itsMe?: boolean;
-  lettersNotGuessed$: Observable<string[]>;
-  wordGuesses$: Observable<string[]>;
-  restartButton?: DataLoaderObservable<void>;
 
   constructor(
     private gameService: GameService,
@@ -35,16 +31,6 @@ export class GameKeyboardComponent extends BaseDirective implements OnInit {
         isDisabled: false
       });
     }
-
-    this.lettersNotGuessed$ = this.gameQuery.getGuesses$().pipe(
-      map( guesses => guesses
-        .filter( g => !g.ids || !g.ids.length)
-        .map( g => g.letter)
-      ),
-      shareReplay(1)
-    );
-
-    this.wordGuesses$ = this.gameQuery.getWordGuesses$();
 
     this.showGameKeyboard$ = this.gameQuery.getStatus$().pipe(
       map((status) => !status)
@@ -95,11 +81,10 @@ export class GameKeyboardComponent extends BaseDirective implements OnInit {
 
   }
 
-  buttonClicked(button: GKButton): void {
-    button.clickHandler = new DataLoaderObservable(this.gameService.sendLetter(button.key));
-    button.clickHandler.subscribe( () => {
-      this.disableButton(button.key);
-    });
+  buttonClicked(button: GKButton): Observable<void> {
+    return this.gameService.sendLetter(button.key).pipe(
+      tap( () => this.disableButton(button.key))
+    );
   }
 
   disableButton(key: string): void {
@@ -109,12 +94,8 @@ export class GameKeyboardComponent extends BaseDirective implements OnInit {
     }
   }
 
-  restartGame(): void {
-    if (this.restartButton && this.restartButton.loading) {
-      return;
-    }
-    this.restartButton = new DataLoaderObservable<void>(this.gameService.restartGame());
-    this.restartButton.subscribe();
+  restartGame(): Observable<void> {
+    return this.gameService.restartGame();
   }
 
   private enableAllButtons(): void {
@@ -125,5 +106,4 @@ export class GameKeyboardComponent extends BaseDirective implements OnInit {
 interface GKButton {
   key: string;
   isDisabled: boolean;
-  clickHandler?: DataLoaderObservable<any>;
 }

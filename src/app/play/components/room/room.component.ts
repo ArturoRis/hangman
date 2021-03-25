@@ -3,7 +3,6 @@ import { BaseDirective } from '../../../core/base-objects/base.directive';
 import { GameService } from '../../state/game.service';
 import { GameQuery } from '../../state/game.query';
 import { Observable } from 'rxjs';
-import { DataLoaderObservable } from '../../../utils/data-loader.observable';
 
 @Component({
   selector: 'hmo-room',
@@ -13,7 +12,6 @@ import { DataLoaderObservable } from '../../../utils/data-loader.observable';
 export class RoomComponent extends BaseDirective implements OnInit {
 
   amIMaster$: Observable<boolean>;
-  startButton?: DataLoaderObservable<void>;
 
   constructor(
     private gameService: GameService,
@@ -27,11 +25,7 @@ export class RoomComponent extends BaseDirective implements OnInit {
 
   }
 
-  startGame(): void {
-    if (this.startButton && this.startButton.loading) {
-      return;
-    }
-    this.startButton = new DataLoaderObservable<void>(this.gameService.initGame());
-    this.startButton.subscribe();
+  startGame(): Observable<void> {
+    return this.gameService.initGame();
   }
 }

@@ -11,6 +11,7 @@ import { AkitaNgDevtools } from '@datorama/akita-ngdevtools';
 import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { IdTokenProvider } from './id-token.provider';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { IdTokenProvider } from './id-token.provider';
     BrowserAnimationsModule,
     CoreModule,
     AppRoutingModule,
-    environment.production ? [] : AkitaNgDevtools
+    environment.production ? [] : AkitaNgDevtools,
+    FontAwesomeModule
   ],
   providers: [
     {

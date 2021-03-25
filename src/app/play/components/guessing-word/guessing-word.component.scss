@@ -1,29 +1,32 @@
 $border-style: 2px solid;
+$border-style-half: 1px solid;
 $border-radius: 20%;
 $padding-y: .2rem;
-$padding-x: .4rem;
+$padding-x: .35rem;
 
 .letter {
   font-family: Monospaced, monospace;
   font-size: x-large;
-  width: 2.3rem;
+  line-height: 1;
   text-align: center;
   padding: $padding-y $padding-x;
   border-color: #062f58;
   border-top: $border-style;
   border-bottom: $border-style;
-  border-right: $border-style;
+  border-right: $border-style-half;
+  border-left: $border-style-half;
 
   &:first-child {
-    @apply rounded-l-lg border-l-2;
     border-left: $border-style;
     border-top-left-radius: $border-radius;
     border-bottom-left-radius: $border-radius;
+    border-left: $border-style;
   }
 
   &:last-child {
     border-top-right-radius: $border-radius;
     border-bottom-right-radius: $border-radius;
+    border-right: $border-style;
   }
 }
 

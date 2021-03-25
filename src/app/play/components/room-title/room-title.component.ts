@@ -28,8 +28,8 @@ export class RoomTitleComponent extends BaseDirective implements OnInit {
   ngOnInit(): void {
   }
 
-  async getLink(): Promise<void> {
-    const toCopy = location.href;
+  async getLink(roomId: string): Promise<void> {
+    const toCopy = location.host + '/#/manage-room?r=' + roomId;
     await navigator.clipboard.writeText(toCopy);
     this.tooltipText = this.linkCopiedTooltipText;
     this.linkCopied = true;
