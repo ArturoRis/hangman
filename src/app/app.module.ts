@@ -12,6 +12,7 @@ import { environment } from '../environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { IdTokenProvider } from './id-token.provider';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { VersionTokenProvider } from './version.provider';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
       useClass: HashLocationStrategy,
       provide: LocationStrategy
     },
-    IdTokenProvider
+    IdTokenProvider,
+    VersionTokenProvider
     // { provide: NG_ENTITY_SERVICE_CONFIG, useValue: { baseUrl: 'https://jsonplaceholder.typicode.com' }}
   ],
   bootstrap: [AppComponent]

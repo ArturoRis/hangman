@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { VERSION_TOKEN } from '../../../version.provider';
 
 @Component({
   selector: 'hmo-footer',
@@ -8,9 +9,14 @@ import { faHeart } from '@fortawesome/free-solid-svg-icons';
 })
 export class FooterComponent implements OnInit {
 
+  version: string;
   faHearth = faHeart;
 
-  constructor() { }
+  constructor(
+    @Inject(VERSION_TOKEN) version: string
+  ) {
+    this.version = version;
+  }
 
   ngOnInit(): void {
   }
