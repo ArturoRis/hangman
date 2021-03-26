@@ -49,6 +49,6 @@ export class ManageRoomComponent extends BaseDirective implements OnInit {
 
   goToRoom(roomId: string): Observable<boolean> {
     this.playerInfoService.setName(this.name);
-    return fromPromise(this.router.navigate(['game', roomId, 'play']));
+    return fromPromise(this.router.navigate(['game', roomId]));
   }
 }

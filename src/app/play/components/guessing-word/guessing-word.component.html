@@ -2,5 +2,6 @@
     <span
       *ngFor="let letter of (letters$ | async)"
       class="letter"
-    >{{letter}}</span>
+      [innerHTML]="letter"
+    ></span>
 </div>

@@ -10,7 +10,6 @@ import { ChooseWordComponent } from './components/choose-word/choose-word.compon
 import { FormsModule } from '@angular/forms';
 import { PlayersViewerComponent } from './components/players-viewer/players-viewer.component';
 import { WaitingTurnDirective } from './directives/waiting-turn.directive';
-import { RoomComponent } from './components/room/room.component';
 import { RoomGuard } from './services/room.guard';
 import { UiKitModule } from '../ui-kit/ui-kit.module';
 import { RoomTitleComponent } from './components/room-title/room-title.component';
@@ -28,7 +27,6 @@ import { WordGuessViewerComponent } from './components/word-guess-viewer/word-gu
     ChooseWordComponent,
     PlayersViewerComponent,
     WaitingTurnDirective,
-    RoomComponent,
     RoomTitleComponent,
     TryToGuessComponent,
     GuessViewerComponent,

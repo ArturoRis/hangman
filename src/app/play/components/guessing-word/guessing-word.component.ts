@@ -19,8 +19,8 @@ export class GuessingWordComponent extends BaseDirective implements OnInit {
     this.letters$ = this.gameQuery.getWord$().pipe(
       filter(word => !!word && !!word.length),
       map( letters => letters.map( l => {
-        if (!l) {
-          return ' ';
+        if (!l.letter) {
+          return '&nbsp;';
         }
         if (!l.isGuessed) {
           return '_';

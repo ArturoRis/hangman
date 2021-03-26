@@ -35,12 +35,6 @@ export class GameService implements OnDestroy {
           this.gameStore.addPlayer(player);
         })
       ),
-      this.socketService.getMessages$<GameState>('go-to-start').pipe(
-        tap(({data: state}) => {
-          this.gameStore.update(state);
-          this.router.navigate(['game', state.id, 'play']);
-        })
-      ),
       this.socketService.getMessages$<Status>('finish-game').pipe(
         tap(({data: status}) => {
           this.gameStore.updateStatus(status);
@@ -102,11 +96,6 @@ export class GameService implements OnDestroy {
       word: wordGuess
     };
     return this.httpClient.post<void>(url, dto);
-  }
-
-  initGame(): Observable<void> {
-    const url = this.createUrl(`game/rooms/${this.roomId}/init-game`);
-    return this.httpClient.put<void>(url, undefined);
   }
 
   restartGame(): Observable<void> {
