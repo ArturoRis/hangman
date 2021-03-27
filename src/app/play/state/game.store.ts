@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { action, arrayAdd, arrayRemove, arrayUpdate, Store, StoreConfig } from '@datorama/akita';
+import { action, arrayAdd, arrayRemove, arrayUpdate, arrayUpsert, Store, StoreConfig } from '@datorama/akita';
 
 export interface GameState {
   id: string;
@@ -87,11 +87,8 @@ export class GameStore extends Store<GameState> {
 
   @action('Add player')
   addPlayer(playerInfo: PlayerInfo): void {
-    if (this.players.find( p => p.id === playerInfo.id)) {
-      return;
-    }
     this.update({
-      players: arrayAdd(this.players, playerInfo)
+      players: arrayUpsert(this.players, playerInfo.id, playerInfo)
     });
   }
 
