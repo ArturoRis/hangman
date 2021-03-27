@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseComponent } from '../../base-objects/base-component';
+import { BaseDirective } from '../../base-objects/base.directive';
 
 @Component({
   selector: 'hmo-welcome',
   templateUrl: './welcome.component.html',
   styleUrls: ['./welcome.component.scss']
 })
-export class WelcomeComponent extends BaseComponent implements OnInit {
+export class WelcomeComponent extends BaseDirective implements OnInit {
 
   constructor() {
     super();

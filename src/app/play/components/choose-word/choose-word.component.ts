@@ -1,18 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { GameStateService } from '../../services/game-state.service';
-import { BaseComponent } from '../../../core/base-objects/base-component';
+import { GameService } from '../../state/game.service';
+import { BaseDirective } from '../../../core/base-objects/base.directive';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'hmo-choose-word',
   templateUrl: './choose-word.component.html',
   styleUrls: ['./choose-word.component.scss']
 })
-export class ChooseWordComponent extends BaseComponent implements OnInit {
+export class ChooseWordComponent extends BaseDirective implements OnInit {
 
-  word: string;
+  word?: string;
 
   constructor(
-    private gameStateService: GameStateService
+    private gameService: GameService
   ) {
     super();
   }
@@ -20,7 +21,10 @@ export class ChooseWordComponent extends BaseComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  chooseWord() {
-    this.gameStateService.setWord(this.word);
+  chooseWord(): Observable<string> {
+    if (!this.word) {
+      return of('');
+    }
+    return this.gameService.setWord(this.word);
   }
 }

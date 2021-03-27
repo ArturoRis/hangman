@@ -1,0 +1,7 @@
+<span class="mr-2 has-text-weight-bold">Non presenti</span>
+<div class="tags">
+  <span
+    *ngFor="let char of (lettersNotGuessed$ | async)"
+    class="tag is-dark"
+  >{{char}}</span>
+</div>

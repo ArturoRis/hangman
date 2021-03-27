@@ -1,13 +1,30 @@
-<div class="space-y-2">
-  <div>Scrivi la parola che gli altri dovranno indovinare</div>
-  <div>
-    <form>
-      <label hidden for="word">Parola da indovinare</label>
-      <input class="rounded-r-none" id="word" type="text" [(ngModel)]="word" required pattern="[a-zA-Z]+( [a-zA-Z]+)*"
-             #wordModel="ngModel" name="word"/>
-      <button type="submit" class="rounded-l-none border border-primary" (click)="chooseWord()"
-              [disabled]="wordModel.invalid">Ok
-      </button>
-    </form>
-  </div>
+<div class="mb-2">Scrivi la parola che gli altri dovranno indovinare</div>
+<div>
+  <form>
+    <div class="field">
+      <label class="label is-sr-only" for="word">Parola da indovinare</label>
+      <div class="field has-addons">
+        <div class="control">
+          <input
+            class="control"
+            id="word"
+            type="text"
+            [(ngModel)]="word"
+            required
+            pattern="[a-zA-Z]+( [a-zA-Z]+)*"
+            #wordModel="ngModel"
+            name="word"
+          />
+        </div>
+        <div class="control">
+          <button
+            class="control"
+            type="submit"
+            [asyncClick]="chooseWord.bind(this)"
+            [disabled]="!word || wordModel.invalid"
+          >Ok</button>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>

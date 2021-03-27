@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { filter } from 'rxjs/operators';
-import { GameStateService } from '../../services/game-state.service';
-import { BaseComponent } from '../../../core/base-objects/base-component';
+import { filter, map } from 'rxjs/operators';
+import { GameQuery } from '../../state/game.query';
+import { BaseDirective } from '../../../core/base-objects/base.directive';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -9,20 +9,28 @@ import { Observable } from 'rxjs';
   templateUrl: './guessing-word.component.html',
   styleUrls: ['./guessing-word.component.scss']
 })
-export class GuessingWordComponent extends BaseComponent implements OnInit {
-  lettersInfo: Observable<LetterInfo[]>;
+export class GuessingWordComponent extends BaseDirective implements OnInit {
+  letters$: Observable<string[]>;
 
   constructor(
-    private gameStateService: GameStateService
+    private gameQuery: GameQuery
   ) {
     super();
+    this.letters$ = this.gameQuery.getWord$().pipe(
+      filter(word => !!word && !!word.length),
+      map( letters => letters.map( l => {
+        if (!l.letter) {
+          return '&nbsp;';
+        }
+        if (!l.isGuessed) {
+          return '_';
+        }
+        return l.letter;
+      }))
+    );
   }
 
   ngOnInit(): void {
-
-    this.lettersInfo = this.gameStateService.getWord$().pipe(
-      filter(word => !!word && !!word.length)
-    );
   }
 }
 

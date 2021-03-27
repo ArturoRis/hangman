@@ -1,4 +1,12 @@
-<div hmoUiTitle>Stanza: <span class="tooltip" (click)="getLink()">{{roomId | async}}<span
-  class="tooltiptext">{{tooltiptext}}</span></span></div>
-<hmo-players-viewer></hmo-players-viewer>
-<hmo-ui-animated-router-outlet></hmo-ui-animated-router-outlet>
+<div hmoUiTitle class="is-card">Stanza:
+  <span
+    *ngIf="roomId$ | async as roomId"
+    [class.has-tooltip-active]="linkCopied"
+    (click)="getLink(roomId)"
+    [attr.data-tooltip]="tooltipText"
+  >{{roomId}}</span>
+</div>
+<div class="is-card">
+  <hmo-players-viewer class="is-block mb-4"></hmo-players-viewer>
+  <hmo-ui-animated-router-outlet></hmo-ui-animated-router-outlet>
+</div>

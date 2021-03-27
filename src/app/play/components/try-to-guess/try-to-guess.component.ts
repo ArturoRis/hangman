@@ -1,30 +1,34 @@
 import { Component, OnInit } from '@angular/core';
-import { BaseComponent } from '../../../core/base-objects/base-component';
-import { GameStateService } from '../../services/game-state.service';
+import { BaseDirective } from '../../../core/base-objects/base.directive';
+import { GameService } from '../../state/game.service';
+import { GameQuery } from '../../state/game.query';
 import { map, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'hmo-try-to-guess',
   templateUrl: './try-to-guess.component.html',
   styleUrls: ['./try-to-guess.component.scss']
 })
-export class TryToGuessComponent extends BaseComponent implements OnInit {
+export class TryToGuessComponent extends BaseDirective implements OnInit {
 
   turnsToWait = 0;
-  wordGuess: string;
-  wordGuesses$: Observable<string[]>;
+  wordGuess?: string;
   amINotMaster$: Observable<boolean>;
 
   constructor(
-    private gameStateService: GameStateService
+    private gameService: GameService,
+    private gameQuery: GameQuery
   ) {
     super();
+    this.amINotMaster$ = this.gameQuery.getAmIMaster$().pipe(
+      map(amIMaster => !amIMaster)
+    );
   }
 
   ngOnInit(): void {
     this.addSubscription(
-      this.gameStateService.getCurrentTurn$().pipe(
+      this.gameQuery.getCurrentTurn$().pipe(
         tap(() => {
           if (this.turnsToWait > 0) {
             this.turnsToWait -= 1;
@@ -32,17 +36,19 @@ export class TryToGuessComponent extends BaseComponent implements OnInit {
         })
       ).subscribe()
     );
-
-    this.wordGuesses$ = this.gameStateService.getWordGuesses$();
-
-    this.amINotMaster$ = this.gameStateService.getAmIMaster$().pipe(
-      map( amIMaster => !amIMaster)
-    );
   }
 
-  sendTry() {
-    this.gameStateService.sendWordGuess(this.wordGuess);
-    this.turnsToWait = 3;
-    this.wordGuess = '';
+  sendTry(): Observable<void> {
+    if (!this.wordGuess) {
+      return of();
+    }
+    return this.gameService.sendWordGuess(this.wordGuess).pipe(
+      tap(
+        () => {
+          this.wordGuess = '';
+          this.turnsToWait = 3;
+        }
+      )
+    );
   }
 }

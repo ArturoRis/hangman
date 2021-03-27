@@ -1,12 +1,30 @@
-<div class="flex items-center flex-col lg:flex-row bg-bkg-primary pb-2 px-1 sm:px-3">
-  <hmo-ui-logo class="block w-full lg:w-2/3"></hmo-ui-logo>
-  <div class="w-full lg:w-1/3">
-    <ul class="flex justify-center space-x-4 lg:justify-end">
-      <li *ngFor="let item of menu">
-        <a class="inline-block border-b-2 pt-2 px-2 text-black border-black hover:border-b-4"
-           [routerLinkActive]="['text-active2', 'border-active2', 'border-b-4', 'font-bold']"
-           [routerLink]="item.route">{{item.label}}</a>
-      </li>
-    </ul>
+<nav class="navbar is-secondary" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand py-1">
+    <hmo-ui-logo></hmo-ui-logo>
+    <a
+      role="button"
+      class="navbar-burger"
+      [class.is-active]="isActive"
+      aria-label="menu"
+      [attr.aria-expanded]="isActive"
+      (click)="isActive = !isActive"
+    >
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
   </div>
-</div>
+  <div
+    class="navbar-menu"
+    [class.is-active]="isActive"
+  >
+    <div class="navbar-end">
+        <a
+          *ngFor="let item of menu"
+          class="navbar-item"
+          [routerLinkActive]="['is-active']"
+          [routerLink]="item.route"
+        >{{item.label}}</a>
+    </div>
+  </div>
+</nav>

@@ -1,9 +1,26 @@
-<div class="sm:flex items-center py-2">
-  <div class="text-2xl mr-2">Giocatori</div>
-  <div class="flex flex-wrap">
-    <span [class.border-primary]="p.id === me" [class.border-active2]="p.id !== me" class="player"
-          [class.master]="p.id === master" *ngFor="let p of (players | async)">
-        <span class="name" [class.current-turn]="p.id === currentTurn">{{p.name}} - {{p.points}}</span>
+<div class="is-flex is-flex-wrap-wrap is-align-items-baseline">
+  <div class="mr-4 mb-1">
+    <span class="is-size-5">Giocatori</span>
+  </div>
+  <div class="mr-2 mb-1" *ngFor="let p of (players$ | async)">
+    <span class="tags has-addons are-medium">
+      <span
+        *ngIf="p.id === master"
+        [class.is-light]="p.id !== currentTurn"
+        class="tag is-warning has-text-weight-bold is-rounded"
+      >M</span>
+      <span
+        class="tag is-rounded"
+        [class.is-info]="p.id !== me"
+        [class.is-primary]="p.id == me"
+        [class.is-light]="p.id !== currentTurn"
+      >{{p.name}}</span>
+      <span
+        class="tag is-rounded"
+        [class.is-info]="p.id !== me"
+        [class.is-primary]="p.id == me"
+        [class.is-light]="p.id !== currentTurn"
+      >{{p.points}}</span>
     </span>
   </div>
 </div>

@@ -1,18 +1,27 @@
 import { Component, HostBinding, OnInit } from '@angular/core';
-import { BaseComponent } from '../../base-objects/base-component';
+import { BaseDirective } from '../../base-objects/base.directive';
+import { MenuItem } from '../../../ui-kit/components/ui-menu/menu-item';
 
 @Component({
   selector: 'hmo-page',
   templateUrl: './page.component.html',
   styleUrls: ['./page.component.scss']
 })
-export class PageComponent extends BaseComponent implements OnInit {
-
-  @HostBinding('class.h-full')
-  hFull = true;
+export class PageComponent extends BaseDirective implements OnInit {
+  menu: MenuItem[];
 
   constructor() {
     super();
+    this.menu = [
+      {
+        route: 'welcome',
+        label: 'Benvenuto'
+      },
+      {
+        route: 'manage-room',
+        label: 'Gioca'
+      }
+    ];
   }
 
   ngOnInit(): void {
