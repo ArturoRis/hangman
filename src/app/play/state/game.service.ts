@@ -1,9 +1,8 @@
-import { Inject, Injectable, OnDestroy } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { GameState, GameStore, GuessInfo, LetterInfo, PlayerInfo, Status } from './game.store';
 import { SocketService } from '../services/socket.service';
 import { Observable, Subscription } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
@@ -17,8 +16,7 @@ export class GameService implements OnDestroy {
   constructor(
     private gameStore: GameStore,
     private socketService: SocketService,
-    private httpClient: HttpClient,
-    private router: Router
+    private httpClient: HttpClient
   ) {
 
     const socketMessagesHandlers: Observable<any>[] = [
