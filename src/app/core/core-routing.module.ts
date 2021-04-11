@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { WelcomeComponent } from './components/welcome/welcome.component';
 import { ManageRoomComponent } from './components/manage-room/manage-room.component';
+import { FeedbackComponent } from './components/feedback/feedback.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,9 @@ const routes: Routes = [
       },
       {
         path: 'manage-room', component: ManageRoomComponent
+      },
+      {
+        path: 'feedback', component: FeedbackComponent
       }
     ],
   }

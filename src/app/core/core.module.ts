@@ -10,6 +10,7 @@ import { UiKitModule } from '../ui-kit/ui-kit.module';
 import { PlayerIdInterceptorProvider } from './services/player-id.interceptor';
 import { FooterComponent } from './components/footer/footer.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { FeedbackComponent } from './components/feedback/feedback.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     PageComponent,
     WelcomeComponent,
     ManageRoomComponent,
-    FooterComponent
+    FooterComponent,
+    FeedbackComponent
   ],
   exports: [
     PageComponent

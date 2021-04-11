@@ -1,0 +1,9 @@
+<div class="fullpage loading" *ngIf="iframeLoading">
+  <fa-icon [icon]="faSpinner" [spin]="true" size="4x"></fa-icon>
+</div>
+<iframe
+  class="fullpage"
+  [hidden]="iframeLoading"
+  src="https://docs.google.com/forms/d/e/1FAIpQLSfICvzXhyIcO8o4cuQ9xNQafqONAuN6vnuD3DLolylpE2s8Hw/viewform?embedded=true"
+  (load)="iframeLoading = false"
+>Caricamento…</iframe>
