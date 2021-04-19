@@ -20,10 +20,6 @@ export class PageComponent extends BaseDirective implements OnInit {
       {
         route: 'manage-room',
         label: 'Gioca'
-      },
-      {
-        route: 'feedback',
-        label: 'Feedback'
       }
     ];
   }

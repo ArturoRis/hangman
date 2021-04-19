@@ -16,9 +16,6 @@ const routes: Routes = [
       },
       {
         path: 'manage-room', component: ManageRoomComponent
-      },
-      {
-        path: 'feedback', component: FeedbackComponent
       }
     ],
   }
