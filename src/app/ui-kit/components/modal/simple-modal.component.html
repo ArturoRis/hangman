@@ -1,0 +1,9 @@
+<div class="modal" [class.is-active]="openModal">
+  <div class="modal-background"></div>
+  <button class="modal-close is-large" (click)="close()"></button>
+  <div class="modal-content">
+    <ng-container *ngIf="conf">
+      <ng-container *ngTemplateOutlet="conf.template"></ng-container>
+    </ng-container>
+  </div>
+</div>

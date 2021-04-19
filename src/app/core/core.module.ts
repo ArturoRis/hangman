@@ -9,7 +9,6 @@ import { LeaveRoomGuard } from './services/leave-room.guard';
 import { UiKitModule } from '../ui-kit/ui-kit.module';
 import { PlayerIdInterceptorProvider } from './services/player-id.interceptor';
 import { FooterComponent } from './components/footer/footer.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FeedbackComponent } from './components/feedback/feedback.component';
 
 
@@ -28,8 +27,7 @@ import { FeedbackComponent } from './components/feedback/feedback.component';
     CommonModule,
     FormsModule,
     CoreRoutingModule,
-    UiKitModule,
-    FontAwesomeModule
+    UiKitModule
   ],
   providers: [
     LeaveRoomGuard,

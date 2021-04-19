@@ -8,6 +8,8 @@ import { UiTitleDirective } from './directives/ui-title.directive';
 import { UiAnimatedRouterOutletComponent } from './components/ui-animated-router-outlet/ui-animated-router-outlet.component';
 import { UiDirectives } from './directives/ui-directives';
 import { ButtonAsyncClickDirective } from './directives/button-async-click.directive';
+import { SimpleModalComponent } from './components/modal/simple-modal.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -18,11 +20,13 @@ import { ButtonAsyncClickDirective } from './directives/button-async-click.direc
     UiTitleDirective,
     UiAnimatedRouterOutletComponent,
     ...UiDirectives,
-    ButtonAsyncClickDirective
+    ButtonAsyncClickDirective,
+    SimpleModalComponent
   ],
   imports: [
     CommonModule,
-    RouterModule
+    RouterModule,
+    FontAwesomeModule
   ],
   exports: [
     UiMenuComponent,
@@ -31,7 +35,9 @@ import { ButtonAsyncClickDirective } from './directives/button-async-click.direc
     UiTitleDirective,
     UiAnimatedRouterOutletComponent,
     ...UiDirectives,
-    ButtonAsyncClickDirective
+    ButtonAsyncClickDirective,
+    SimpleModalComponent,
+    FontAwesomeModule
   ]
 })
 export class UiKitModule {
