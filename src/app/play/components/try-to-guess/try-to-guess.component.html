@@ -4,7 +4,7 @@
     *ngIf="turnsToWait === 0;else waitTurns"
   >
     <div class="column is-narrow field">
-      <label class="label is-sr-only" for="wordGuess">Prova a indovinare</label>
+      <label class="label is-sr-only" for="wordGuess">Try to guess</label>
       <div class="field has-addons">
         <div class="control">
           <input
@@ -23,14 +23,14 @@
             #button="asyncButton"
             [asyncClick]="sendTry.bind(this)"
             [disabled]="wordGuessModel.invalid"
-          >Invia</button>
+          >Send</button>
         </div>
       </div>
     </div>
   </div>
   <ng-template #waitTurns>
     <div class="has-text-centered text-xl">
-      Devi aspettare {{turnsToWait}} turni per poter provare a indovinare di nuovo
+      You have to wait {{turnsToWait}} turn{{turnsToWait > 1 ? 's' : ''}} to try to guess again
     </div>
   </ng-template>
 </ng-container>
