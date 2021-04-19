@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faFan } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'hmo-feedback',
@@ -7,7 +7,7 @@ import { faSpinner } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./feedback.component.scss']
 })
 export class FeedbackComponent implements OnInit {
-  faSpinner = faSpinner;
+  faSpinner = faFan;
   iframeLoading = true;
   constructor() { }
 
