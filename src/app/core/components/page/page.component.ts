@@ -15,11 +15,11 @@ export class PageComponent extends BaseDirective implements OnInit {
     this.menu = [
       {
         route: 'welcome',
-        label: 'Benvenuto'
+        label: 'Welcome'
       },
       {
         route: 'manage-room',
-        label: 'Gioca'
+        label: 'Play'
       }
     ];
   }

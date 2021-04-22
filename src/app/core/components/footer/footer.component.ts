@@ -1,6 +1,7 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, TemplateRef } from '@angular/core';
 import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import { VERSION_TOKEN } from '../../../version.provider';
+import { ModalService } from '../../../ui-kit/components/modal/simple-modal.component';
 
 @Component({
   selector: 'hmo-footer',
@@ -13,7 +14,8 @@ export class FooterComponent implements OnInit {
   faHearth = faHeart;
 
   constructor(
-    @Inject(VERSION_TOKEN) version: string
+    @Inject(VERSION_TOKEN) version: string,
+    private modalService: ModalService
   ) {
     this.version = version;
   }
@@ -21,4 +23,11 @@ export class FooterComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  openFeedback(feedbackTemplate: TemplateRef<{}>): void {
+    this.modalService.open({
+        template: feedbackTemplate
+      },
+      h => console.log('gotHandler', h)
+    );
+  }
 }

@@ -1,10 +1,18 @@
-<footer class="is-flex is-justify-content-space-between is-align-items-baseline">
+<ng-template #modal>
+  <hmo-feedback></hmo-feedback>
+</ng-template>
+
+
+<div class="feedback has-text-centered">
+  <button (click)="openFeedback(modal)">Send Feedback</button>
+</div>
+<footer class="is-flex is-justify-content-space-between is-align-items-center">
   <div class="credits ml-2">
     Made with <fa-icon [icon]="faHearth"></fa-icon>️ by
     <a href="https://github.com/silibdev" target="_blank">Fabio Siliberto</a>
   </div>
   <div class="version mr-2">
-    <span>Versione</span>
+    <span>Version</span>
     <span class="version-number">{{version}}</span>
   </div>
 </footer>

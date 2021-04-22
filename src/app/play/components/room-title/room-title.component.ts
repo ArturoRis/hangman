@@ -14,8 +14,8 @@ export class RoomTitleComponent extends BaseDirective implements OnInit {
   tooltipText: string;
   linkCopied = false;
 
-  private linkNotCopiedTooltipText = 'Clicca per copiare il link';
-  private linkCopiedTooltipText = 'Link copiato!';
+  private linkNotCopiedTooltipText = 'Click to copy the link';
+  private linkCopiedTooltipText = 'Link copied!';
 
   constructor(
     private gameQuery: GameQuery

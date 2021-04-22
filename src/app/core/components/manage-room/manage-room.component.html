@@ -1,16 +1,16 @@
 <div hmoUiTitle class="is-card">
   <ng-container *ngIf="roomId$ | async as roomId; else elseTitle">
-    Unisciti alla stanza <strong>{{roomId}}</strong>
+    Join room <strong>{{roomId}}</strong>
   </ng-container>
   <ng-template #elseTitle>
-    Crea stanza
+    Create room
   </ng-template>
 </div>
 <div class="is-card">
   <div class="columns mb-1">
     <div class="field column is-12-mobile is-8-tablet is-6-desktop">
       <label class="label" for="name">
-        Inserisci il tuo nome
+        Insert your name
       </label>
       <div class="field has-addons">
         <div class="control is-expanded">
@@ -21,14 +21,14 @@
               <button
                 [asyncClick]="joinRoom.bind(this, roomId)"
                 [disabled]="!name || !roomId"
-              >Unisciti</button>
+              >Join</button>
           </ng-container>
           <ng-template #elseBlock>
             <button
               class="is-fullwidth"
               [asyncClick]="createRoom.bind(this)"
               [disabled]="!name"
-            >Crea stanza</button>
+            >Create</button>
           </ng-template>
         </div>
       </div>

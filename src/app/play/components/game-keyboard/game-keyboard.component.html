@@ -14,14 +14,14 @@
 </ng-container>
 <div class="my-2 is-size-5 has-text-centered" *ngIf="showWin !== undefined">
   <div class="" *ngIf="showWin">
-    Complimenti {{itsMe ? 'hai vinto' : 'a ' + showWin}}!
+    Congratulations{{itsMe ? ', you win' : ' to ' + showWin}}!
   </div>
   <div *ngIf="!showWin">
-    La parola non è stata indovinata{{itsMe ? ' :)' : ', peccato :('}}
+    The word has not been guessed{{itsMe ? ' :)' : ', that\'s a pity :('}}
   </div>
 </div>
 <div class="has-text-centered" *ngIf="showRestart$ | async">
   <button
     [asyncClick]="restartGame.bind(this)"
-  >Continua</button>
+  >Continue</button>
 </div>
