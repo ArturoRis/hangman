@@ -1,1 +1,44 @@
-<div class="is-size-4">HANGMAN ONLINE</div>
+<div hmoUiTitle class="is-card">
+  Welcome to the online hangman game <fa-icon [icon]="faSmile" [classes]="['ml-2']"></fa-icon>
+</div>
+<section class="is-card is-size-6-mobile is-size-5-tablet has-text-centered-mobile has-text-left-tablet">
+  <div class="py-3">
+    Here you can play at hangman with your friends online!
+  </div>
+  <div class="py-3 columns is-align-items-center ">
+    <div class="column is-6-tablet is-8-desktop">
+      Click on "Play" and create a room, then copy and share the link with your friends so that they can join your room.
+      <br><br>
+      Let the master choose the word and start playing.
+    </div>
+    <div class="column is-6-tablet is-4-desktop image is-flex is-justify-content-center">
+      <img class="tutorial-image" src="assets/CopyLink.png" alt="Copy link">
+    </div>
+  </div>
+</section>
+<section class="is-card has-text-centered-mobile has-text-left-tablet">
+  <div class="py-3 is-flex is-align-items-flex-end is-size-5-mobile is-size-4-tablet">
+    <fa-icon [icon]="faArrowDown" [classes]="['mx-2', 'is-hidden-tablet']"></fa-icon>
+    <span>If you don't know what is the hangman game here a simple explanation</span>
+    <fa-icon [icon]="faArrowDown" [classes]="['mx-2']"></fa-icon>
+  </div>
+  <div class="explanation is-size-6-mobile is-size-5-tablet">
+    <div class="start-rule py-2">
+      A group of people choose a <em>"Master"</em> that has to think about a word that the others have to
+      guess.
+      <br>
+      The other players, each turn, ask the master if a letter is present in the word.
+    </div>
+    <div class="guess-rule py-3">
+      If the letter <em>is present</em> the master will write the letter in the word, everytime it occurs.
+    </div>
+    <div class="guess-rule py-3">
+      If the letter <em>is <strong>not</strong> present</em> the master will draw a part of a stick-man that is going to
+      be hanged.
+    </div>
+    <div class="finish-rule py-2">
+      The game finished when a player guesses the word (and he wins) or when all the parts of the stick-man are drawn
+      (the master wins).
+    </div>
+  </div>
+</section>
