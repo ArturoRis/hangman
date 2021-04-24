@@ -1,7 +1,7 @@
 <div hmoUiTitle class="is-card">
   Welcome to the online hangman game <fa-icon [icon]="faSmile" [classes]="['ml-2']"></fa-icon>
 </div>
-<section class="is-card is-size-6-mobile is-size-5-tablet">
+<section class="is-card is-size-6-mobile is-size-5-tablet has-text-centered-mobile has-text-left-tablet">
   <div class="py-3">
     Here you can play at hangman with your friends online!
   </div>
@@ -16,13 +16,13 @@
     </div>
   </div>
 </section>
-<section class="is-card has-text-centered">
-  <div class="py-3 is-flex is-align-items-flex-end is-justify-content-center is-size-5-mobile is-size-4-tablet">
-    <fa-icon [icon]="faArrowDown" [classes]="['mx-2']"></fa-icon>
+<section class="is-card has-text-centered-mobile has-text-left-tablet">
+  <div class="py-3 is-flex is-align-items-flex-end is-size-5-mobile is-size-4-tablet">
+    <fa-icon [icon]="faArrowDown" [classes]="['mx-2', 'is-hidden-tablet']"></fa-icon>
     <span>If you don't know what is the hangman game here a simple explanation</span>
     <fa-icon [icon]="faArrowDown" [classes]="['mx-2']"></fa-icon>
   </div>
-  <div class="explanation  is-size-6-mobile is-size-5-tablet">
+  <div class="explanation is-size-6-mobile is-size-5-tablet">
     <div class="start-rule py-2">
       A group of people choose a <em>"Master"</em> that has to think about a word that the others have to
       guess.
